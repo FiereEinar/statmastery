@@ -23,6 +23,27 @@
 		<livewire:scripts />
 	</head>
 	<body>
-		
+		<x-topbar />
+    @auth
+    <section class="text-base-content/70 min-h-[100dvh] px-20 py-10 space-y-5">
+      <h1 class="text-3xl">My Learning</h1>
+      <div>
+        <h4 class="font-semibold text-lg">In-Progress</h4>
+        <x-coursesplaceholder courses="3" />
+      </div>
+      <div>
+        <h4 class="font-semibold text-lg">Completed</h4>
+        <x-coursesplaceholder courses="2" />
+      </div>
+    </section>
+    @else
+    <section class="w-full h-[100dvh] flex flex-col gap-3 justify-center items-center">
+      <h1>You are not logged in.</h1>
+      <a href="/login">
+        <x-button primary label="Login" />
+      </a>
+    </section>
+    @endauth
+    <x-footer />
 	</body>
 </html>
