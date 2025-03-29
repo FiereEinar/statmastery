@@ -3,8 +3,15 @@
         <h1 class="text-5xl">Master Mathematics with <span class="text-blue-800">Elson Salvan</span></h1>
         <p>Learn Quantitative Methods, Statistics, and More with Engaging Online Courses.</p>
         <div class="space-x-2">
-            <x-button outline primary label="Browse Courses" />
-            <x-button primary label="Sign Up Now" />
+            <a href="#">
+                <x-button outline primary label="Browse Courses" />
+            </a>
+            @auth
+            @else
+            <a href="/signup">
+                <x-button primary label="Sign Up Now" />
+            </a>
+            @endauth
         </div>
     </div>
     <div class="w-1/3">

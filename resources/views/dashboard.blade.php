@@ -25,7 +25,7 @@
 	<body>
 		<x-topbar />
     @auth
-    <section class="text-base-content/70 min-h-[100dvh] px-20 py-10 space-y-5">
+    <section class="text-base-content/70 min-h-[100dvh] px-20 py-10 space-y-8">
       <h1 class="text-3xl">My Learning</h1>
       <div>
         <h4 class="font-semibold text-lg">In-Progress</h4>

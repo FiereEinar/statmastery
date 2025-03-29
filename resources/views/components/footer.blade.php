@@ -7,13 +7,17 @@
             Teaching mathematics since <span class="text-blue-500">1992</span>
         </p>
         <div>
-            @auth
-            @else
             <div class="space-x-2">
-                <x-button xs outline primary label="Browse Courses" />
-                <x-button xs primary label="Sign Up Now" />
+                <a href="#">
+                    <x-button sm outline primary label="Browse Courses" />
+                </a>
+                @auth
+                @else
+                <a href="/signup">
+                    <x-button sm primary label="Sign Up Now" />
+                </a>
+                @endauth
             </div>
-            @endauth
         </div>
     </aside>
     <nav>

@@ -17,7 +17,7 @@
         [
             "title" => "Discrete Math",
             "description" => "Dive into logic, set theory, graph theory, and combinatorics. Perfect for students in computer science, cryptography, and mathematical reasoning.",
-            "image" => "images/courses/statistics-card-img.jpg",
+            "image" => "images/courses/discrete-math.jpg",
             "badge" => "Intermediate",
             "badgeColor" => "badge-warning"
         ],
