@@ -18,3 +18,4 @@ Route::get('/signup', [AuthController::class, 'signupView']);
 Route::get('/v1/api/logout', [AuthController::class, 'logout']);
 Route::post('/v1/api/login', [AuthController::class, 'login']);
 Route::post('/v1/api/signup', [AuthController::class, 'signup']);
+
