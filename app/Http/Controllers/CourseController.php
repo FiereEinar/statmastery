@@ -21,6 +21,10 @@ class CourseController extends Controller
     public function courseEditView(Course $course) {
         return view('edit-course', ['course'=> $course]);
     }
+    
+    public function createCourseView() {
+        return view('create-course');
+    }
 
     public function createCourse(Request $request) {
         $body = $request->validate([

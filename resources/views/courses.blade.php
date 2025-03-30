@@ -25,7 +25,10 @@
 	<body>
 		<x-topbar />
     <section class="text-base-content/70 min-h-[100dvh] px-20 py-10 space-y-8">
-      <h1 class="text-3xl">Courses</h1>
+      <div class="flex justify-between items-center">
+        <h1 class="text-3xl">Courses</h1>
+        <x-button primary label="Add Course" href="/course/create" />    
+      </div>
       <div>
         <p>Courses: {{ sizeof($courses) }}</p>
       </div>
@@ -33,41 +36,6 @@
         @foreach ($courses as $course)
           <x-course-card :course="$course" badgeColor="success" />
         @endforeach
-      </div>
-
-      <div>
-        <h1>Add Course</h1>
-        <form action="/v1/api/course" method="POST">
-          @csrf
-          <fieldset class="fieldset">
-            <legend class="fieldset-legend">Title</legend>
-            <input name="title" type="text" class="input" placeholder="Type here" />
-          </fieldset>
-          <fieldset class="fieldset">
-            <legend class="fieldset-legend">Description</legend>
-            <textarea name="description" class="textarea h-24" placeholder="Bio"></textarea>
-          </fieldset>
-          <label class="input">
-            Path
-            <input name="thumbnail" type="text" class="grow" placeholder="images/example.png" />
-          </label>
-          <fieldset class="fieldset">
-            <legend class="fieldset-legend">Thumbnail</legend>
-            <input  type="file" accept="image/*" class="file-input" />
-            <label class="fieldset-label">Max size 2MB</label>
-          </fieldset>
-          <fieldset class="fieldset">
-            <legend class="fieldset-legend">Difficulty</legend>
-            <select name="badge" class="select">
-              <option selected>Beginner</option>
-              <option>Intermediate</option>
-              <option>Advanced</option>
-            </select>
-          </fieldset>
-          <div>
-            <x-button type="submit" primary label="Add Course" />
-          </div>
-        </form>
       </div>
     </section>
     <x-footer />

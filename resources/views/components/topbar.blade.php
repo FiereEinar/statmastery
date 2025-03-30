@@ -15,7 +15,7 @@
         <p>Profile</p>       
         @else
         <a href="/dashboard">
-            <x-button primary flat label="Dashbaord" />
+            <x-button primary flat label="Dashboard" />
         </a>
         @endif
         <form action="/v1/api/logout" method="GET">

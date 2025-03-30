@@ -25,8 +25,11 @@
 	<body>
 		<x-topbar />
     @auth
-    <section class="text-base-content/70 min-h-[100dvh] px-20 py-10 space-y-8">
-      <h1 class="text-3xl">My Learning</h1>
+    <section class="text-base-content/70 min-h-[100dvh] w-fit px-20 py-10 space-y-8">
+			<div class="flex justify-between">
+				<h1 class="text-3xl">My Learning</h1>
+				<x-button href="/course" outline label="View Courses" />
+			</div>
       <div>
         <h4 class="font-semibold text-lg">In-Progress</h4>
         <x-coursesplaceholder courses="3" />

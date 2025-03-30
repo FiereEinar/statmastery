@@ -25,7 +25,7 @@ class AuthController extends Controller
 
         if (auth()->guard('web')->attempt(['email' => $body['email'],'password'=> $body['password']])) {
             $request->session()->regenerate();
-            return redirect('/');
+            return redirect('/dashboard');
         } else {
             return back()->withErrors(['all' => 'Incorrect credentials'])->withInput();
         }
@@ -47,7 +47,7 @@ class AuthController extends Controller
         $user = User::create($body);
         auth()->guard('web')->login($user);
 
-        return redirect('/');
+        return redirect('/dashboard');
     }
 
     public function logout() {
