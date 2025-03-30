@@ -2,6 +2,8 @@
     <h1 class="text-2xl">Our <span class="text-blue-800">Popular</span> Courses</h1>
     <x-coursesplaceholder courses="4" />
     <div class="flex justify-center w-full">
-        <x-button rounded="2xl" outline info label="View All Courses" />
+        <a href="/course">
+            <x-button rounded="2xl" outline info label="View All Courses" />
+        </a>
     </div>
 </section>

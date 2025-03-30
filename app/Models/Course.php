@@ -10,8 +10,10 @@ class Course extends Model
     use HasFactory;
 
     protected $fillable = [
+        'owner_id',
         'title',
         'description',
         'thumbnail',
+        'badge',
     ];
 }

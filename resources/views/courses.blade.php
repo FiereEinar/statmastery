@@ -29,6 +29,11 @@
       <div>
         <p>Courses: {{ sizeof($courses) }}</p>
       </div>
+      <div class="flex gap-4 flex-wrap">
+        @foreach ($courses as $course)
+          <x-course-card :course="$course" badgeColor="success" />
+        @endforeach
+      </div>
 
       <div>
         <h1>Add Course</h1>
@@ -50,6 +55,14 @@
             <legend class="fieldset-legend">Thumbnail</legend>
             <input  type="file" accept="image/*" class="file-input" />
             <label class="fieldset-label">Max size 2MB</label>
+          </fieldset>
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend">Difficulty</legend>
+            <select name="badge" class="select">
+              <option selected>Beginner</option>
+              <option>Intermediate</option>
+              <option>Advanced</option>
+            </select>
           </fieldset>
           <div>
             <x-button type="submit" primary label="Add Course" />

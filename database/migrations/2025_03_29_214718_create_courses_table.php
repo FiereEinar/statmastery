@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('owner_id')->constrained('users')->cascadeOnDelete();
             $table->string('title');
             $table->string('description');
             $table->string('thumbnail');
+            $table->enum('badge', ['Beginner','Intermediate','Advanced'])->default('Beginner');
             $table->timestamps();
         });
     }

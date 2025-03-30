@@ -27,9 +27,28 @@ class CourseController extends Controller
             "title" => ["required", "min:3", "max:255"],
             "description" => ["required", "min:3", "max:255"],
             "thumbnail"=> ["required"],
+            "badge"=> ["required"],
         ]);
 
-        Course::create($body);
-        return redirect('/course/{$course->id}/edit');
+        $body['owner_id'] = auth()->guard('web')->user()->id;
+        $course = Course::create($body);
+        return redirect('/course/' . $course->id . '/edit');
     }
+    
+    public function updateCourse(Course $course, Request $request) {
+        $body = $request->validate([
+            "title" => ["required", "min:3", "max:255"],
+            "description" => ["required", "min:3", "max:255"],
+            "thumbnail"=> ["required"],
+            "badge"=> ["required"],
+        ]);
+
+        if (auth()->guard('web')->user()->id !== $course->owner_id) {
+            return redirect('/course');
+        }
+
+        $course->update($body);
+        return redirect('/course');  
+    }
+
 }

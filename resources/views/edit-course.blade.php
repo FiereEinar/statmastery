@@ -47,6 +47,14 @@
             <input  type="file" accept="image/*" class="file-input" />
             <label class="fieldset-label">Max size 2MB</label>
           </fieldset>
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend">Difficulty</legend>
+            <select name="badge" class="select">
+              <option value="Beginner" {{ $course->badge === 'Beginner' ? 'selected' : '' }}>Beginner</option>
+              <option value="Intermediate" {{ $course->badge === 'Intermediate' ? 'selected' : '' }}>Intermediate</option>
+              <option value="Advanced" {{ $course->badge === 'Advanced' ? 'selected' : '' }}>Advanced</option>
+            </select>
+          </fieldset>
           <div>
             <x-button type="submit" primary label="Add Course" />
           </div>

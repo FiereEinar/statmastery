@@ -22,6 +22,7 @@ Route::post('/v1/api/signup', [AuthController::class, 'signup']);
 
 // Course routes
 Route::get('/course/{course}/edit', [CourseController::class, 'courseEditView']);
+Route::put('/course/{course}', [CourseController::class, 'updateCourse']);
 Route::get('/course', [CourseController::class, 'coursesView']);
 Route::get('/v1/api/course', [CourseController::class, 'getCourses']);
 Route::post('/v1/api/course', [CourseController::class, 'createCourse']);
