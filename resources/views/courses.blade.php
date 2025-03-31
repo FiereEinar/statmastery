@@ -24,10 +24,10 @@
 	</head>
 	<body>
 		<x-topbar />
-    <section class="text-base-content/70 min-h-[100dvh] px-20 py-10 space-y-8">
+		<x-custom-section>
       <div class="flex justify-between items-center">
         <h1 class="text-3xl">Courses</h1>
-        <x-button primary label="Add Course" href="/course/create" />    
+        <x-button icon="plus" primary label="Add Course" href="/course/create" />    
       </div>
       <div>
         <p>Courses: {{ sizeof($courses) }}</p>
@@ -37,7 +37,7 @@
           <x-course-card :course="$course" badgeColor="success" />
         @endforeach
       </div>
-    </section>
-    <x-footer />
+		</x-custom-section>
+			<x-footer />
 	</body>
 </html>

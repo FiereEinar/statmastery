@@ -8,11 +8,6 @@ use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
-    public function getCourses() {
-        $courses = Course::all();
-        return response()->json($courses);
-    }
-
     public function coursesView() {
         $courses = Course::all();
         return view('courses', ['courses'=> $courses]);
@@ -26,12 +21,20 @@ class CourseController extends Controller
         return view('create-course');
     }
 
+    public function viewCourse(Course $course) {
+        return view('view-course', ['course'=> $course]);
+    }
+
     public function createCourse(Request $request) {
         $body = $request->validate([
             "title" => ["required", "min:3", "max:255"],
             "description" => ["required", "min:3", "max:255"],
             "thumbnail"=> ["required"],
-            "badge"=> ["required"],
+            "badge"=> ["required", "in:Beginner,Intermediate,Advanced"],
+            "overview"=> ["required"],
+            "time_to_complete"=> ["required"],
+            "price"=> ["required"],
+            "subscription_type"=> ["required", "in:Free,Paid"],
         ]);
 
         $body['owner_id'] = auth()->guard('web')->user()->id;
@@ -44,7 +47,11 @@ class CourseController extends Controller
             "title" => ["required", "min:3", "max:255"],
             "description" => ["required", "min:3", "max:255"],
             "thumbnail"=> ["required"],
-            "badge"=> ["required"],
+            "badge"=> ["required", "in:Beginner,Intermediate,Advanced"],
+            "overview"=> ["required"],
+            "time_to_complete"=> ["required"],
+            "price"=> ["required"],
+            "subscription_type"=> ["required", "in:Free,Paid"],
         ]);
 
         if (auth()->guard('web')->user()->id !== $course->owner_id) {

@@ -14,6 +14,10 @@ class Course extends Model
         'title',
         'description',
         'thumbnail',
+        'overview',
+        'time_to_complete',
+        'price',
+        'subscription_type',
         'badge',
     ];
 }

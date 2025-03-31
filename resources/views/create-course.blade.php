@@ -24,7 +24,7 @@
 	</head>
 	<body>
 		<x-topbar />
-    <section class="text-base-content/70 min-h-[100dvh] px-20 py-10 space-y-8">
+		<x-custom-section>
       <h1 class="text-3xl">Add Course</h1>
       <form action="/v1/api/course" method="POST">
         @csrf
@@ -32,32 +32,64 @@
           <legend class="fieldset-legend">Title</legend>
           <input name="title" type="text" class="input" placeholder="Type here" />
         </fieldset>
+
         <fieldset class="fieldset">
           <legend class="fieldset-legend">Description</legend>
-          <textarea name="description" class="textarea h-24" placeholder="Bio"></textarea>
+          <textarea name="description" class="textarea h-24" placeholder="Type here"></textarea>
         </fieldset>
-        <label class="input">
-          Path
-          <input name="thumbnail" type="text" class="grow" placeholder="images/example.png" />
-        </label>
+
         <fieldset class="fieldset">
-          <legend class="fieldset-legend">Thumbnail</legend>
-          <input  type="file" accept="image/*" class="file-input" />
-          <label class="fieldset-label">Max size 2MB</label>
+          <legend class="fieldset-legend">Path</legend>
+          <input name="thumbnail" type="text" class="input" placeholder="images/test.png" />
         </fieldset>
+
         <fieldset class="fieldset">
-          <legend class="fieldset-legend">Difficulty</legend>
-          <select name="badge" class="select">
-            <option selected>Beginner</option>
-            <option>Intermediate</option>
-            <option>Advanced</option>
-          </select>
+          <legend class="fieldset-legend">Overview</legend>
+          <textarea name="overview" class="textarea h-24" placeholder="Type here"></textarea>
         </fieldset>
-        <div>
+
+        <div class="flex gap-2">
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend">Time to complete</legend>
+            <input name="time_to_complete" type="text" class="input validator" required placeholder="Enter here" />
+          </fieldset>
+          
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend">Price (P)</legend>
+            <input value="0" name="price" type="number" class="input validator" required placeholder="Enter here" />
+          </fieldset>
+        </div>
+
+        <div class="flex gap-2">
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend">Subcription Type</legend>
+            <select name="subscription_type" class="select">
+              <option selected>Free</option>
+              <option>Paid</option>
+            </select>
+          </fieldset>
+
+          {{-- <fieldset class="fieldset">
+            <legend class="fieldset-legend">Thumbnail</legend>
+            <input  type="file" accept="image/*" class="file-input" />
+            <label class="fieldset-label">Max size 2MB</label>
+          </fieldset> --}}
+          
+          <fieldset class="fieldset">
+            <legend class="fieldset-legend">Difficulty</legend>
+            <select name="badge" class="select">
+              <option selected>Beginner</option>
+              <option>Intermediate</option>
+              <option>Advanced</option>
+            </select>
+          </fieldset>
+        </div>
+
+        <div class="mt-3">
           <x-button type="submit" primary label="Add Course" />
         </div>
       </form>
-    </section>
+		</x-custom-section>
     <x-footer />
 	</body>
 </html>

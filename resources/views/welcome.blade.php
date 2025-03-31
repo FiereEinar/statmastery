@@ -23,6 +23,10 @@
 		<livewire:scripts />
 	</head>
 	<body>
-		
+		<x-topbar />
+		<x-custom-section>
+			
+		</x-custom-section>
+    <x-footer />
 	</body>
 </html>

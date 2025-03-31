@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string('title');
             $table->string('description');
             $table->string('thumbnail');
+            $table->longText('overview');
+            $table->string('time_to_complete');
+            $table->float('price', 2)->default(0);
+            $table->enum('subscription_type', ['Free','Paid'])->default('Free');
             $table->enum('badge', ['Beginner','Intermediate','Advanced'])->default('Beginner');
             $table->timestamps();
         });

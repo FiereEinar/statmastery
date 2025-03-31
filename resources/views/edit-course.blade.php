@@ -24,7 +24,7 @@
 	</head>
 	<body>
     <x-topbar />
-    <section class="text-base-content/70 min-h-[100dvh] px-20 py-10 space-y-8">
+		<x-custom-section>
       <div>
         <h1 class="text-3xl">Edit Course</h1>
         <form action="/v1/api/course" method="POST">
@@ -60,7 +60,7 @@
           </div>
         </form>
       </div>
-    </section>
+		</x-custom-section>
     <x-footer />
 	</body>
 </html>

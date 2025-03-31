@@ -24,7 +24,7 @@
 	</head>
 	<body>
 		<main class="h-[100dvh] flex justify-center items-center">
-			<form class="space-y-5 shadow-xl px-5 py-10 bg-base-200 rounded-md" action="/v1/api/signup" method="POST">
+			<form class="space-y-5 shadow-xl px-5 py-10 bg-neutral-content/50 rounded-md" action="/v1/api/signup" method="POST">
         @csrf
         <div class="flex items-center gap-2">
           <img class="w-10 rounded-full" src="{{ asset('images/app-logo.jpg') }}" alt="Logo">

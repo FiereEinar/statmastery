@@ -25,9 +25,12 @@
 	<body>
 		<x-topbar />
     @auth
-    <section class="text-base-content/70 min-h-[100dvh] w-fit px-20 py-10 space-y-8">
+		<x-custom-section>
 			<div class="flex justify-between">
-				<h1 class="text-3xl">My Learning</h1>
+				<div class="flex items-center gap-2">
+					<x-icon name="book-open" class="size-10" />
+					<h1 class="text-3xl">My Learning</h1>
+				</div>
 				<x-button href="/course" outline label="View Courses" />
 			</div>
       <div>
@@ -38,8 +41,8 @@
         <h4 class="font-semibold text-lg">Completed</h4>
         <x-coursesplaceholder courses="2" />
       </div>
-    </section>
-    @else
+		</x-custom-section>
+			@else
     <section class="w-full h-[100dvh] flex flex-col gap-3 justify-center items-center">
       <h1>You are not logged in.</h1>
       <a href="/login">
