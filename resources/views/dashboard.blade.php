@@ -31,7 +31,6 @@
 					<x-icon name="book-open" class="size-10" />
 					<h1 class="text-3xl">My Learning</h1>
 				</div>
-				<x-button href="/course" outline label="View Courses" />
 			</div>
       <div>
         <h4 class="font-semibold text-lg">In-Progress</h4>
