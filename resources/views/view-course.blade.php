@@ -29,8 +29,11 @@
         <div class="space-y-5 max-w-[700px]">
           <h1 class="text-3xl">{{ $course->title }}</h1>
           <p>{{ $course->description }}</p>
-          <div>
+          <div class="space-x-2">
             <x-button href="/course/{{ $course->id }}/enroll" primary label="Enroll Now" />
+            @if (auth()->guard('web')->user()->id === $course->owner_id)
+              <x-button href="/course/{{ $course->id }}/edit" primary outline label="Edit Course" />
+            @endif
           </div>
           <div>
             <h2 class="text-xl">Overview</h2>
@@ -72,6 +75,5 @@
         </div>
       </div>
 		</x-custom-section>
-    <x-footer />
 	</body>
 </html>

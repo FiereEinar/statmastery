@@ -12,17 +12,6 @@
     <div class="flex justify-center items-center gap-3">
         @auth
         <x-profile-drawer />
-        {{-- @if (request()->path() === 'dashboard')
-        <p>Profile</p>       
-        @else
-        <a href="/dashboard">
-            <x-button primary flat label="Dashboard" />
-        </a>
-        @endif
-        <form action="/v1/api/logout" method="GET">
-            @csrf
-            <x-button icon="power" type="submit" primary flat label="Logout" />
-        </form> --}}
         @else
         <a href="/login">
             <x-button primary label="Login" />

@@ -39,7 +39,7 @@ class CourseController extends Controller
 
         $body['owner_id'] = auth()->guard('web')->user()->id;
         $course = Course::create($body);
-        return redirect('/course/' . $course->id . '/edit');
+        return redirect("/course/{$course->id}/edit");
     }
     
     public function updateCourse(Course $course, Request $request) {
@@ -59,7 +59,7 @@ class CourseController extends Controller
         }
 
         $course->update($body);
-        return redirect('/course');  
+        return redirect("/course/{$course->id}/edit");
     }
 
 }

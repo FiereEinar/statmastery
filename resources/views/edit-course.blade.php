@@ -23,7 +23,7 @@
 		<livewire:scripts />
 	</head>
 	<body>
-    <x-topbar />
+    <x-course-header :course="$course" />
 		<x-custom-section>
       <div>
         <h1 class="text-3xl">Edit Course</h1>
@@ -61,6 +61,5 @@
         </form>
       </div>
 		</x-custom-section>
-    <x-footer />
 	</body>
 </html>
