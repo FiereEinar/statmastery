@@ -22,44 +22,87 @@
 		<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
 		<livewire:scripts />
 	</head>
-	<body>
+	<body class="min-h-screen flex flex-col">
     <x-course-header :course="$course" />
-		<x-custom-section>
-      <div>
-        <h1 class="text-3xl">Edit Course</h1>
-        <form action="/v1/api/course" method="POST">
-          @csrf
-          @method('PUT')
-          <fieldset class="fieldset">
-            <legend class="fieldset-legend">Title</legend>
-            <input value="{{ $course->title }}" name="title" type="text" class="input" placeholder="Type here" />
-          </fieldset>
-          <fieldset class="fieldset">
-            <legend class="fieldset-legend">Description</legend>
-            <textarea name="description" class="textarea h-24" placeholder="Bio">{{ $course->description }}</textarea>
-          </fieldset>
-          <label class="input">
-            Path
-            <input value="{{ $course->thumbnail }}" name="thumbnail" type="text" class="grow" placeholder="images/example.png" />
-          </label>
-          <fieldset class="fieldset">
-            <legend class="fieldset-legend">Thumbnail</legend>
-            <input  type="file" accept="image/*" class="file-input" />
-            <label class="fieldset-label">Max size 2MB</label>
-          </fieldset>
-          <fieldset class="fieldset">
-            <legend class="fieldset-legend">Difficulty</legend>
-            <select name="badge" class="select">
-              <option value="Beginner" {{ $course->badge === 'Beginner' ? 'selected' : '' }}>Beginner</option>
-              <option value="Intermediate" {{ $course->badge === 'Intermediate' ? 'selected' : '' }}>Intermediate</option>
-              <option value="Advanced" {{ $course->badge === 'Advanced' ? 'selected' : '' }}>Advanced</option>
-            </select>
-          </fieldset>
-          <div>
-            <x-button type="submit" primary label="Add Course" />
+		<section class="flex grow min-h-full">
+      {{-- Course Outline sidebar --}}
+      <aside class="min-h-full border-r-2 border-neutral-content w-fit max-w-[400px] shrink-0">
+        <div class="flex items-center gap-2 px-5 py-3 border-b-2 border-primary">
+          <x-icon name="clipboard-document-list" />
+          <h1 class="text-2xl">Course Outline</h1>
+        </div>
+        <div>
+          <div class="collapse collapse-arrow bg-base-100 border border-base-300">
+            <input type="radio" name="my-accordion-2" checked="checked" />
+            <div class="collapse-title font-semibold flex items-center gap-2">
+              <div class="rounded-full size-6 shrink-0 border border-primary bg-primary flex items-center justify-center"><x-icon name="check" class="text-white size-4" /></div>
+              <p>Module 1: Introduction to Algebra</p>
+            </div>
+            <div class="collapse-content text-sm pl-10">
+              <div class="flex items-center gap-1 p-2 rounded-md">
+                <div class="rounded-full size-4 border border-primary bg-primary flex items-center justify-center"><x-icon name="check" class="text-white size-2" /></div>
+                <p>1.1: What is Algebra?</p>
+              </div>
+              <div class="flex items-center gap-1 p-2 rounded-md">
+                <div class="rounded-full size-4 border border-primary flex items-center justify-center"><x-icon name="check" class="text-white size-2" /></div>
+                <p>1.2: Application of Algebra</p>
+              </div>
+              <div class="flex items-center gap-1 p-2 rounded-md">
+                <div class="rounded-full size-4 border border-primary flex items-center justify-center"><x-icon name="check" class="text-white size-2" /></div>
+                <p>1.3: Why is it important to learn Algebra</p>
+              </div>
+            </div>
           </div>
-        </form>
+          
+          <div class="collapse collapse-arrow bg-base-100 border border-base-300">
+            <input type="radio" name="my-accordion-2" checked="checked" />
+            <div class="collapse-title font-semibold flex items-center gap-2">
+              <div class="rounded-full size-6 shrink-0 border border-primary flex items-center justify-center"><x-icon name="check" class="text-white size-4" /></div>
+              <p>Module 2: Basic Algebra</p>
+            </div>
+            <div class="collapse-content text-sm pl-10">
+              <div class="flex items-center gap-1 p-2 rounded-md">
+                <div class="rounded-full size-4 border border-primary bg-primary flex items-center justify-center"><x-icon name="check" class="text-white size-2" /></div>
+                <p>1.1: What is Algebra?</p>
+              </div>
+              <div class="flex items-center gap-1 p-2 rounded-md">
+                <div class="rounded-full size-4 border border-primary flex items-center justify-center"><x-icon name="check" class="text-white size-2" /></div>
+                <p>1.2: Application of Algebra</p>
+              </div>
+              <div class="flex items-center gap-1 p-2 rounded-md">
+                <div class="rounded-full size-4 border border-primary flex items-center justify-center"><x-icon name="check" class="text-white size-2" /></div>
+                <p>1.3: Why is it important to learn Algebra</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="collapse collapse-arrow bg-base-100 border border-base-300">
+            <input type="radio" name="my-accordion-2" checked="checked" />
+            <div class="collapse-title font-semibold flex items-center gap-2">
+              <div class="rounded-full size-6 shrink-0 border border-primary flex items-center justify-center"><x-icon name="check" class="text-white size-4" /></div>
+              <p>Module 3: Advanced Algebra</p>
+            </div>
+            <div class="collapse-content text-sm pl-10">
+              <div class="flex items-center gap-1 p-2 rounded-md">
+                <div class="rounded-full size-4 border border-primary bg-primary flex items-center justify-center"><x-icon name="check" class="text-white size-2" /></div>
+                <p>1.1: What is Algebra?</p>
+              </div>
+              <div class="flex items-center gap-1 p-2 rounded-md">
+                <div class="rounded-full size-4 border border-primary flex items-center justify-center"><x-icon name="check" class="text-white size-2" /></div>
+                <p>1.2: Application of Algebra</p>
+              </div>
+              <div class="flex items-center gap-1 p-2 rounded-md">
+                <div class="rounded-full size-4 border border-primary flex items-center justify-center"><x-icon name="check" class="text-white size-2" /></div>
+                <p>1.3: Why is it important to learn Algebra</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </aside>
+      {{-- Main content --}}
+      <div class="bg-neutral-content w-full min-h-full">
       </div>
-		</x-custom-section>
+    </section>
 	</body>
 </html>
