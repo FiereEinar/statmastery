@@ -11,6 +11,6 @@
     </div>
     <div class="flex items-center gap-2">
         <livewire:update-course-details-dialog :course="$course" />
-        <x-button icon="x-mark" outline sm negative label="Close" />
+        <x-button href="/course" icon="x-mark" outline sm negative label="Close" />
     </div>
 </header>

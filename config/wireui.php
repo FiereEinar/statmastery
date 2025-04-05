@@ -6,6 +6,8 @@ use WireUi\WireUiConfig as Config;
 
 return [
 
+    'theme' => 'light',
+
     /*
     |--------------------------------------------------------------------------
     | Prefix
@@ -33,6 +35,7 @@ return [
         'shadow' => Packs\Shadow::BASE,
         'rounded' => Packs\Rounded::MD,
         'color' => Packs\Color::PRIMARY,
+        'theme' => 'light',
     ],
 
     /*

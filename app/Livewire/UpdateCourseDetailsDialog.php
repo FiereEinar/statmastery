@@ -11,7 +11,6 @@ class UpdateCourseDetailsDialog extends Component
     use WireUiActions;
 
     public Course $course;
-
     public function mount(Course $course){
         $this->course = $course;
     }
@@ -21,25 +20,8 @@ class UpdateCourseDetailsDialog extends Component
         session()->flash('message', 'Course updated successfully!');
     }
 
-    public function cancel() {
-        
-    }
-
-    public function showUpdateCourseDetailsDialog() {
-        $this->dialog()->id("update-course-details-dialog")->confirm([
-            // 'onClose' => [
-            //     'method' => 'save',
-            // ]
-            'icon' => false,
-            'accept' => [
-                'label' => 'Save Changes',
-                'method' => 'save',
-            ],
-            'reject' => [
-                'label' => 'Discard Changes',
-                'method' => 'cancel',
-            ],
-        ]);
+    public function showDialog() {
+        $this->dispatch('do-show-dialog-event');
     }
 
     public function render()
