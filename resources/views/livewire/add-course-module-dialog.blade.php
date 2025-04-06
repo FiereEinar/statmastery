@@ -1,6 +1,6 @@
 <div>
   <x-custom-dialog title="Add Course Module" dialogID="add-course-module-dialog">
-    <form id="submit-update-course-form" class="w-full" method="POST">
+    <form class="w-full" method="POST">
       @csrf
       <fieldset class="fieldset">
         <legend class="fieldset-legend">Title</legend>
@@ -18,5 +18,4 @@
   </x-custom-dialog>
 
   <x-button wire:click="showDialog" class="absolute bottom-0 left-0 w-full py-5" squared icon="plus" label="Add Module" />
-    {{-- <x-button wire:click="showDialog" icon="pencil" outline sm primary label="Update Details" /> --}}
 </div>

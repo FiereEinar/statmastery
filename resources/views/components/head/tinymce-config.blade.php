@@ -6,4 +6,18 @@
     toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table',
     disabled: true
   });
+
+  function setDisabled(val) {
+    tinymce.activeEditor.options.set('disabled', val);
+  }
+
+  function setTinyMCEContent(content) {
+    console.log('Setting Editor content: ', content);
+    tinymce.activeEditor.setContent(content);
+  }
+  
+  function getTinyMCEContent() {
+    console.log('Getting Editor content: ', tinymce.activeEditor.getContent());
+    return tinymce.activeEditor.getContent();
+  }
 </script>
