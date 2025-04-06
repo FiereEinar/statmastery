@@ -25,7 +25,12 @@
                     </div>
                     @endif
                     @foreach ($module->contents as $content)
-                    <button onclick="setDisabled(false); setTinyMCEContent('{{ $content->content }}')" class="transition-all w-full flex items-center gap-1 p-3 cursor-pointer hover:bg-neutral-content">
+                    <button 
+                        onclick="setDisabled(false); setTinyMCEContentFromEl(this)" 
+                        data-content="{{ base64_encode($content->content) }}"
+                        wire:click="setActiveContent({{ $content }})" 
+                        class="transition-all w-full flex items-center gap-1 p-3 cursor-pointer hover:bg-neutral-content {{ $activeContent && $activeContent->id === $content->id ? 'bg-neutral-content/50' : '' }}"
+                    >
                         <div class="rounded-full size-4 shrink-0 border border-primary flex items-center justify-center"><x-icon name="check" class="text-white size-2" /></div>
                         <p class="truncate">{{ $content->title }}</p>
                     </button>
@@ -41,7 +46,19 @@
     </aside>
 
     {{-- Main content --}}
-    <main class="bg-neutral-content w-full min-h-full p-3" wire:ignore> 
-      <x-forms.tinymce-editor />
+    <main class="bg-neutral-content w-full min-h-full p-3"> 
+        <div class="w-full p-3 bg-white rounded-t-lg border-b-2 border-neutral-content flex justify-between items-center">
+            @if (!$activeContent)
+            <h1 class="ml-2 italic text-base-content">Select a content</h1>
+            @else
+            <h1 class="ml-2">{{ $activeContent->title }}</h1>
+            @endif
+            <x-button onclick="saveContentToLivewire()" xs type="button" outline label="Save Changes" />
+            {{-- Hidden input bound to Livewire --}}
+            <input type="hidden" id="editorContent" wire:model="editorContent" />
+        </div>
+        <div wire:ignore>
+            <x-forms.tinymce-editor  />
+        </div>
     </main>
 </section>
