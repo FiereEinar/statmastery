@@ -28,6 +28,7 @@ Route::middleware(['auth.check'])->group(function () {
     Route::get('/course/{course}', [CourseController::class, 'viewCourse']);
     
     Route::put('/v1/api/course/{course}', [CourseController::class, 'updateCourse']);
+    Route::post('/v1/api/course/{course}/module', [CourseController::class, 'createCourseModule']);
     Route::post('/v1/api/course', [CourseController::class, 'createCourse']);
 });
 

@@ -20,4 +20,8 @@ class Course extends Model
         'subscription_type',
         'badge',
     ];
+
+    public function modules() {
+        return $this->hasMany(CourseModule::class, 'course_id')->orderBy('module_number');
+    }
 }

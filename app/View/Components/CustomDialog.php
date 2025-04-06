@@ -10,14 +10,16 @@ class CustomDialog extends Component
 {
     public $show;
     public $title;
+    public $dialogID;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($show = false, $title = 'Dialog')
+    public function __construct($show = false, $title = 'Dialog', $dialogID = 'dialogID')
     {
         $this->show = $show;
         $this->title = $title;
+        $this->dialogID = $dialogID;
     }
 
     public function shouldRender(): bool{

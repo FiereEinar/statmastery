@@ -1,5 +1,5 @@
 <div>
-  <x-custom-dialog title="Update Course Details">
+  <x-custom-dialog title="Update Course Details" dialogID="update-course-details-dialog">
     <form id="submit-update-course-form" class="w-full" action="/v1/api/course/{{ $course->id }}" method="POST">
       @csrf
       @method('PUT')
@@ -60,10 +60,8 @@
         </fieldset>
       </div>
 
-      <!-- Alpine.js event listener -->
-      <div x-data @submit-update-course-form.window="document.querySelector('#submit-update-course-form').submit();"></div>
       <div class="flex justify-end mt-5">
-        <x-button type="submit" primary label="Update" />
+        <x-button type="submit" primary label="Add Module" />
       </div>
     </form>
   </x-custom-dialog>

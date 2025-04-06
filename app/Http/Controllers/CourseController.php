@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\CourseModule;
 use Illuminate\Http\Request;
 
 class CourseController extends Controller
@@ -59,6 +60,17 @@ class CourseController extends Controller
         }
 
         $course->update($body);
+        return redirect("/course/{$course->id}/edit");
+    }
+
+    public function createCourseModule(Course $course, Request $request) {
+        $body = $request->validate([
+            "title" => ["required", "min:3", "max:255"],
+            "module_number"=> ["required"],
+        ]);
+
+        $body['course_id'] = $course->id;
+        CourseModule::create($body);
         return redirect("/course/{$course->id}/edit");
     }
 

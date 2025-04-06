@@ -14,4 +14,8 @@ class CourseModule extends Model
         'title',
         'module_number',
     ];
+
+    public function contents() {
+        return $this->hasMany(CourseModuleContent::class, 'course_module_id')->orderBy('content_number');
+    }
 }
