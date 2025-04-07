@@ -29,9 +29,6 @@
         <h1 class="text-3xl">Courses</h1>
         <x-button icon="plus" primary label="Add Course" href="/course/create" />    
       </div>
-      <div>
-        <p>Courses: {{ sizeof($courses) }}</p>
-      </div>
       <div class="flex gap-4 flex-wrap">
         @foreach ($courses as $course)
           <x-course-card :course="$course" badgeColor="success" />
