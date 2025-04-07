@@ -26,6 +26,7 @@ Route::middleware(['auth.check'])->group(function () {
     Route::get('/course/{course}/edit', [CourseController::class, 'courseEditView']);
     Route::get('/course/create', [CourseController::class, 'createCourseView']);
     Route::get('/course/{course}', [CourseController::class, 'viewCourse']);
+    Route::get('/course/{course}/content', [CourseController::class, 'viewCourseContent']);
     
     Route::put('/v1/api/course/{course}', [CourseController::class, 'updateCourse']);
     Route::post('/v1/api/course/{course}/module', [CourseController::class, 'createCourseModule']);

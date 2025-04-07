@@ -74,4 +74,8 @@ class CourseController extends Controller
         return redirect("/course/{$course->id}/edit");
     }
 
+    public function viewCourseContent(Course $course) {
+        
+    }
+
 }

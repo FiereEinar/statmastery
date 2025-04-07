@@ -1,5 +1,5 @@
 <div class="rounded-xl bg-base-100 w-80 shadow-xl relative overflow-hidden">
-    <span class="absolute top-2 left-2 badge badge-{{ $badgeColor }} z-60">{{ $course['badge'] }}</span>
+    <span class="absolute top-2 left-2 badge badge-{{ $course['badge'] === 'Beginner' ? 'success' : ($course['badge'] === 'Intermediate' ? 'warning' : 'error') }} z-60">{{ $course['badge'] }}</span>
     <figure>
         <x-course-image source="{{ $course->thumbnail }}" />
     </figure>

@@ -23,9 +23,9 @@
 	</head>
 	<body>
 		<x-topbar />
-		<x-custom-section>
-			
-		</x-custom-section>
+    <main>
+      
+    </main>
     <x-footer />
 	</body>
 </html>

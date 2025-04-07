@@ -2,7 +2,7 @@
     x-data="{ isOpen: false }"
     x-show="isOpen"
     x-transition
-    class="fixed inset-0 flex items-center justify-center z-50 bg-black/50"
+    class="fixed inset-0 flex items-center justify-center z-70 bg-black/50"
     style="display: none;"
 >
     <div @click.away="isOpen = false" class="bg-neutral-content p-6 rounded-xl shadow-xl w-full max-w-lg  max-h-[600px] overflow-y-auto">

@@ -27,7 +27,7 @@
 		<x-custom-section>
       <div class="flex justify-between items-center">
         <h1 class="text-3xl">Courses</h1>
-        <x-button icon="plus" primary label="Add Course" href="/course/create" />    
+				<livewire:add-course-dialog />
       </div>
       <div class="flex gap-4 flex-wrap">
         @foreach ($courses as $course)
@@ -35,6 +35,6 @@
         @endforeach
       </div>
 		</x-custom-section>
-			<x-footer />
+		<x-footer />
 	</body>
 </html>
