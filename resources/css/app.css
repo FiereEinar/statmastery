@@ -3,6 +3,12 @@
     border-radius: 0px 0px 10px 10px !important;
 }
 
+.text-wrap {
+    word-break: break-word;
+    overflow-wrap: anywhere;
+    hyphens: auto;
+}
+
 @import "tailwindcss";
 @import "../../vendor/wireui/wireui/ts/global.css";
 @plugin "daisyui" {

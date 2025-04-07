@@ -21,11 +21,8 @@
 		<wireui:scripts />
 		<livewire:scripts />
 	</head>
-	<body>
-		<x-topbar />
-    <main>
-      
-    </main>
-    <x-footer />
+	<body class="min-h-screen flex flex-col overflow-hidden">
+    <x-course-header :course="$course" />
+    <livewire:view-course-content :course="$course" />
 	</body>
 </html>

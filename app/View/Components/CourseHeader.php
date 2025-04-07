@@ -10,12 +10,14 @@ use Illuminate\Contracts\View\View;
 class CourseHeader extends Component
 {
     public Course $course;
+    public string $type;
     /**
      * Create a new component instance.
      */
-    public function __construct(Course $course)
+    public function __construct(Course $course, string $type = 'view')
     {
         $this->course = $course;
+        $this->type = $type;
     }
 
     /**

@@ -29,7 +29,7 @@
           <h1 class="text-3xl">{{ $course->title }}</h1>
           <p>{{ $course->description }}</p>
           <div class="space-x-2">
-            <x-button href="/course/{{ $course->id }}/enroll" primary label="Enroll Now" />
+            <x-button href="/course/{{ $course->id }}/content" primary label="Enroll Now" />
             @if (auth()->guard('web')->user()->id === $course->owner_id)
               <x-button href="/course/{{ $course->id }}/edit" primary outline label="Edit Course" />
             @endif

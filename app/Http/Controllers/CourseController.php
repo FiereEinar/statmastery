@@ -75,7 +75,7 @@ class CourseController extends Controller
     }
 
     public function viewCourseContent(Course $course) {
-        
+        return view('course-content', ['course'=> $course]);
     }
 
 }

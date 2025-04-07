@@ -7,6 +7,7 @@ use Livewire\Component;
 
 class AddModuleContentDialog extends Component
 {
+    /** @var CourseModule */
     public CourseModule $module;
     public $title;
     public $content_number = 1;
