@@ -19,7 +19,6 @@
 		@endif
 		<livewire:styles />
 		<wireui:scripts />
-		<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
 		<livewire:scripts />
 	</head>
 	<body>
@@ -35,12 +34,46 @@
               <x-button href="/course/{{ $course->id }}/edit" primary outline label="Edit Course" />
             @endif
           </div>
-          <div>
+          <div class="w-full h-1 border-b-2 border-neutral-content"></div>
+          <div class="space-y-3">
             <h2 class="text-xl">Overview</h2>
             <p>{{ $course->overview }}</p>
           </div>
-          <div>
+          <div class="w-full h-1 border-b-2 border-neutral-content"></div>
+          <div class="space-y-3">
             <h2 class="text-xl">Curriculum</h2>
+            <div class="overflow-y-auto h-full">
+              @if ($course->modules->isEmpty())
+              <div class="flex items-center gap-2 px-5 py-3">
+                  <h1 class="italic text-neutral-content">No modules yet</h1>
+              </div>
+              @endif
+              @foreach ($course->modules as $module)
+              <div class="collapse collapse-arrow bg-base-100 border border-base-300">
+                <input type="radio" name="my-accordion-2" />
+                <div class="collapse-title font-semibold flex items-center gap-3">
+                    <div class="rounded-full size-6 shrink-0 border border-primary flex items-center justify-center"><x-icon name="check" class="text-white size-4" /></div>
+                    <p class="truncate">{{ $module->title }}</p>
+                </div>
+                <div class="collapse-content text-sm pl-10">
+                    @if ($module->contents->isEmpty())
+                    <div class="flex items-center gap-2 p-2">
+                        <h1 class="italic text-neutral-content">No contents yet</h1>
+                    </div>
+                    @endif
+                    @foreach ($module->contents as $content)
+                    <button 
+                    class="transition-all w-full flex items-center gap-1 p-3 cursor-pointer hover:bg-neutral-content"
+                    >
+                        <div class="rounded-full size-4 shrink-0 border border-primary flex items-center justify-center"><x-icon name="check" class="text-white size-2" /></div>
+                        <p class="truncate">{{ $content->title }}</p>
+                    </button>
+                    @endforeach
+                </div>
+              </div>
+              @endforeach
+              {{-- <button onclick="tinymce.activeEditor.options.set('disabled', false)">click</button> --}}
+            </div>
           </div>
         </div>
         <div class="space-y-5">
@@ -49,19 +82,19 @@
           </div>
           <div class="flex justify-center gap-10">
             <div class="flex flex-col items-center gap-1">
-              <x-icon name="lock-closed" class="size-10" />
+              <x-icon name="lock-closed" class="size-8" />
               <h2 class="text-xl">{{ $course->subsription_type ?? "Free" }}</h2>
             </div>
             <div class="flex flex-col items-center gap-1">
-              <x-icon name="currency-dollar" class="size-10" />
+              <x-icon name="currency-dollar" class="size-8" />
               <h2 class="text-xl">P{{ $course->price ?? 0 }}</h2>
             </div>
             <div class="flex flex-col items-center gap-1">
-              <x-icon name="chart-bar" class="size-10" />
+              <x-icon name="chart-bar" class="size-8" />
               <h2 class="text-xl">{{ $course->badge }}</h2>
             </div>
             <div class="flex flex-col items-center gap-1">
-              <x-icon name="clock" class="size-10" />
+              <x-icon name="clock" class="size-8" />
               <h2 class="text-xl">{{ $course->time_to_complete }}</h2>
             </div>
           </div>

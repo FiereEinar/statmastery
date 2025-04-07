@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('course_module_id')->constrained()->cascadeOnDelete();
             $table->string('title');
             $table->longText('content');
-            $table->decimal('content_number', 10,2)->default(1.1);
+            $table->integer('content_number');
             $table->timestamps();
         });
     }

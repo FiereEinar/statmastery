@@ -14,7 +14,7 @@
             @foreach ($course->modules as $module)
             <div class="collapse collapse-arrow bg-base-100 border border-base-300 max-w-[400px]">
                 <input type="radio" name="my-accordion-2" {{ $loop->first ? 'checked' : '' }} />
-                <div class="collapse-title font-semibold flex items-center gap-2 max-w-[400px]">
+                <div class="collapse-title font-semibold flex items-center gap-3 max-w-[400px]">
                     <div class="rounded-full size-6 shrink-0 border border-primary flex items-center justify-center"><x-icon name="check" class="text-white size-4" /></div>
                     <p class="truncate">{{ $module->title }}</p>
                 </div>
@@ -26,10 +26,10 @@
                     @endif
                     @foreach ($module->contents as $content)
                     <button 
-                        onclick="setDisabled(false); setTinyMCEContentFromEl(this)" 
-                        data-content="{{ base64_encode($content->content) }}"
-                        wire:click="setActiveContent({{ $content }})" 
-                        class="transition-all w-full flex items-center gap-1 p-3 cursor-pointer hover:bg-neutral-content {{ $activeContent && $activeContent->id === $content->id ? 'bg-neutral-content/50' : '' }}"
+                    onclick="setDisabled(false); setTinyMCEContentFromEl(this)" 
+                    data-content="{{ base64_encode($content->content) }}"
+                    wire:click="setActiveContent({{ $content }})" 
+                    class="transition-all w-full flex items-center gap-1 p-3 cursor-pointer hover:bg-neutral-content {{ $activeContent && $activeContent->id === $content->id ? 'bg-neutral-content/50' : '' }}"
                     >
                         <div class="rounded-full size-4 shrink-0 border border-primary flex items-center justify-center"><x-icon name="check" class="text-white size-2" /></div>
                         <p class="truncate">{{ $content->title }}</p>
