@@ -26,6 +26,7 @@
                     @endif
                     @foreach ($module->contents as $content)
                     <button 
+                    {{-- onclick="setTimeout(() => Livewire.emit('content-updated'), 100)"  --}}
                     wire:click="setActiveContent({{ $content }})" 
                     class="transition-all w-full flex items-center gap-1 p-3 cursor-pointer hover:bg-neutral-content {{ $activeContent && $activeContent->id === $content->id ? 'bg-neutral-content/50' : '' }}"
                     >
@@ -51,8 +52,74 @@
                 @endif
             </div>
         </div>
-        <div class="bg-white rounded-b-md h-[600px] shadow p-5 text-wrap overflow-y-scroll space-y-3">
-            {!! $activeContent->content ?? '' !!}
+                
+        
+        <div class="relative bg-white rounded-b-md h-[600px] shadow text-wrap space-y-3">
+            <!-- Loading Spinner -->
+            <div id="loading-spinner" class="w-full h-full absolute top-0 left-0 flex items-center justify-center bg-white bg-opacity-70 z-10 hidden">
+                <div class="loader"></div> <!-- Your spinner here -->
+            </div>
+            
+            {{-- {!! $activeContent->content ?? '' !!} --}}
+            <iframe 
+                id="content-frame"
+                class="w-full h-full border-none"
+                style="border: none;"
+            ></iframe>
         </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                writeData(@json($activeContent->content ?? ''));
+            });
+
+            Livewire.on('content-updated', (data) => {
+                writeData(data[0].content);
+            });
+
+            function writeData(content) {
+                // Show spinner
+                const iframe = document.getElementById('content-frame');
+                if (!iframe) return;
+                document.getElementById('loading-spinner').classList.remove('hidden');
+                const doc = iframe.contentDocument || iframe.contentWindow.document;
+                
+                doc.open();
+                doc.write(`
+                    <html>
+                        <head>
+                            <!-- Fonts -->
+                            <link rel="preconnect" href="https://fonts.bunny.net">
+                            <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+                            <link rel="stylesheet" href="https://unpkg.com/style.css">
+                            <style> 
+                                * { 
+                                    margin: 0; 
+                                    padding: 0; 
+                                    font-family: 'Instrument Sans', sans-serif; 
+                                    word-break: break-word; 
+                                    overflow-wrap: anywhere; 
+                                    hyphens: auto;
+                                } 
+                                
+                                body { 
+                                    padding: 2rem;
+                                }
+                            </style>
+                        </head>
+                        <body>${content}</body>
+                    </html>
+                `);
+                doc.close();
+
+                // Auto-scroll to top
+                iframe.contentWindow.scrollTo(0, 0);
+
+                setTimeout(() => {
+                    // Hide spinner
+                    document.getElementById('loading-spinner').classList.add('hidden');
+                }, 300);
+            }
+        </script>
     </main>
 </section>

@@ -9,7 +9,7 @@
   
         <fieldset class="fieldset">
           <legend class="fieldset-legend">Description</legend>
-          <textarea name="description" class="textarea h-24 w-full" placeholder="Bio"></textarea>
+          <textarea name="description" class="textarea h-24 w-full" placeholder="Type here"></textarea>
         </fieldset>
   
         <fieldset class="fieldset">
@@ -19,7 +19,7 @@
   
         <fieldset class="fieldset">
           <legend class="fieldset-legend">Overview</legend>
-          <textarea name="overview" class="textarea h-24 w-full" placeholder="Bio"></textarea>
+          <textarea name="overview" class="textarea h-24 w-full" placeholder="Type here"></textarea>
         </fieldset>
   
         <fieldset class="fieldset">

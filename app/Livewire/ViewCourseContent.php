@@ -23,6 +23,7 @@ class ViewCourseContent extends Component
 
     public function setActiveContent(CourseModuleContent $content) {
         $this->activeContent = $content;
+        $this->dispatch('content-updated', $this->activeContent);
     }
     
     public function render()
