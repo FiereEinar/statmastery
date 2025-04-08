@@ -1,18 +1,52 @@
 <script src="https://cdn.tiny.cloud/1/{{ config('app.tinymce_key') }}/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
+  let saveTimeout;
+
   tinymce.init({
     selector: 'textarea#myeditorinstance', // Replace this CSS selector to match the placeholder element for TinyMCE
     plugins: 'code table lists',
     toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table',
     disabled: true,
+    setup: function (editor) {
+      editor.on('keydown', (e) => {
+        const validKeys = (
+          e.key.length === 1 ||
+          e.key === 'Backspace' ||
+          e.key === 'Delete'
+        );
+
+        if (e.ctrlKey || e.metaKey || e.altKey || !validKeys) {
+          return;
+        }
+
+        // Clear any previous timeout to debounce
+        clearTimeout(saveTimeout);
+
+        // Dispatch 'saving' immediately
+        Livewire.dispatch('saving');
+
+        // Debounce the actual save + 'saved' dispatch
+        saveTimeout = setTimeout(() => {
+          saveContentToLivewire();
+          Livewire.dispatch('saved');
+        }, 1000); // Save 1 second after last keypress
+      })
+    } 
   });
+
+  setTimeout(() => {
+    document.querySelector('#myeditorinstance').addEventListener('keydown', () => {
+      // saveContentToLivewire();
+      console.log('saved');
+    }); 
+
+  }, 5000)
 
   function setDisabled(val) {
     tinymce.activeEditor.options.set('disabled', val);
   }
 
   function setTinyMCEContent(content) {
-    console.log('Setting Editor content: ', content);
     tinymce.activeEditor.setContent(content);
   }
 
@@ -23,7 +57,6 @@
   }
   
   function getTinyMCEContent() {
-    console.log('Getting Editor content: ', tinymce.activeEditor.getContent());
     return tinymce.activeEditor.getContent();
   }
 

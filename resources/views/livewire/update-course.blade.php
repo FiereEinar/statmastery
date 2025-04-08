@@ -1,4 +1,4 @@
-<section class="flex grow min-h-full">
+<section class="flex grow min-h-full" x-data="{ saving: false }">
     {{-- Course Outline sidebar --}}
     <aside class="relative pb-[8rem] min-h-full border-r-2 border-neutral-content w-fit max-w-[400px] shrink-0">
         <div class="flex items-center gap-2 px-5 py-3 border-b-2 border-primary">
@@ -46,14 +46,14 @@
     </aside>
 
     {{-- Main content --}}
-    <main class="bg-neutral-content w-full min-h-full p-3"> 
+    <main  class="bg-neutral-content w-full min-h-full p-3"> 
         <div class="w-full p-3 bg-white rounded-t-lg border-b-2 border-neutral-content flex justify-between items-center">
             @if (!$activeContent)
             <h1 class="ml-2 italic text-base-content">Select a content</h1>
             @else
             <h1 class="ml-2">{{ $activeContent->title }}</h1>
             @endif
-            <x-button onclick="saveContentToLivewire()" xs type="button" outline label="Save Changes" />
+            <p class="text-sm pr-2 text-base-content/50" @saving.window="saving = true" @saved.window="saving = false" x-text="saving ? 'Saving...' : 'Saved'"></p>
             {{-- Hidden input bound to Livewire --}}
             <input type="hidden" id="editorContent" wire:model="editorContent" />
         </div>

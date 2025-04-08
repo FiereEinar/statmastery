@@ -16,7 +16,9 @@ class UpdateCourse extends Component
     protected $listeners = [
         'addCourseModule' => 'addCourseModule', 
         'addModuleContent' => 'addModuleContent',
-        'saveContent' => 'saveContent'
+        'saveContent' => 'saveContent',
+        'saving' => 'saving',
+        'saved'=> 'saved',
     ];
 
     public function mount(Course $course) {
@@ -43,9 +45,19 @@ class UpdateCourse extends Component
     }
 
     public function saveContent() {
+        if (!$this->editorContent) return;
+        
         $this->activeContent->content = $this->editorContent;
         $this->activeContent->save();
         $this->course->refresh();
+    }
+
+    public function saving() {
+        
+    }
+
+    public function saved() {
+        
     }
     
     public function render()
