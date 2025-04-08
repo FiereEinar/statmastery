@@ -5,7 +5,7 @@
             <x-icon name="clipboard-document-list" />
             <h1 class="text-2xl">Course Outline</h1>
         </div>
-        <div class="overflow-y-auto h-full max-w-[400px]">
+        <div id="modules-container" class="overflow-y-auto h-full max-w-[400px]">
             @if ($course->modules->isEmpty())
             <div class="flex items-center gap-2 px-5 py-3">
                 <h1 class="italic text-neutral-content">No modules found</h1>

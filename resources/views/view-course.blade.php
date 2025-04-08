@@ -45,7 +45,7 @@
             <div class="overflow-y-auto h-full">
               @if ($course->modules->isEmpty())
               <div class="flex items-center gap-2 px-5 py-3">
-                  <h1 class="italic text-neutral-content">No modules yet</h1>
+                  <h1 class="italic text-base-content/50">No modules yet</h1>
               </div>
               @endif
               @foreach ($course->modules as $module)
@@ -58,7 +58,7 @@
                 <div class="collapse-content text-sm pl-10">
                     @if ($module->contents->isEmpty())
                     <div class="flex items-center gap-2 p-2">
-                        <h1 class="italic text-neutral-content">No contents yet</h1>
+                        <h1 class="italic text-base-content/50">No contents yet</h1>
                     </div>
                     @endif
                     @foreach ($module->contents as $content)

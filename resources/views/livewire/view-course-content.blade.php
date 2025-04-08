@@ -8,7 +8,7 @@
         <div class="overflow-y-auto h-full max-w-[400px]">
             @if ($course->modules->isEmpty())
             <div class="flex items-center gap-2 px-5 py-3">
-                <h1 class="italic text-neutral-content">No modules found</h1>
+                <h1 class="italic text-base-content/70">No modules found</h1>
             </div>
             @endif
             @foreach ($course->modules as $module)
@@ -21,7 +21,7 @@
                 <div class="collapse-content text-sm pl-10 max-w-[400px]">
                     @if ($module->contents->isEmpty())
                     <div class="flex items-center gap-2 p-2">
-                        <h1 class="italic text-neutral-content">No contents found</h1>
+                        <h1 class="italic text-base-content/70">No contents found</h1>
                     </div>
                     @endif
                     @foreach ($module->contents as $content)
@@ -36,18 +36,20 @@
                 </div>
             </div>
             @endforeach
-            {{-- <button onclick="tinymce.activeEditor.options.set('disabled', false)">click</button> --}}
         </div>
     </aside>
 
     {{-- Main content --}}
     <main class="bg-neutral-content w-full min-h-full p-3"> 
         <div class="w-full p-3 bg-white rounded-t-lg border-b-2 border-neutral-content flex justify-between items-center">
-            @if (!$activeContent)
-            <h1 class="ml-2 italic text-base-content">Select a content</h1>
-            @else
-            <h1 class="ml-2">{{ $activeContent->title }}</h1>
-            @endif
+            <div class="flex items-center">
+                <x-icon name="document-text" />
+                @if (!$activeContent)
+                <h1 class="ml-2 italic text-base-content">Select a content</h1>
+                @else
+                <h1 class="ml-2">{{ $activeContent->title }}</h1>
+                @endif
+            </div>
         </div>
         <div class="bg-white rounded-b-md h-[600px] shadow p-5 text-wrap overflow-y-scroll space-y-3">
             {!! $activeContent->content ?? '' !!}

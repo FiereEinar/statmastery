@@ -13,6 +13,12 @@ class ViewCourseContent extends Component
 
     public function mount(Course $course) {
         $this->course = $course;
+
+        $firstModule = $course->modules->firstWhere(fn ($m) => $m->contents->isNotEmpty());
+
+        if ($firstModule) {
+            $this->activeContent = $firstModule->contents->first();
+        }
     }
 
     public function setActiveContent(CourseModuleContent $content) {

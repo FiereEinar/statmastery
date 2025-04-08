@@ -11,7 +11,7 @@
     </div>
     <div class="flex items-center gap-2">
         @if ($type === 'view')
-            <x-button class="size-10" icon="x-mark" flat black squared  />
+            <x-button class="size-10" icon="x-mark" href="/course/{{ $course->id }}" flat black squared  />
         @elseif ($type === 'update')
             <livewire:update-course-details-dialog :course="$course" />
             <x-button href="/course" icon="x-mark" outline sm negative label="Close" />

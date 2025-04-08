@@ -20,10 +20,10 @@
 		<livewire:styles />
 		<wireui:scripts />
     <livewire:scripts />
+		<x-head.tinymce-config />
 	</head>
 	<body class=" min-h-screen flex flex-col">
     <x-course-header :course="$course" type="update" />
     <livewire:update-course :course="$course" />
-    <x-head.tinymce-config />
 	</body>
 </html>
