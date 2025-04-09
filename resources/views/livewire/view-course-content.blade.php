@@ -42,7 +42,7 @@
 
     {{-- Main content --}}
     <main class="bg-neutral-content w-full min-h-full p-3"> 
-        <div class="w-full p-3 bg-white rounded-t-lg border-b-2 border-neutral-content flex justify-between items-center">
+        <div class="w-full p-3 bg-white border-b-2 border-neutral-content flex justify-between items-center">
             <div class="flex items-center">
                 <x-icon name="document-text" />
                 @if (!$activeContent)
@@ -54,9 +54,9 @@
         </div>
                 
         
-        <div class="relative bg-white rounded-b-md h-[600px] shadow text-wrap space-y-3">
+        <div class="relative bg-white h-[600px] shadow text-wrap space-y-3">
             <!-- Loading Spinner -->
-            <div id="loading-spinner" class="w-full h-full absolute top-0 left-0 flex items-center justify-center bg-white bg-opacity-70 z-10 hidden">
+            <div id="loading-spinner" class="w-full h-full absolute top-0 left-0 flex items-center justify-center bg-white bg-opacity-70 z-10">
                 <div class="loader"></div> <!-- Your spinner here -->
             </div>
             

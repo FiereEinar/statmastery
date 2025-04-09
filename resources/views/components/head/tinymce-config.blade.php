@@ -7,7 +7,8 @@
     plugins: 'code table lists',
     toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright | indent outdent | bullist numlist | code | table',
     disabled: true,
-    content_css: 'border',
+    content_css: 'https://unpkg.com/style.css',
+    content_style: "* { margin: 0; padding: 0; font-family: 'Instrument Sans', sans-serif; word-break: break-word; overflow-wrap: anywhere; hyphens: auto;} body { padding: 2rem;}",
     setup: function (editor) {
       editor.on('keydown', (e) => {
         const validKeys = (

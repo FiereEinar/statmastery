@@ -15,6 +15,7 @@ return [
 
     'name' => env('APP_NAME', 'Laravel'),
     'tinymce_key' => env('TINYMCE_KEY'),
+    'PAYMONGO_SECRET' => env('PAYMONGO_SECRET'),
 
     /*
     |--------------------------------------------------------------------------

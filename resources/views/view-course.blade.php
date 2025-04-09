@@ -28,8 +28,11 @@
         <div class="space-y-5 max-w-[700px]">
           <h1 class="text-3xl">{{ $course->title }}</h1>
           <p>{{ $course->description }}</p>
-          <div class="space-x-2">
-            <x-button href="/course/{{ $course->id }}/content" primary label="Enroll Now" />
+          <div class="gap-2 flex">
+            <form action="/v1/api/course/{{ $course->id }}/checkout" method="POST">
+              @csrf
+              <x-button type="submit" primary label="Enroll Now" />
+            </form>
             @if (auth()->guard('web')->user()->id === $course->owner_id)
               <x-button href="/course/{{ $course->id }}/edit" primary outline label="Edit Course" />
             @endif
