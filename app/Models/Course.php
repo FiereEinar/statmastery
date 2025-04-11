@@ -17,7 +17,6 @@ class Course extends Model
         'overview',
         'time_to_complete',
         'price',
-        'subscription_type',
         'badge',
     ];
 

@@ -28,7 +28,6 @@ class DatabaseSeeder extends Seeder
             "thumbnail" => "images/courses/statistics-card-img.jpg",
             "time_to_complete" => "1 Month",
             "price" => 500,
-            "subscription_type" => "Paid",
             "badge" => "Advanced",
         ]);
 
@@ -37,7 +36,6 @@ class DatabaseSeeder extends Seeder
             "description" => "Explore the beauty of mathematics in everyday life! From logic and patterns to financial math and coding, see how math shapes the world around us.",
             "thumbnail" => "images/courses/mtmw.png",
             "badge" => "Beginner",
-            "subscription_type" => "Free",
             "time_to_complete" => "3 Months",
             "price" => 0,
         ]);
@@ -47,7 +45,6 @@ class DatabaseSeeder extends Seeder
             "description" => "Dive into logic, set theory, graph theory, and combinatorics. Perfect for students in computer science, cryptography, and mathematical reasoning.",
             "thumbnail" => "images/courses/discrete-math.jpg",
             "badge" => "Intermediate",
-            "subscription_type" => "Paid",
             "time_to_complete" => "5 Months",
             "price" => 1100,
         ]);
@@ -57,7 +54,6 @@ class DatabaseSeeder extends Seeder
             "description" => "Develop problem-solving skills using mathematical models and statistical tools. Ideal for business, economics, and research applications.",
             "thumbnail" => "images/courses/quantitative-methods.jpg",
             "badge" => "Intermediate",
-            "subscription_type" => "Free",
             "time_to_complete" => "2 Months",
             "price" => 0,
         ]);
@@ -67,7 +63,6 @@ class DatabaseSeeder extends Seeder
             "description" => "Build a strong foundation in algebra with topics like variables, expressions, equations, and real-life applications. Perfect for high school and college beginners.",
             "thumbnail" => "images/courses/algebra.jpg",
             "badge" => "Beginner",
-            "subscription_type" => "Free",
             "time_to_complete" => "3 Weeks",
             "price" => 0,
         ]);
@@ -77,7 +72,6 @@ class DatabaseSeeder extends Seeder
             "description" => "Understand the core concepts of limits, derivatives, and integrals. A must-have course for STEM students aiming to master continuous change.",
             "thumbnail" => "images/courses/calculus.jpg",
             "badge" => "Advanced",
-            "subscription_type" => "Paid",
             "time_to_complete" => "8 Months",
             "price" => 1400,
         ]);

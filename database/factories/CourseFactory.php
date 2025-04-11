@@ -20,10 +20,9 @@ class CourseFactory extends Factory
             'owner_id' => 1,
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
-            'overview' => $this->faker->paragraph(4),
+            'overview' => $this->faker->paragraph(6)."\n\n".$this->faker->paragraph(6)."\n\n".$this->faker->paragraph(6),
             'thumbnail' => 'images/courses/placeholder.png',
             'badge' => $this->faker->randomElement(['Beginner', 'Intermediate', 'Advanced']),
-            'subscription_type' => 'Free',
             'time_to_complete' => '1 Month',
             'price' => 0,
         ];

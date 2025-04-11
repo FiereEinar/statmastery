@@ -61,14 +61,6 @@
 
         <div class="flex gap-2">
           <fieldset class="fieldset">
-            <legend class="fieldset-legend">Subcription Type</legend>
-            <select name="subscription_type" class="select">
-              <option selected>Free</option>
-              <option>Paid</option>
-            </select>
-          </fieldset>
-          
-          <fieldset class="fieldset">
             <legend class="fieldset-legend">Difficulty</legend>
             <select name="badge" class="select">
               <option selected>Beginner</option>

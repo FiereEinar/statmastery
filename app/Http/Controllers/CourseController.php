@@ -62,7 +62,6 @@ class CourseController extends Controller
             "overview"=> ["required"],
             "time_to_complete"=> ["required"],
             "price"=> ["required"],
-            "subscription_type"=> ["required", "in:Free,Paid"],
         ]);
 
         $body['owner_id'] = auth()->guard('web')->user()->id;

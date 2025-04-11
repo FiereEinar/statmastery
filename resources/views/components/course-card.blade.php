@@ -9,7 +9,7 @@
             <p class="text-base-content/70 truncate">{{ $course['description'] }}</p>
         </div>
         <div class="flex justify-between items-center p-5 border-t border-primary">
-            <p class="text-base-content/70">{{ $course->subscription_type }}</p>
+            <p class="text-base-content/70">{{ $course->price <= 0 ? 'Free' : 'Paid' }}</p>
             <a href="/course/{{ $course['id'] }}" class="flex items-center gap-1 text-primary cursor-pointer">
                 <button class="hover:underline underline-primary cursor-pointer">Get Started</button>
                 <x-icon name="chevron-right" />
