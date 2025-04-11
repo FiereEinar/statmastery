@@ -51,7 +51,7 @@
     ];
 @endphp
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-fit">
     @for ($i = 0; $i < $courses; $i++)
     <div class="rounded-xl bg-base-100 w-80 shadow-xl relative overflow-hidden">
         <span class="absolute top-2 left-2 badge badge-{{ $courseList[$i]['badge'] === 'Beginner' ? 'success' : ($courseList[$i]['badge'] === 'Intermediate' ? 'warning' : 'error') }} z-60">{{ $courseList[$i]['badge'] }}</span>
