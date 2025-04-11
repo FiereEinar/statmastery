@@ -8,6 +8,7 @@ use App\Models\CourseModule;
 use App\Models\Payment;
 use BcMath\Number;
 use Illuminate\Http\Request;
+use GuzzleHttp\Client;
 
 class CourseController extends Controller
 {
@@ -25,7 +26,31 @@ class CourseController extends Controller
     }
 
     public function viewCourse(Course $course) {
-        return view('view-course', ['course'=> $course]);
+        $client = new Client();
+        $userPayments = Payment::where('user_id', auth()->guard('web')->user()->id)->where('course_id', $course->id)->get();
+        $PAYMONGO_SECRET = config('app.PAYMONGO_SECRET');
+        $hasPayed = false;
+
+        // First check all previous payments
+        foreach ($userPayments as $payment) {
+            $checkoutResponse = $client->request('GET', "https://api.paymongo.com/v1/checkout_sessions/{$payment->checkout_session_id}", [
+                'headers' => [
+                    'accept' => 'application/json',
+                    'Authorization' => "Basic {$PAYMONGO_SECRET}",
+                ],
+                'verify' => false
+            ]);
+
+            $checkout = json_decode($checkoutResponse->getBody(), true);
+
+            $status = $checkout['data']['attributes']['payment_intent']['attributes']['status'] ?? null;
+            if ($status === 'succeeded') {
+                $hasPayed = true;
+                break;
+            }
+        }
+
+        return view('view-course', ['course'=> $course, 'hasPayed' => $hasPayed]);
     }
 
     public function createCourse(Request $request) {
@@ -85,11 +110,12 @@ class CourseController extends Controller
             return redirect("/course/{$course->id}/content"); 
         }
 
-        $client = new \GuzzleHttp\Client();
+        $client = new Client();
         $PAYMONGO_SECRET = config('app.PAYMONGO_SECRET');
         $currentUser = auth()->guard('web')->user();
         $userPayments = Payment::where('user_id', $currentUser->id)->where('course_id', $course->id)->get();
         $hasPayed = false;
+        $activeLink = null;
 
         // First check all previous payments
         foreach ($userPayments as $payment) {
@@ -104,15 +130,24 @@ class CourseController extends Controller
             $checkout = json_decode($checkoutResponse->getBody(), true);
 
             $status = $checkout['data']['attributes']['payment_intent']['attributes']['status'] ?? null;
+            $linkStatus = $checkout['data']['attributes']['status'] ?? null;
             if ($status === 'succeeded') {
                 $hasPayed = true;
                 break;
+            }
+
+            if ($linkStatus === 'active') {
+                $activeLink = $checkout['data']['attributes']['checkout_url'];
             }
         }
 
         if ($hasPayed) {
             // Redirect to course content if payment succeeded
             return redirect("/course/{$course->id}/content");
+        }
+
+        if ($activeLink !== null) {
+            return redirect($activeLink);
         }
 
         // Otherwise, create a new checkout session

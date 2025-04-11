@@ -20,12 +20,12 @@ class CourseFactory extends Factory
             'owner_id' => 1,
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
-            'overview' => $this->faker->paragraph,
+            'overview' => $this->faker->paragraph(4),
             'thumbnail' => 'images/courses/placeholder.png',
-            'badge' => 'Beginner',
+            'badge' => $this->faker->randomElement(['Beginner', 'Intermediate', 'Advanced']),
             'subscription_type' => 'Free',
             'time_to_complete' => '1 Month',
-            'price' => 500,
+            'price' => 0,
         ];
     }
 }
