@@ -24,8 +24,16 @@
 	<body>
 		<x-topbar />
 		<x-custom-section>
-      <div class="flex justify-between items-center">
-        <h1 class="text-3xl">Courses</h1>
+			<div class="flex justify-between items-center">
+				<div >
+					<div class="breadcrumbs text-sm">
+						<ul>
+							<li><a href="/"><x-icon class="size-5" name="home" />Home</a></li>
+							<li><a><x-icon class="size-5" name="book-open" />Courses</a></li>
+						</ul>
+					</div>
+					<h1 class="text-3xl">Courses</h1>
+				</div>
 				<livewire:add-course-dialog />
       </div>
       <div class="flex gap-4 flex-wrap">

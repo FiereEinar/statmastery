@@ -1,11 +1,11 @@
 <section class="flex grow min-h-full" x-data="{ saving: false }">
     {{-- Course Outline sidebar --}}
-    <aside class="relative pb-[8rem] min-h-full border-r-2 border-neutral-content w-fit max-w-[400px] shrink-0">
+    <aside class="relative min-h-full border-r-2 border-neutral-content w-fit max-w-[400px] shrink-0">
         <div class="flex items-center gap-2 px-5 py-3 border-b-2 border-primary">
             <x-icon name="clipboard-document-list" />
             <h1 class="text-2xl">Course Outline</h1>
         </div>
-        <div id="modules-container" class="overflow-y-auto h-full max-w-[400px]">
+        <div id="modules-container" class="overflow-y-scroll h-full max-h-[500px] max-w-[400px]">
             @if ($course->modules->isEmpty())
             <div class="flex items-center gap-2 px-5 py-3">
                 <h1 class="italic text-neutral-content">No modules found</h1>

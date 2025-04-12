@@ -3,12 +3,16 @@
 namespace Database\Seeders;
 
 use App\Models\Course;
+use App\Models\CourseModule;
+use App\Models\CourseModuleContent;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+    private $module_count = 1;
+
     /**
      * Seed the application's database.
      */
@@ -75,5 +79,32 @@ class DatabaseSeeder extends Seeder
             "time_to_complete" => "8 Months",
             "price" => 1400,
         ]);
+
+        $this->createCourseModules(1, 9);
+        $this->createCourseModules(2, 8);
+        $this->createCourseModules(3, 3);
+        $this->createCourseModules(4, 6,);
+        $this->createCourseModules(5, 10);
+        $this->createCourseModules(6, 5);
+    }
+
+    private function createCourseModules($courseID, $moduleCount = 5) {
+        for ($i = 1; $i <= $moduleCount; $i++) {
+            CourseModule::factory()->create([
+                "course_id" => $courseID,
+                "module_number" => $i,
+            ]);
+
+            $contentCount = rand(3, 8);
+    
+            for ($j = 1; $j <= $contentCount; $j++) {
+                CourseModuleContent::factory()->create([
+                    "course_module_id" => $this->module_count,
+                    "content_number"=> $j,
+                ]);
+            }
+            
+            $this->module_count++;
+        }
     }
 }

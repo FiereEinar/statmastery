@@ -4,9 +4,9 @@
         <x-course-image source="{{ $course->thumbnail }}" />
     </figure>
     <div class="border-t border-blue-800">
-        <div class="p-5">
+        <div class="p-5 space-y-1">
             <h2 class="font-semibold">{{ $course['title'] }}</h2>
-            <p class="text-base-content/70 truncate">{{ $course['description'] }}</p>
+            <p class="text-base-content/70 line-clamp-2">{{ $course['description'] }}</p>
         </div>
         <div class="flex justify-between items-center p-5 border-t border-primary">
             <p class="text-base-content/70">{{ $course->price <= 0 ? 'Free' : 'Paid' }}</p>

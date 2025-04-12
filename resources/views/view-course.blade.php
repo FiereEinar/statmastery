@@ -29,6 +29,7 @@
           <div class="relative py-8 pr-5 pl-32 bg-neutral-content/50 border-b-2 border-neutral-content space-y-5">
             <div class="breadcrumbs text-sm">
               <ul>
+                <li><a href="/"><x-icon class="size-5" name="home" />Home</a></li>
                 <li><a href="/course"><x-icon class="size-5" name="book-open" />Courses</a></li>
                 <li><a>{{ $course->title }}</a></li>
               </ul>
@@ -57,7 +58,10 @@
             </div>
             <div class="w-full h-1 border-b-2 border-neutral-content"></div>
             <div class="space-y-3">
-              <h2 class="text-xl">Curriculum</h2>
+              <div class="flex justify-between">
+                <h2 class="text-xl">Curriculum</h2>
+                <p class="text-base-content/50">{{ $course->modules->count() }} Modules</p>
+              </div>
               <div class="overflow-y-auto h-full">
                 @if ($course->modules->isEmpty())
                 <div class="flex items-center gap-2 px-5 py-3">
@@ -105,7 +109,7 @@
           <div class="flex justify-start gap-10 px-8">
             <div class="flex flex-col items-center gap-1">
               <x-icon name="lock-closed" class="size-6" />
-              <h2 class="tex">{{ $course->subsription_type ?? "Free" }}</h2>
+              <h2 class="tex">{{ $course->price <= 0 ? "Free" : "Paid" }}</h2>
             </div>
             <div class="flex flex-col items-center gap-1">
               <x-icon name="currency-dollar" class="size-6" />
