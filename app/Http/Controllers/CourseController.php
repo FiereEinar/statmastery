@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseModule;
 use App\Models\Payment;
-use BcMath\Number;
+use App\Models\ProgressTracking;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 
@@ -101,7 +101,8 @@ class CourseController extends Controller
     }
 
     public function viewCourseContent(Course $course) {
-        return view('course-content', ['course'=> $course]);
+        $userProgress = ProgressTracking::where('user_id', auth()->guard('web')->user()->id)->where('course_id', $course->id)->pluck('content_id')->toArray();
+        return view('course-content', ['course'=> $course, 'userProgress' => $userProgress]);
     }
 
     public function createACheckout(Course $course) {

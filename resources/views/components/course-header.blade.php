@@ -14,7 +14,7 @@
             <x-button class="size-10" icon="x-mark" href="/course/{{ $course->id }}" flat black squared  />
         @elseif ($type === 'update')
             <livewire:update-course-details-dialog :course="$course" />
-            <x-button href="/course" icon="x-mark" outline sm negative label="Close" />
+            <x-button href="/course/{{ $course->id }}" icon="x-mark" outline sm negative label="Close" />
         @endif
     </div>
 </header>

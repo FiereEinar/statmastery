@@ -106,7 +106,7 @@
             className="w-full object-cover object-center"
             />
           </div>
-          <div class="flex justify-start gap-10 px-8">
+          <div class="flex justify-center gap-10 px-8">
             <div class="flex flex-col items-center gap-1">
               <x-icon name="lock-closed" class="size-6" />
               <h2 class="tex">{{ $course->price <= 0 ? "Free" : "Paid" }}</h2>

@@ -18,4 +18,8 @@ class CourseModule extends Model
     public function contents() {
         return $this->hasMany(CourseModuleContent::class, 'course_module_id')->orderBy('content_number');
     }
+
+    public function completedByUsers() {
+        return $this->belongsToMany(User::class, 'progress_trackings');
+    }
 }

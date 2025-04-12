@@ -23,6 +23,6 @@
 	</head>
 	<body class="min-h-screen flex flex-col overflow-hidden">
     <x-course-header :course="$course" />
-    <livewire:view-course-content :course="$course" />
+    <livewire:view-course-content :course="$course" :userProgress="$userProgress" />
 	</body>
 </html>

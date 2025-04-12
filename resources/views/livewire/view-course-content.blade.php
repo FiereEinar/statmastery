@@ -5,7 +5,7 @@
             <x-icon name="clipboard-document-list" />
             <h1 class="text-2xl">Course Outline</h1>
         </div>
-        <div class="overflow-y-auto h-full max-w-[400px]">
+        <div class="overflow-y-auto h-full max-h-[500px] max-w-[400px]">
             @if ($course->modules->isEmpty())
             <div class="flex items-center gap-2 px-5 py-3">
                 <h1 class="italic text-base-content/70">No modules found</h1>
@@ -26,11 +26,17 @@
                     @endif
                     @foreach ($module->contents as $content)
                     <button 
-                    {{-- onclick="setTimeout(() => Livewire.emit('content-updated'), 100)"  --}}
                     wire:click="setActiveContent({{ $content }})" 
-                    class="transition-all w-full flex items-center gap-1 p-3 cursor-pointer hover:bg-neutral-content {{ $activeContent && $activeContent->id === $content->id ? 'bg-neutral-content/50' : '' }}"
-                    >
-                        <div class="rounded-full size-4 shrink-0 border border-primary flex items-center justify-center"><x-icon name="check" class="text-white size-2" /></div>
+                    class="
+                    transition-all w-full flex items-center gap-1 p-3 cursor-pointer hover:bg-neutral-content 
+                    {{ $activeContent && $activeContent->id === $content->id ? 'bg-neutral-content/50' : '' }}
+                    ">
+                        <div class="
+                        {{ in_array($content->id, $userProgress) ? 'bg-primary' : '' }} 
+                        rounded-full size-4 shrink-0 border border-primary flex items-center justify-center
+                        ">
+                            <x-icon name="check" class="text-white size-2" />
+                        </div>
                         <p class="truncate">{{ $content->title }}</p>
                     </button>
                     @endforeach
@@ -51,16 +57,17 @@
                 <h1 class="ml-2">{{ $activeContent->title }}</h1>
                 @endif
             </div>
+            <div>
+                <x-button wire:click="markAsCompleted" outline xs icon="check" label="Mark as Completed" />
+            </div>
         </div>
                 
         
-        <div class="relative bg-white h-[600px] shadow text-wrap space-y-3">
-            <!-- Loading Spinner -->
+        <div wire:ignore class="relative bg-white h-[500px] shadow text-wrap space-y-3">
             <div id="loading-spinner" class="w-full h-full absolute top-0 left-0 flex items-center justify-center bg-white bg-opacity-70 z-10">
-                <div class="loader"></div> <!-- Your spinner here -->
+                <div class="loader"></div> 
             </div>
             
-            {{-- {!! $activeContent->content ?? '' !!} --}}
             <iframe 
                 id="content-frame"
                 class="w-full h-full border-none"
@@ -114,12 +121,12 @@
 
                 // Auto-scroll to top
                 iframe.contentWindow.scrollTo(0, 0);
-
+                
                 setTimeout(() => {
                     // Hide spinner
                     document.getElementById('loading-spinner').classList.add('hidden');
                 }, 300);
             }
-        </script>
+            </script>
     </main>
 </section>
