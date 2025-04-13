@@ -69,10 +69,15 @@
                 </div>
                 @endif
                 @foreach ($course->modules as $module)
+                @php
+                  $contentIds = $module->contents->pluck('id')->toArray();
+                  $unfinished = array_diff($contentIds, $userProgress);
+                  $isCompleted = count($unfinished) === 0 && count($contentIds) > 0;
+                @endphp
                 <div class="collapse collapse-arrow bg-base-100 border border-base-300">
                   <input type="radio" name="my-accordion-2" />
                   <div class="collapse-title font-semibold flex items-center gap-3">
-                      <div class="rounded-full size-6 shrink-0 border border-primary flex items-center justify-center"><x-icon name="check" class="text-white size-4" /></div>
+                      <div class="rounded-full size-6 shrink-0 border border-primary flex items-center justify-center {{ $isCompleted ? 'bg-primary' : '' }}"><x-icon name="check" class="text-white size-4" /></div>
                       <p class="truncate">{{ $module->title }}</p>
                   </div>
                   <div class="collapse-content text-sm pl-10">
@@ -82,11 +87,14 @@
                       </div>
                       @endif
                       @foreach ($module->contents as $content)
-                      <button 
-                      class="transition-all w-full flex items-center gap-1 p-3 cursor-pointer hover:bg-neutral-content"
-                      >
-                          <div class="rounded-full size-4 shrink-0 border border-primary flex items-center justify-center"><x-icon name="check" class="text-white size-2" /></div>
-                          <p class="truncate">{{ $content->title }}</p>
+                      <button class="transition-all w-full flex items-center gap-1 p-3 cursor-pointer hover:bg-neutral-content">
+                        <div 
+                        class="rounded-full size-4 shrink-0 border border-primary flex items-center justify-center
+                        {{ in_array($content->id, $userProgress) ? 'bg-primary' : '' }} 
+                        ">
+                          <x-icon name="check" class="text-white size-2" />
+                        </div>
+                        <p class="truncate">{{ $content->title }}</p>
                       </button>
                       @endforeach
                   </div>
@@ -117,7 +125,7 @@
             </div>
             <div class="flex flex-col items-center gap-1">
               <x-icon name="chart-bar" class="size-6" />
-              <h2 class="tex">{{ $course->badge }}</h2>
+              <h2 class="tex">{{ $course->badge->name }}</h2>
             </div>
             <div class="flex flex-col items-center gap-1">
               <x-icon name="clock" class="size-6" />

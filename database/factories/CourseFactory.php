@@ -22,7 +22,7 @@ class CourseFactory extends Factory
             'description' => $this->faker->paragraph,
             'overview' => $this->faker->paragraph(6)."\n\n".$this->faker->paragraph(6)."\n\n".$this->faker->paragraph(6),
             'thumbnail' => 'images/courses/placeholder.png',
-            'badge' => $this->faker->randomElement(['Beginner', 'Intermediate', 'Advanced']),
+            'badge_id' => $this->faker->numberBetween(1, 3),
             'time_to_complete' => '1 Month',
             'price' => 0,
         ];

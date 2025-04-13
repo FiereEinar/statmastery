@@ -17,8 +17,12 @@ class Course extends Model
         'overview',
         'time_to_complete',
         'price',
-        'badge',
+        'badge_id',
     ];
+
+    public function badge() {
+        return $this->belongsTo(CourseBadge::class, 'badge_id');
+    }
 
     public function modules() {
         return $this->hasMany(CourseModule::class, 'course_id')->orderBy('module_number');

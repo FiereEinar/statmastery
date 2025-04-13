@@ -11,6 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::create('course_badges', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->timestamps();
+        });
+
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('owner_id')->constrained('users')->cascadeOnDelete();
@@ -20,7 +26,7 @@ return new class extends Migration
             $table->longText('overview');
             $table->string('time_to_complete');
             $table->float('price', 2)->default(0);
-            $table->enum('badge', ['Beginner','Intermediate','Advanced'])->default('Beginner');
+            $table->foreignId('badge_id')->constrained('course_badges')->cascadeOnDelete();
             $table->timestamps();
         });
     }
