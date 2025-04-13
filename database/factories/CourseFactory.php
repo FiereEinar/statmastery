@@ -25,6 +25,7 @@ class CourseFactory extends Factory
             'badge_id' => $this->faker->numberBetween(1, 3),
             'time_to_complete' => '1 Month',
             'price' => 0,
+            'category_id'=> $this->faker->numberBetween(1,5),
         ];
     }
 }

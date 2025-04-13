@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Course;
 use App\Models\CourseBadge;
+use App\Models\CourseCategory;
 use App\Models\CourseModule;
 use App\Models\CourseModuleContent;
 use App\Models\User;
@@ -19,8 +20,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
         User::factory()->create([
             'name' => 'Nick Mours',
             'email' => 'nick@gmail.com',
@@ -36,6 +35,8 @@ class DatabaseSeeder extends Seeder
         CourseBadge::factory()->create([
             'name'=> 'Advanced',
         ]);
+
+        CourseCategory::factory()->count(5)->create();
 
         Course::factory()->create([
             "title" => "Statistics & Probability",

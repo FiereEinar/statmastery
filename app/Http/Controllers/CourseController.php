@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\CourseCategory;
 use App\Models\CourseModule;
 use App\Models\Payment;
 use App\Models\ProgressTracking;
@@ -14,7 +15,8 @@ class CourseController extends Controller
 {
     public function coursesView() {
         $courses = Course::all();
-        return view('courses', ['courses'=> $courses]);
+        $categories = CourseCategory::all();
+        return view('courses', ['courses'=> $courses, 'categories' => $categories]);
     }
 
     public function courseEditView(Course $course) {

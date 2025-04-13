@@ -17,6 +17,13 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        Schema::create('course_categories', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->string('description');
+            $table->timestamps();
+        });
+
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
             $table->foreignId('owner_id')->constrained('users')->cascadeOnDelete();
@@ -27,6 +34,7 @@ return new class extends Migration
             $table->string('time_to_complete');
             $table->float('price', 2)->default(0);
             $table->foreignId('badge_id')->constrained('course_badges')->cascadeOnDelete();
+            $table->foreignId('category_id')->constrained('course_categories')->cascadeOnDelete();
             $table->timestamps();
         });
     }

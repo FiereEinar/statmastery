@@ -18,7 +18,12 @@ class Course extends Model
         'time_to_complete',
         'price',
         'badge_id',
+        'category_id',
     ];
+
+    public function category() {
+        return $this->belongsTo(CourseCategory::class, 'category_id');
+    }
 
     public function badge() {
         return $this->belongsTo(CourseBadge::class, 'badge_id');

@@ -11,6 +11,7 @@
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
         "livewire/livewire": "^3.6",
+        "lodash-php/lodash-php": "^0.1.0",
         "wireui/wireui": "^2.4"
     },
     "require-dev": {
