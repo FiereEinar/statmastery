@@ -31,7 +31,6 @@ class CourseController extends Controller
         $PAYMONGO_SECRET = config('app.PAYMONGO_SECRET');
         $hasPayed = false;
 
-        // First check all previous payments
         foreach ($userPayments as $payment) {
             $checkoutResponse = $client->request('GET', "https://api.paymongo.com/v1/checkout_sessions/{$payment->checkout_session_id}", [
                 'headers' => [
@@ -161,6 +160,7 @@ class CourseController extends Controller
                         'show_description' => true,
                         'show_line_items' => true,
                         'description' => 'Course payment',
+                        'success_url' => config('app.url').'/course/'.$course->id.'/content',
                         'line_items' => [[
                             'currency' => 'PHP',
                             'amount' => $course->price * 100,

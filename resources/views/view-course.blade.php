@@ -38,7 +38,7 @@
             <p>{!! nl2br(e($course->description)) !!}</p>
             <div class="flex gap-2">
               @if ($hasPayed || $course->subscription_type === 'Free' || $course->price <= 0)
-                <x-button href="/course/{{ $course->id }}/content" primary label="Get Started With The Course" />
+                <x-button href="/course/{{ $course->id }}/content" primary label="{{sizeof($userProgress) === 0 ? 'Get Started' : 'Continue'}} With The Course" />
               @else
                 <form target="_blank" action="/v1/api/course/{{ $course->id }}/checkout" method="POST">
                   @csrf
@@ -65,7 +65,7 @@
               <div class="overflow-y-auto h-full">
                 @if ($course->modules->isEmpty())
                 <div class="flex items-center gap-2 px-5 py-3">
-                    <h1 class="italic text-base-content/50">No modules yet</h1>
+                  <h1 class="italic text-base-content/50">No modules yet</h1>
                 </div>
                 @endif
                 @foreach ($course->modules as $module)
@@ -77,13 +77,13 @@
                 <div class="collapse collapse-arrow bg-base-100 border border-base-300">
                   <input type="radio" name="my-accordion-2" />
                   <div class="collapse-title font-semibold flex items-center gap-3">
-                      <div class="rounded-full size-6 shrink-0 border border-primary flex items-center justify-center {{ $isCompleted ? 'bg-primary' : '' }}"><x-icon name="check" class="text-white size-4" /></div>
-                      <p class="truncate">{{ $module->title }}</p>
+                    <div class="rounded-full size-6 shrink-0 border border-primary flex items-center justify-center {{ $isCompleted ? 'bg-primary' : '' }}"><x-icon name="check" class="text-white size-4" /></div>
+                    <p class="truncate">{{ $module->title }}</p>
                   </div>
                   <div class="collapse-content text-sm pl-10">
                       @if ($module->contents->isEmpty())
                       <div class="flex items-center gap-2 p-2">
-                          <h1 class="italic text-base-content/50">No contents yet</h1>
+                        <h1 class="italic text-base-content/50">No contents yet</h1>
                       </div>
                       @endif
                       @foreach ($module->contents as $content)
