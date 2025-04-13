@@ -12,10 +12,20 @@
             </div>
             @endif
             @foreach ($course->modules as $module)
+            @php
+                $contentIds = $module->contents->pluck('id')->toArray();
+                $unfinished = array_diff($contentIds, $userProgress);
+                $isCompleted = count($unfinished) === 0 && count($contentIds) > 0;
+            @endphp
             <div class="collapse collapse-arrow bg-base-100 border border-base-300 max-w-[400px]">
                 <input type="radio" name="my-accordion-2" {{ $loop->first ? 'checked' : '' }} />
                 <div class="collapse-title font-semibold flex items-center gap-3 max-w-[400px]">
-                    <div class="rounded-full size-6 shrink-0 border border-primary flex items-center justify-center"><x-icon name="check" class="text-white size-4" /></div>
+                    <div 
+                    class="rounded-full size-6 shrink-0 border border-primary flex items-center justify-center
+                    {{ $isCompleted ? 'bg-primary' : '' }}"
+                    >
+                        <x-icon name="check" class="text-white size-4" />
+                    </div>
                     <p class="truncate">{{ $module->title }}</p>
                 </div>
                 <div class="collapse-content text-sm pl-10 max-w-[400px]">
