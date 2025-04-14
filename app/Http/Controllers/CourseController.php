@@ -29,7 +29,8 @@ class CourseController extends Controller
 
     public function viewCourse(Course $course) {
         $client = new Client();
-        $userPayments = Payment::where('user_id', auth()->guard('web')->user()->id)->where('course_id', $course->id)->get();
+        $currentUser = auth()->guard('web')->user();
+        $userPayments = Payment::where('user_id', $currentUser->id ?? '')->where('course_id', $course->id)->get();
         $PAYMONGO_SECRET = config('app.PAYMONGO_SECRET');
         $hasPayed = false;
 
@@ -51,7 +52,7 @@ class CourseController extends Controller
             }
         }
 
-        $userProgress = ProgressTracking::where('user_id', auth()->guard('web')->user()->id)->where('course_id', $course->id)->pluck('content_id')->toArray();
+        $userProgress = ProgressTracking::where('user_id', $currentUser->id ?? '')->where('course_id', $course->id)->pluck('content_id')->toArray();
 
         return view('view-course', ['course'=> $course, 'hasPayed' => $hasPayed, 'userProgress' => $userProgress]);
     }
