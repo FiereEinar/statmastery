@@ -5,10 +5,10 @@
             <!-- Page content here -->
             <x-button 
             type="button" 
-            icon="bars-3" 
+            icon="user-circle" 
             flat 
             primary 
-            label="Menu"
+            label="{{ auth()->user()->name }}"
             @click="document.getElementById('my-drawer-4').click()"
             />
         </div>

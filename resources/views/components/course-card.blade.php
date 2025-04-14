@@ -11,7 +11,7 @@
         <div class="flex justify-between items-center p-5 border-t border-primary">
             <p class="text-base-content/70">{{ $course->price <= 0 ? 'Free' : 'Paid' }}</p>
             <a href="/course/{{ $course['id'] }}" class="flex items-center gap-1 text-primary cursor-pointer">
-                <button class="hover:underline underline-primary cursor-pointer">Get Started</button>
+                <button class="hover:underline underline-primary cursor-pointer">{{ $actionTitle }}</button>
                 <x-icon name="chevron-right" />
             </a>
         </div>

@@ -14,7 +14,7 @@
         <x-profile-drawer />
         @else
         <a href="/login">
-            <x-button primary label="Login" />
+            <x-button icon="user-circle" flat primary label="Login" />
         </a>
         @endauth
     </div>

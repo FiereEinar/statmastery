@@ -8,9 +8,6 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-});
 
 // Auth routes
 Route::get('/login', [AuthController::class, 'loginView']);
@@ -22,6 +19,8 @@ Route::post('/v1/api/signup', [AuthController::class, 'signup']);
 
 // Apply 'auth.check' middleware to all course-related routes
 Route::middleware(['auth.check'])->group(function () {
+    Route::get('/dashboard', [CourseController::class, 'dashboard']);
+    
     // Course routes
     Route::get('/course/{course}/edit', [CourseController::class, 'courseEditView']);
     Route::get('/course/create', [CourseController::class, 'createCourseView']);

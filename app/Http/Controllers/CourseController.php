@@ -13,6 +13,17 @@ use GuzzleHttp\Client;
 
 class CourseController extends Controller
 {
+    public function dashboard() {
+        $user = auth()->guard("web")->user();
+        $courseIds = ProgressTracking::where("user_id", $user->id)
+            ->select("course_id")
+            ->distinct()
+            ->pluck("course_id");
+        $takenCourses = Course::whereIn('id', $courseIds)->get();
+
+        return view('dashboard', ['takenCourses'=> $takenCourses]);
+    }
+
     public function coursesView() {
         $courses = Course::all();
         $categories = CourseCategory::all();

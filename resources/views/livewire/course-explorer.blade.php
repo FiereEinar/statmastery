@@ -42,14 +42,14 @@ use function _\startCase;
                 <p class="text-base-content/50 italic">No courses yet.</p>
                 @endif
                 @foreach ($activeCategory->courses as $course)
-                <x-course-card :course="$course" badgeColor="success" />
+                <x-course-card :course="$course" />
                 @endforeach            
             @else
                 @if($courses->isEmpty())
                 <p class="text-base-content/50 italic">No courses yet.</p>
                 @endif
                 @foreach ($courses as $course)
-                <x-course-card :course="$course" badgeColor="success" />
+                <x-course-card :course="$course" />
                 @endforeach
             @endif
         </div>
