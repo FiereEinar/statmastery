@@ -23,7 +23,6 @@ Route::middleware(['auth.check'])->group(function () {
     
     // Course routes
     Route::get('/course/{course}/edit', [CourseController::class, 'courseEditView']);
-    Route::get('/course/create', [CourseController::class, 'createCourseView']);
     Route::get('/course/{course}/content', [CourseController::class, 'viewCourseContent']);
     
     Route::post('/v1/api/course/{course}/checkout', [CourseController::class, 'createACheckout']);

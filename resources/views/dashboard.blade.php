@@ -24,7 +24,7 @@
 	<body>
 		<x-topbar />
     @auth
-		<div class="text-base-content/70 flex h-full">
+		<div class="text-base-content/70 flex h-full min-h-[100dvh]">
 			<section class="grow w-full pl-20 pr-4 py-10 space-y-8">
 				<div class="flex justify-between">
 					<div class="flex items-center gap-2">
@@ -35,6 +35,9 @@
 				<div class="space-y-2">
 					<h4 class="font-semibold text-lg">In-Progress</h4>
 					<div class="flex gap-4 flex-wrap">
+						@if ($takenCourses->isEmpty())
+							<p class="text-base-content/50 italic"><a href="/course" class="underline">Browse courses</a> and start learning now!</p>
+						@endif
 						@foreach ($takenCourses as $course)
 							<x-course-card :course="$course" actionTitle="Continue" />
 						@endforeach

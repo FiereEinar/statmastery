@@ -34,10 +34,6 @@ class CourseController extends Controller
         return view('edit-course', ['course'=> $course]);
     }
     
-    public function createCourseView() {
-        return view('create-course');
-    }
-
     public function viewCourse(Course $course) {
         $client = new Client();
         $currentUser = auth()->guard('web')->user();
