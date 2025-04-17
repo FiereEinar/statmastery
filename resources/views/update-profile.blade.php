@@ -21,10 +21,9 @@
 		<wireui:scripts />
 		<livewire:scripts />
 	</head>
-	<body class="relative">
-		<x-topbar />
-    <x-herosection />
-    <x-featuredcourses :courses="$courses" />
+	<body>
+    <x-topbar />
+    <livewire:profile-update :user="$user" />
     <x-footer />
 	</body>
 </html>

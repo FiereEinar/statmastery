@@ -45,7 +45,7 @@
 				</div>
 				<div class="space-y-2">
 					<h4 class="font-semibold text-lg">Completed</h4>
-					<x-coursesplaceholder courses="1" />
+					<x-courses-placeholder courses="1" />
 				</div>
 			</section>
 			<aside class="grow-0 bg-neutral-content/50 min-h-full px-8 py-10 w-[500px] space-y-4">

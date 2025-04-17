@@ -24,6 +24,11 @@ class CourseController extends Controller
         return view('dashboard', ['takenCourses'=> $takenCourses]);
     }
 
+    public function home() {
+        $courses = Course::all()->take(6); 
+        return view('home', ['courses'=> $courses]);
+    }
+
     public function coursesView() {
         $courses = Course::all();
         $categories = CourseCategory::all();

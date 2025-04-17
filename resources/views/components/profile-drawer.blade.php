@@ -15,9 +15,9 @@
         <div class="drawer-side">
             <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
             <div class="flex flex-col bg-base-200 text-base-content min-h-full pr-4">
-                <div class="bg-neutral-content/50 py-3 px-5 flex items-center gap-3">
+                <div class="bg-[url('../../public/images/profile-cover.png')] bg-cover bg-center text-white py-3 px-5 flex items-center gap-3">
                     <x-custom-image 
-                    :source="auth()->guard('web')->user()->profile_picture ?? 'nothing.png'" 
+                    :source="'storage/'.auth()->guard('web')->user()->profile_picture ?? 'nothing.png'" 
                     defaultImg="images/user-placeholder.jpg"
                     className="rounded-full w-12 h-12"
                     :alt="auth()->user()->name . ' profile picture'" 
@@ -28,7 +28,7 @@
                     </div>
                     <form class="ml-8" action="/v1/api/logout" method="GET">
                         @csrf
-                        <x-button rounded="3xl" xs icon="power" type="submit" primary outline label="Logout" />
+                        <x-button rounded="3xl" xs icon="power" type="submit" secondary outline label="Logout" />
                     </form>
                 </div>
                 <div class="px-5 py-8 space-y-4">
@@ -58,7 +58,7 @@
                         <x-icon name="user-circle" />
                         <h4 class="font-semibold">Profile</h4>
                     </div>
-                    <a href="/dashboard" class="flex gap-1 items-center justify-between hover:text-primary">
+                    <a href="/profile/update" class="flex gap-1 items-center justify-between hover:text-primary">
                         <h4>Update Profile</h4>
                         <x-icon class="text-primary" name="chevron-right" />
                     </a>
