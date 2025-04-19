@@ -43,10 +43,10 @@
 						@endforeach
 					</div>
 				</div>
-				<div class="space-y-2">
+				{{-- <div class="space-y-2">
 					<h4 class="font-semibold text-lg">Completed</h4>
 					<x-courses-placeholder courses="1" />
-				</div>
+				</div> --}}
 			</section>
 			<aside class="grow-0 bg-neutral-content/50 min-h-full px-8 py-10 w-[500px] space-y-4">
 				<div class="flex justify-between items-center">

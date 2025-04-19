@@ -13,6 +13,11 @@ class CourseModuleContent extends Model
         'course_module_id',
         'title',
         'content',
+        'content_type_id',
         'content_number',
     ];
+
+    public function content_type() {
+        return $this->belongsTo(CourseModuleContentType::class, 'content_type_id');
+    }
 }

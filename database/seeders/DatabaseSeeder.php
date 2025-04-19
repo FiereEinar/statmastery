@@ -7,6 +7,7 @@ use App\Models\CourseBadge;
 use App\Models\CourseCategory;
 use App\Models\CourseModule;
 use App\Models\CourseModuleContent;
+use App\Models\CourseModuleContentType;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -84,6 +85,13 @@ class DatabaseSeeder extends Seeder
             "thumbnail" => "images/courses/calculus.jpg",
             "time_to_complete" => "8 Months",
             "price" => 1400,
+        ]);
+
+        CourseModuleContentType::factory()->create([
+            "name" => "content",
+        ]);
+        CourseModuleContentType::factory()->create([
+            "name" => "quiz",
         ]);
 
         $this->createCourseModules(1, 9);

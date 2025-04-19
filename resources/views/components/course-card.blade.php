@@ -1,4 +1,4 @@
-<div class="rounded-xl bg-base-100 w-80 shadow-xl relative overflow-hidden">
+<div class="transition-all rounded-md bg-base-100 w-80 shadow-sm border border-neutral-content relative overflow-hidden hover:shadow-lg cursor-pointer">
     <span class="absolute top-2 left-2 badge badge-{{ $course->badge->name === 'Beginner' ? 'success' : ($course->badge->name === 'Intermediate' ? 'warning' : 'error') }} z-60">{{ $course->badge->name }}</span>
     <figure>
         <x-course-image source="{{ $course->thumbnail }}" />

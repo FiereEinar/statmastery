@@ -57,8 +57,18 @@
             {{-- Hidden input bound to Livewire --}}
             <input type="hidden" id="editorContent" wire:model="editorContent" />
         </div>
-        <div wire:ignore>
-            <x-forms.tinymce-editor  />
+        {{-- QUIZ TYPE CONTENT --}}
+        <div class="{{ $activeContent && $activeContent->content_type->name === 'quiz' ? 'flex' : 'hidden' }}">
+            @if ($activeContent)
+            <livewire:update-module-content-quizzes :module_content="$activeContent" />
+            @endif
+        </div>
+
+        {{-- REGULAR TYPE CONTENT --}}
+        <div class="{{ $activeContent && $activeContent->content_type->name === 'content' ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none' }}">
+            <div wire:ignore>
+                <x-forms.tinymce-editor  />
+            </div>
         </div>
     </main>
 </section>

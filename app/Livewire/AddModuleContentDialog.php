@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\CourseModule;
+use App\Models\CourseModuleContentType;
 use Livewire\Component;
 
 class AddModuleContentDialog extends Component
@@ -11,6 +12,12 @@ class AddModuleContentDialog extends Component
     public CourseModule $module;
     public $title;
     public $content_number = 1;
+    public $avalableContentTypes;
+    public $content_type_id = 1;
+
+    public function mount() {
+        $this->avalableContentTypes = CourseModuleContentType::all();
+    }
 
     protected $listeners = ['openAddModuleContentDialog'];
 
@@ -29,6 +36,7 @@ class AddModuleContentDialog extends Component
             'title' => $this->title,
             'content_number' => $this->content_number,
             'course_module_id' => $this->module->id,
+            'content_type_id' => $this->content_type_id,
             'content' => 'Write your content here.',
         ]);
         $this->module->refresh();

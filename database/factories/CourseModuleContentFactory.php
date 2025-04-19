@@ -19,6 +19,7 @@ class CourseModuleContentFactory extends Factory
         return [
             'course_module_id' => 1,
             'title' => $this->faker->sentence,
+            'content_type_id' => 1,
             'content' => 
             "<h4>".$this->faker->sentence."</h4>"
             ."<p>".$this->faker->paragraph(10)."</p><p>".$this->faker->paragraph(10)."</p><p>".$this->faker->paragraph(10)."</p><p>".$this->faker->paragraph(10)."</p>"
