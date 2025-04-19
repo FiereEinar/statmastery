@@ -20,4 +20,8 @@ class CourseModuleContent extends Model
     public function content_type() {
         return $this->belongsTo(CourseModuleContentType::class, 'content_type_id');
     }
+
+    public function contentQuizzes() {
+        return $this->hasMany(Quiz::class,'course_module_content_id');
+    }
 }

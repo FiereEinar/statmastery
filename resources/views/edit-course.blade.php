@@ -19,8 +19,8 @@
 		@endif
 		<livewire:styles />
 		<wireui:scripts />
-    <livewire:scripts />
 		<x-head.tinymce-config />
+    <livewire:scripts />
 	</head>
 	<body class=" min-h-screen flex flex-col">
 		<x-notifications position="bottom-end" />
