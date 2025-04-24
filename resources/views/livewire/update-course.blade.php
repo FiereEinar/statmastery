@@ -36,7 +36,7 @@
                     >
                         <div class="rounded-full size-4 shrink-0 border border-primary flex items-center justify-center"><x-icon name="check" class="text-white size-2" /></div>
                         <p class="truncate pr-5">{{ $content->title }}</p>
-                        <div class="transition-all absolute right-2 hover:text-primary p-2 rounded-full cursor-pointer shrink-0">
+                        <div wire:click="showUpdateModuleContentDialog({{ $content->id }})" class="transition-all absolute right-2 z-70 hover:text-primary p-2 rounded-full cursor-pointer shrink-0">
                             <x-icon name="pencil" class="size-3" />
                         </div>
                     </button>
@@ -50,6 +50,7 @@
         <livewire:add-module-content-dialog />
         <livewire:add-course-module-dialog :course="$course" />
         <livewire:update-course-module-dialog />
+        <livewire:update-module-content-dialog />
     </aside>
 
     {{-- Main content --}}

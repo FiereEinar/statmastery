@@ -12,9 +12,9 @@ class UpdateCourseModuleDialog extends Component
     public $title;
     public $module_number;
 
-    protected $listeners = ['openUpdateModuleContentDialog'];
+    protected $listeners = ['openUpdateCourseModuleDialog'];
     
-    public function openUpdateModuleContentDialog($moduleId) {
+    public function openUpdateCourseModuleDialog($moduleId) {
         $this->module = CourseModule::findOrFail($moduleId);
         $this->title = $this->module->title;
         $this->module_number = $this->module->module_number;
@@ -26,6 +26,7 @@ class UpdateCourseModuleDialog extends Component
         $this->module->refresh();
         $this->dispatch('refresh-course');
     }
+    
     public function render()
     {
         return view('livewire.update-course-module-dialog');

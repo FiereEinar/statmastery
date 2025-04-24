@@ -35,7 +35,11 @@ class UpdateCourse extends Component
     }
 
     public function showUpdateCourseModuleDialog($moduleID) {
-        $this->dispatch('openUpdateModuleContentDialog', $moduleID);
+        $this->dispatch('openUpdateCourseModuleDialog', $moduleID);
+    }
+
+    public function showUpdateModuleContentDialog($contentID) {
+        $this->dispatch('openUpdateModuleContentDialog', $contentID);
     }
 
     public function addCourseModule($data) {
