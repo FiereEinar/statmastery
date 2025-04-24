@@ -14,9 +14,12 @@
             @foreach ($course->modules as $module)
             <div class="collapse collapse-arrow bg-base-100 border border-base-300 max-w-[400px]">
                 <input type="radio" name="my-accordion-2" {{ $loop->first ? 'checked' : '' }} />
-                <div class="collapse-title font-semibold flex items-center gap-3 max-w-[400px]">
+                <div class="relative collapse-title font-semibold flex items-center gap-3 max-w-[400px]">
                     <div class="rounded-full size-6 shrink-0 border border-primary flex items-center justify-center"><x-icon name="check" class="text-white size-4" /></div>
-                    <p class="truncate">{{ $module->title }}</p>
+                    <p class="truncate pr-5">{{ $module->title }}</p>
+                    <div wire:click="showUpdateCourseModuleDialog({{ $module->id }})" class="transition-all absolute right-8 p-2 z-70 rounded-full hover:text-primary cursor-pointer shrink-0">
+                        <x-icon name="pencil" class="size-5" />
+                    </div>
                 </div>
                 <div class="collapse-content text-sm pl-10 max-w-[400px]">
                     @if ($module->contents->isEmpty())
@@ -29,10 +32,13 @@
                     onclick="setDisabled(false); setTinyMCEContentFromEl(this)" 
                     data-content="{{ base64_encode($content->content) }}"
                     wire:click="setActiveContent({{ $content }})" 
-                    class="transition-all w-full flex items-center gap-1 p-3 cursor-pointer hover:bg-neutral-content {{ $activeContent && $activeContent->id === $content->id ? 'bg-neutral-content/50' : '' }}"
+                    class="transition-all relative w-full flex items-center gap-1 p-3 cursor-pointer hover:bg-neutral-content {{ $activeContent && $activeContent->id === $content->id ? 'bg-neutral-content/50' : '' }}"
                     >
                         <div class="rounded-full size-4 shrink-0 border border-primary flex items-center justify-center"><x-icon name="check" class="text-white size-2" /></div>
-                        <p class="truncate">{{ $content->title }}</p>
+                        <p class="truncate pr-5">{{ $content->title }}</p>
+                        <div class="transition-all absolute right-2 hover:text-primary p-2 rounded-full cursor-pointer shrink-0">
+                            <x-icon name="pencil" class="size-3" />
+                        </div>
                     </button>
                     @endforeach
                     <x-button wire:click="showAddModuleContentDialog({{ $module->id }})" type="button" class="w-full" flat squared label="Add Content" icon="plus" />
@@ -43,6 +49,7 @@
         </div>
         <livewire:add-module-content-dialog />
         <livewire:add-course-module-dialog :course="$course" />
+        <livewire:update-course-module-dialog />
     </aside>
 
     {{-- Main content --}}

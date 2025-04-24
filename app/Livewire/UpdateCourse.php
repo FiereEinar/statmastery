@@ -19,14 +19,23 @@ class UpdateCourse extends Component
         'saveContent' => 'saveContent',
         'saving' => 'saving',
         'saved'=> 'saved',
+        'refresh-course'=> 'refreshCourse',
     ];
 
     public function mount(Course $course) {
         $this->course = $course;
     }
 
+    public function refreshCourse() {
+        $this->course->refresh();
+    }
+
     public function showAddModuleContentDialog($moduleID) {
         $this->dispatch('openAddModuleContentDialog', $moduleID);
+    }
+
+    public function showUpdateCourseModuleDialog($moduleID) {
+        $this->dispatch('openUpdateModuleContentDialog', $moduleID);
     }
 
     public function addCourseModule($data) {

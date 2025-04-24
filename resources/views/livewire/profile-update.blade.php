@@ -9,7 +9,7 @@
                 <input wire:model="profile_picture" type="file" hidden id="profile_picture">
 
                 <x-custom-image 
-                :source="'storage/'.$user->profile_picture ?? 'nothing.png'" 
+                :source="'storage/' . $user->profile_picture ?? 'nothing.png'" 
                 defaultImg="images/user-placeholder.jpg"
                 className="rounded-full size-24"
                 :alt="auth()->user()->name . ' profile picture'" 
