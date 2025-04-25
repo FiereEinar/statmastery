@@ -23,9 +23,9 @@
 	</head>
 	<body>
 		<x-topbar />
-		<x-custom-section>
+		<section>
 			<livewire:course-explorer :courses="$courses" :categories="$categories" >
-		</x-custom-section>
+		</section>
 		<x-footer />
 	</body>
 </html>

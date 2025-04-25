@@ -2,7 +2,7 @@
 use function _\startCase;
 ?>
 <div class="flex gap-10">
-    <aside class="shrink-0 space-y-8 w-[300px]">
+    <aside class="shrink-0 space-y-8 w-[400px] bg-neutral-content/50 border-r-2 border-neutral-content pl-20 py-10">
         <div class="space-y-1">
             <div class="breadcrumbs text-sm">
                 <ul>
@@ -27,7 +27,7 @@ use function _\startCase;
             </div>
         </div>
     </aside>
-    <div class="grow space-y-4">
+    <div class="grow space-y-4 py-10">
         @if ($activeCategory)
         <div>
             <h4 class="text-2xl">{{ startCase($activeCategory['name']) }}</h4>

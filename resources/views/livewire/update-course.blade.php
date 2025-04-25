@@ -45,13 +45,14 @@
                 </div>
             </div>
             @endforeach
-            {{-- <button onclick="tinymce.activeEditor.options.set('disabled', false)">click</button> --}}
         </div>
-        <livewire:add-module-content-dialog />
         <livewire:add-course-module-dialog :course="$course" />
-        <livewire:update-course-module-dialog />
-        <livewire:update-module-content-dialog />
     </aside>
+    
+    <livewire:add-module-content-dialog />
+    <livewire:update-course-module-dialog />
+    <livewire:update-module-content-dialog />
+    <livewire:add-question-dialog />
 
     {{-- Main content --}}
     <main  class="bg-neutral-content w-full min-h-full p-3"> 
@@ -61,7 +62,13 @@
             @else
             <h1 class="ml-2">{{ $activeContent->title }}</h1>
             @endif
-            <p class="text-sm pr-2 text-base-content/50" @saving.window="saving = true" @saved.window="saving = false" x-text="saving ? 'Saving...' : 'Saved'"></p>
+            <div class="flex gap-2 items-center">
+                @if ($activeContent && $activeContent->content_type->name === 'quiz')
+                <x-button wire:click="showAddQuestionDialog({{ $activeContent->id }})" outline xs icon="question-mark-circle" label="Add Question" />
+                @endif
+                <p class="text-sm pr-2 text-base-content/50" @saving.window="saving = true" @saved.window="saving = false" x-text="saving ? 'Saving...' : 'Saved'"></p>
+            </div>
+
             {{-- Hidden input bound to Livewire --}}
             <input type="hidden" id="editorContent" wire:model="editorContent" />
         </div>
