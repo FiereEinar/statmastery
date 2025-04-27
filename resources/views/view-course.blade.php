@@ -162,7 +162,7 @@
           
           {{-- Course Reviews --}}
           <div class="px-8">
-            <h2 class="text-xl">Reviews</h2>
+            <livewire:course-review-section :course="$course" :currentUser="auth()->guard('web')->user()" />
           </div>
         </div>
       </div>

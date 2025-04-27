@@ -18,19 +18,19 @@
     <div class="space-y-5">
         @foreach ($course->comments as $comment)
         <div>
-        <div class="flex gap-3 items-center">
-            <x-custom-image 
-            :source="'storage/' . $comment->user->profile_picture ?? 'nothing.png'" 
-            defaultImg="images/user-placeholder.jpg"
-            className="rounded-full size-8"
-            :alt="$comment->user->name . ' profile picture'" 
-            />
-            <div>
-            <h4>{{ $comment->user->name }}</h4>
-            <h4 class="text-xs text-base-content/50">{{ $comment->created_at }}</h4>
+            <div class="flex gap-3 items-center">
+                <x-custom-image 
+                :source="'storage/' . $comment->user->profile_picture ?? 'nothing.png'" 
+                defaultImg="images/user-placeholder.jpg"
+                className="rounded-full size-8"
+                :alt="$comment->user->name . ' profile picture'" 
+                />
+                <div>
+                <h4>{{ $comment->user->name }}</h4>
+                <h4 class="text-xs text-base-content/50">{{ $comment->created_at }}</h4>
+                </div>
             </div>
-        </div>
-        <p class="pl-11 py-1">{{ $comment->text }}</p>
+            <p class="pl-11 py-1">{{ $comment->text }}</p>
         </div>
         @endforeach
     </div>

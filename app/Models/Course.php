@@ -36,4 +36,8 @@ class Course extends Model
     public function comments() {
         return $this->hasMany(CourseComment::class, 'course_id')->orderBy('created_at', 'desc');
     }
+
+    public function reviews() {
+        return $this->hasMany(CourseReview::class, 'course_id')->orderBy('created_at', 'desc');
+    }
 }

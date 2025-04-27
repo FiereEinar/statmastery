@@ -15,4 +15,12 @@ class CourseReview extends Model
         'text',
         'stars',
     ];
+
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function course() {
+        return $this->belongsTo(Course::class, 'course_id');
+    }
 }
