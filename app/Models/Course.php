@@ -32,4 +32,8 @@ class Course extends Model
     public function modules() {
         return $this->hasMany(CourseModule::class, 'course_id')->orderBy('module_number');
     }
+
+    public function comments() {
+        return $this->hasMany(CourseComment::class, 'course_id')->orderBy('created_at', 'desc');
+    }
 }

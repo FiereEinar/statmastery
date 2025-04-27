@@ -26,6 +26,7 @@
 		<section>
       <div class="flex w-full">
         <div class="space-y-5 border-r border-neutral-content">
+          {{-- Course Hero Section --}}
           <div class="relative py-8 pr-5 pl-32 bg-neutral-content/50 border-b-2 border-neutral-content space-y-5">
             <div class="breadcrumbs text-sm">
               <ul>
@@ -50,19 +51,24 @@
               @endif
             </div>
           </div>
-          {{-- <div class="w-full h-1 border-b-2 border-neutral-content"></div> --}}
+
+          {{-- Course Overview --}}
           <div class="py-8 pr-5 pl-32 space-y-5">
+            {{-- Overview --}}
             <div class="space-y-3">
               <h2 class="text-xl">Overview</h2>
               <p>{!! nl2br(e($course->overview)) !!}</p>
             </div>
+
             <div class="w-full h-1 border-b-2 border-neutral-content"></div>
+
+            {{-- Curriculum --}}
             <div class="space-y-3">
               <div class="flex justify-between">
                 <h2 class="text-xl">Curriculum</h2>
                 <p class="text-base-content/50">{{ $course->modules->count() }} Modules</p>
               </div>
-              <div class="overflow-y-auto h-full">
+              <div class="overflow-y-auto max-h-[400px]">
                 @if ($course->modules->isEmpty())
                 <div class="flex items-center gap-2 px-5 py-3">
                   <h1 class="italic text-base-content/50">No modules yet</h1>
@@ -75,7 +81,7 @@
                   $isCompleted = count($unfinished) === 0 && count($contentIds) > 0;
                 @endphp
                 <div class="collapse collapse-arrow bg-base-100 border border-base-300">
-                  <input type="radio" name="my-accordion-2" />
+                  <input type="checkbox" name="my-accordion-2" />
                   <div class="collapse-title font-semibold flex items-center gap-3">
                     <div class="rounded-full size-6 shrink-0 border border-primary flex items-center justify-center {{ $isCompleted ? 'bg-primary' : '' }}"><x-icon name="check" class="text-white size-4" /></div>
                     <p class="truncate">{{ $module->title }}</p>
@@ -100,12 +106,21 @@
                   </div>
                 </div>
                 @endforeach
-                {{-- <button onclick="tinymce.activeEditor.options.set('disabled', false)">click</button> --}}
               </div>
+            </div>
+
+            <div class="w-full h-1 border-b-2 border-neutral-content"></div>
+  
+            {{-- Course Comments --}}
+            <div class="mb-20">
+              <livewire:course-comment-section :course="$course" :currentUser="auth()->guard('web')->user()" />
             </div>
           </div>
         </div>
+
+        {{-- Course Right-Side Section --}}
         <div class="space-y-5 bg-neutral-content/50">
+          {{-- Course Image --}}
           <div class="w-[500px]">
             <x-custom-image 
             source="{{ $course->thumbnail }}" 
@@ -114,6 +129,8 @@
             className="w-full object-cover object-center"
             />
           </div>
+
+          {{-- Course Details --}}
           <div class="flex justify-center gap-10 px-8">
             <div class="flex flex-col items-center gap-1">
               <x-icon name="lock-closed" class="size-6" />
@@ -132,12 +149,18 @@
               <h2 class="tex">{{ $course->time_to_complete }}</h2>
             </div>
           </div>
+
           <div class="w-full h-1 border-b-2 border-neutral-content"></div>
+
+          {{-- Course Achievements --}}
           <div class="px-8">
             <h2 class="text-xl">Achievements</h2>
             <p>What you&apos;ll earn from this course.</p>
           </div>
+
           <div class="w-full h-1 border-b-2 border-neutral-content"></div>
+          
+          {{-- Course Reviews --}}
           <div class="px-8">
             <h2 class="text-xl">Reviews</h2>
           </div>

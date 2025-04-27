@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseCategory;
+use App\Models\CourseComment;
 use App\Models\CourseModule;
+use App\Models\CourseReview;
 use App\Models\Payment;
 use App\Models\ProgressTracking;
 use Illuminate\Http\Request;
@@ -66,7 +68,11 @@ class CourseController extends Controller
 
         $userProgress = ProgressTracking::where('user_id', $currentUser->id ?? '')->where('course_id', $course->id)->pluck('content_id')->toArray();
 
-        return view('view-course', ['course'=> $course, 'hasPayed' => $hasPayed, 'userProgress' => $userProgress]);
+        return view('view-course', [
+            'course'=> $course, 
+            'hasPayed' => $hasPayed, 
+            'userProgress' => $userProgress,
+        ]);
     }
 
     public function createCourse(Request $request) {

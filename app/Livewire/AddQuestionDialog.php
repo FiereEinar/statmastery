@@ -31,7 +31,6 @@ class AddQuestionDialog extends Component
 
         $options = null;
         $correct = [];
-
         
         if ($this->questionType === 'multiple_choice') {
             if (sizeof(array_filter($this->questionOptions)) !== 4) {
@@ -67,9 +66,6 @@ class AddQuestionDialog extends Component
             ]);
             $correct = array_filter(array_map('trim', explode("\n", $this->correctAnswerRaw)));
         }
-
-
-
 
         Quiz::create([
             'course_module_content_id' => $this->module_content->id,
