@@ -59,7 +59,7 @@
         <p class="text-red-500 text-xs mt-1">{{ $errorText }}</p>
   
         <div class="flex justify-end mt-5">
-          <x-button wire:click="addQuestion" type="button" primary label="Add Content" />
+          <x-button wire:click="addQuestion" type="button" primary label="Add Question" />
         </div>
       </form>
     </x-custom-dialog>

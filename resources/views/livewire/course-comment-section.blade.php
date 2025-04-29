@@ -2,10 +2,12 @@
     <h1 class="text-xl">Comments</h1>
 
     {{-- Add Comment --}}
+    @if ($currentUser)
     <fieldset class="fieldset flex">
       <input wire:model="comment" wire:submit="addComment" name="comment" type="text" class="input w-full" placeholder="Add a comment" />
       <x-button wire:click="addComment" type="button" primary label="Comment" />
     </fieldset>
+    @endif
 
     {{-- No Comments --}}
     @if ($course->comments->isEmpty())

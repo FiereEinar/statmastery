@@ -5,9 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\CourseCategory;
-use App\Models\CourseComment;
 use App\Models\CourseModule;
-use App\Models\CourseReview;
+use App\Models\Enrollment;
 use App\Models\Payment;
 use App\Models\ProgressTracking;
 use Illuminate\Http\Request;
@@ -40,11 +39,10 @@ class CourseController extends Controller
     public function courseEditView(Course $course) {
         return view('edit-course', ['course'=> $course]);
     }
-    
-    public function viewCourse(Course $course) {
+
+    private function isUserPaidOnCourse($userID, $courseID) {
         $client = new Client();
-        $currentUser = auth()->guard('web')->user();
-        $userPayments = Payment::where('user_id', $currentUser->id ?? '')->where('course_id', $course->id)->get();
+        $userPayments = Payment::where('user_id', $userID)->where('course_id', $courseID)->get();
         $PAYMONGO_SECRET = config('app.PAYMONGO_SECRET');
         $hasPayed = false;
 
@@ -66,6 +64,12 @@ class CourseController extends Controller
             }
         }
 
+        return $hasPayed;
+    }
+    
+    public function viewCourse(Course $course) {
+        $currentUser = auth()->guard('web')->user();
+        $hasPayed = $this->isUserPaidOnCourse($currentUser->id  ?? '', $course->id);
         $userProgress = ProgressTracking::where('user_id', $currentUser->id ?? '')->where('course_id', $course->id)->pluck('content_id')->toArray();
 
         return view('view-course', [
@@ -123,8 +127,27 @@ class CourseController extends Controller
     }
 
     public function viewCourseContent(Course $course) {
-        $userProgress = ProgressTracking::where('user_id', auth()->guard('web')->user()->id)->where('course_id', $course->id)->pluck('content_id')->toArray();
-        return view('course-content', ['course'=> $course, 'userProgress' => $userProgress]);
+        $currentUser = auth()->guard('web')->user();
+        if (!$currentUser) return redirect("/course/$course->id");
+
+        $hasPayed = $this->isUserPaidOnCourse($currentUser->id, $course->id);
+        $userEnrollments = Enrollment::where('user_id', $currentUser->id)->where('course_id', $course->id)->get();
+        $userProgress = ProgressTracking::where('user_id', $currentUser->id ?? '')->where('course_id', $course->id)->pluck('content_id')->toArray();
+
+        // WTFWTFWTF
+        // if (sizeof($userEnrollments) === 0) {
+        //     if (!$hasPayed && $course->price !== 0) return redirect("/course/$course->id");
+
+        //     Enrollment::create([
+        //         'user_id' => $currentUser->id,
+        //         'course_id' => $course->id,
+        //     ]);
+        // }
+
+        return view('course-content', [
+            'course' => $course, 
+            'userProgress' => $userProgress
+        ]);
     }
 
     public function createACheckout(Course $course) {
@@ -181,7 +204,7 @@ class CourseController extends Controller
                         'show_description' => true,
                         'show_line_items' => true,
                         'description' => 'Course payment',
-                        'success_url' => config('app.url').'/course/'.$course->id.'/content',
+                        'success_url' => config('app.url').'/course/'.$course->id,
                         'line_items' => [[
                             'currency' => 'PHP',
                             'amount' => $course->price * 100,

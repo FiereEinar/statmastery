@@ -13,7 +13,7 @@
         </fieldset>
   
         <div class="flex justify-end mt-5">
-          <x-button wire:click="updateModuleContent" type="button" primary label="Add Content" />
+          <x-button wire:click="updateModuleContent" type="button" primary label="Update Content" />
         </div>
       </form>
     </x-custom-dialog>

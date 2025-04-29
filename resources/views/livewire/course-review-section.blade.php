@@ -2,21 +2,23 @@
     <h2 class="text-xl">Reviews</h2>
     
     {{-- Add Review --}}
+    @if ($currentUser)
     <fieldset class="fieldset flex items-end">
         <div class="flex flex-col grow">
-            <label for="review" class="text-xs text-base-content/50">Add Review</label>
+            <label for="review" class="text-xs text-base-content/50">Add Review:</label>
             <input wire:model="review" id="review" type="text" class="input w-full" placeholder="Write here" />
         </div>
         <div class="flex flex-col">
-            <label for="stars" class="text-xs text-base-content/50">Stars</label>
+            <label for="stars" class="text-xs text-base-content/50">Stars:</label>
             <input wire:model.live="stars" id="stars" type="number" class="input w-14" />
         </div>
         <x-button wire:click="addReview" class="h-fit" type="button" primary label="Submit" />
     </fieldset>
+    @endif
 
     @if ($course->reviews->isEmpty())
     <div class="flex items-center gap-2 p-2">
-        <h1 class="italic text-base-content/50">No comments yet</h1>
+        <h1 class="italic text-base-content/50">No reviews yet</h1>
     </div>
     @endif
     

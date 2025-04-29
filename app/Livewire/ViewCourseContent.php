@@ -48,7 +48,7 @@ class ViewCourseContent extends Component
 
         array_push($this->userProgress, $this->activeContent->id);
     }
-    
+
     public function render()
     {
         return view('livewire.view-course-content');

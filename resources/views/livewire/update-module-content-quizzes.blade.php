@@ -1,6 +1,6 @@
 <div class="w-full bg-white rounded-b-md p-5">
     <div class="space-y-5">
-        @forelse ($module_content->contentQuizzes as $quiz)
+        @forelse ($moduleContent->contentQuizzes as $quiz)
             <article class="rounded border border-neutral-content p-4 shadow-sm">
                 <h4 class="mb-3 font-semibold text-lg">
                     {{ $quiz->question }}

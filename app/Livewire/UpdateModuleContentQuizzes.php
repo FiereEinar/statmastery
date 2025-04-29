@@ -7,10 +7,10 @@ use Livewire\Component;
 
 class UpdateModuleContentQuizzes extends Component
 {
-    public CourseModuleContent $module_content;
+    public CourseModuleContent $moduleContent;
 
-    public function mount(CourseModuleContent $module_content) {
-        $this->module_content = $module_content->load('contentQuizzes');;
+    public function mount(CourseModuleContent $moduleContent) {
+        $this->moduleContent = $moduleContent->load('contentQuizzes');
     }
     
     public function render()

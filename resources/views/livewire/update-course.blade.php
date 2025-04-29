@@ -77,7 +77,7 @@
             {{-- QUIZ TYPE CONTENT --}}
             <div class="{{ $activeContent && $activeContent->content_type->name === 'quiz' ? 'flex' : 'hidden' }}">
                 @if ($activeContent)
-                    <livewire:update-module-content-quizzes :module_content="$activeContent" />
+                    <livewire:update-module-content-quizzes :moduleContent="$activeContent" />
                 @endif
             </div>
             
