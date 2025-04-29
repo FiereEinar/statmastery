@@ -34,7 +34,7 @@
                     <label for="quiz-{{ $quiz->id }}-option-{{ $index }}" class="flex items-center space-x-2 mb-2">
                         <input
                             type="radio"
-                            wire:model.live="userAnswers.{{ $quiz->id }}"
+                            wire:model="userAnswers.{{ $quiz->id }}"
                             value="{{ $option }}"
                             id="quiz-{{ $quiz->id }}-option-{{ $index }}"
                             class="radio radio-primary"
@@ -47,7 +47,7 @@
                 <label class="flex items-center space-x-2 mb-2">
                     <input 
                         type="radio" 
-                        wire:model.live="userAnswers.{{ $quiz->id }}" 
+                        wire:model="userAnswers.{{ $quiz->id }}" 
                         value="True" 
                         class="radio radio-primary" 
                     />
@@ -56,7 +56,7 @@
                 <label class="flex items-center space-x-2">
                     <input 
                         type="radio" 
-                        wire:model.live="userAnswers.{{ $quiz->id }}" 
+                        wire:model="userAnswers.{{ $quiz->id }}" 
                         value="False" 
                         class="radio radio-primary" 
                     />
@@ -68,7 +68,7 @@
                     @foreach (json_decode($quiz->correct_answer ?? '[]', true) as $i => $answer)
                         <input
                             type="text"
-                            wire:model.live="userAnswers.{{ $quiz->id }}.{{ $i }}"
+                            wire:model="userAnswers.{{ $quiz->id }}.{{ $i }}"
                             class="input input-bordered w-full"
                             placeholder="Answer {{ $i + 1 }}"
                         />
@@ -80,7 +80,7 @@
         <p class="text-gray-500 text-center italic">No quiz questions added yet.</p>
     @endforelse
     
-    @if ($moduleContent->contentQuizzes->count() > 0)
+    @if ($moduleContent->contentQuizzes->count() > 0 && !isset($userScorePercentage))
     <div class="flex items-center gap-3">
         <x-button wire:click="submitQuiz()" primary lg label="Submit Quiz" />
     </div>
