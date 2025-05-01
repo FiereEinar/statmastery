@@ -12,7 +12,7 @@ class AddQuestionDialog extends Component
     public $question;
     public $questionType = 'multiple_choice';
     public $questionOptions = [];
-    public $correctAnswer;
+    public $correctAnswer = null;
     public $correctAnswerRaw; // used for enumeration textarea
     public $errorText = "";
 
@@ -38,7 +38,7 @@ class AddQuestionDialog extends Component
                 return;
             }
 
-            if (!$this->correctAnswer) {
+            if ($this->correctAnswer === null) {
                 $this->errorText = "Please select at least one correct answer.";
                 return;
             }
@@ -74,6 +74,8 @@ class AddQuestionDialog extends Component
             'options' => $options ? json_encode(array_values($options)) : null,
             'correct_answer' => json_encode($correct),
         ]);
+        
+        $this->dispatch('refresh');
 
         // Reset form
         $this->reset(['question', 'questionType', 'questionOptions', 'correctAnswer', 'correctAnswerRaw', 'errorText']);

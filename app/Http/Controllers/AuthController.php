@@ -52,6 +52,6 @@ class AuthController extends Controller
 
     public function logout() {
         auth()->guard('web')->logout();
-        return redirect('/');
+        return redirect('/login');
     }
 }

@@ -132,7 +132,11 @@ class CourseController extends Controller
 
         $hasPayed = $this->isUserPaidOnCourse($currentUser->id, $course->id);
         $userEnrollments = Enrollment::where('user_id', $currentUser->id)->where('course_id', $course->id)->get();
-        $userProgress = ProgressTracking::where('user_id', $currentUser->id ?? '')->where('course_id', $course->id)->pluck('content_id')->toArray();
+        $userProgress = ProgressTracking::
+            where('user_id', $currentUser->id ?? '')->
+            where('course_id', $course->id)->
+            pluck('content_id')->
+            toArray();
 
         // WTFWTFWTF
         // if (sizeof($userEnrollments) === 0) {

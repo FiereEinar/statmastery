@@ -24,4 +24,8 @@ class CourseModuleContent extends Model
     public function contentQuizzes() {
         return $this->hasMany(Quiz::class,'course_module_content_id');
     }
+
+    public function module() {
+        return $this->belongsTo(CourseModule::class, 'course_module_id');
+    }
 }

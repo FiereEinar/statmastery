@@ -3,6 +3,8 @@
 namespace App\Livewire;
 
 use App\Models\CourseModuleContent;
+use App\Models\ProgressTracking;
+use App\Models\QuizSubmission;
 use Livewire\Component;
 
 class ModuleContentQuiz extends Component
@@ -14,6 +16,18 @@ class ModuleContentQuiz extends Component
 
     public function mount(CourseModuleContent $moduleContent) {
         $this->moduleContent = $moduleContent;
+        $recentSubmission = QuizSubmission::
+            where('user_id', auth()->guard('web')->user()->id)->
+            where('quiz_id', $moduleContent->id)->
+            latest()->
+            first();
+
+        if ($recentSubmission) {
+            $this->userAnswers = json_decode($recentSubmission->answers, true);
+            $total = $this->moduleContent->contentQuizzes->count();
+            $this->score = $recentSubmission->score;
+            $this->userScorePercentage = $total > 0 ? round(($this->score / $total) * 100) : 0;
+        }
     }
 
     public function submitQuiz() {
@@ -41,6 +55,22 @@ class ModuleContentQuiz extends Component
                 }
             }
         }
+
+        QuizSubmission::create([
+            'user_id' => auth()->guard('web')->user()->id,
+            'quiz_id' => $this->moduleContent->id,
+            'answers' => json_encode($this->userAnswers),
+            'score' => $this->score
+        ]);
+
+        ProgressTracking::create([
+            'user_id' => auth()->guard('web')->user()->id,
+            'course_id' => $this->moduleContent->module->course_id,
+            'module_id' => $this->moduleContent->course_module_id,
+            'content_id' => $this->moduleContent->id
+        ]);
+
+        $this->dispatch('refresh-course');
 
         $this->userScorePercentage = $total > 0 ? round(($this->score / $total) * 100) : 0;
     }

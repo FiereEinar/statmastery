@@ -9,6 +9,15 @@ class UpdateModuleContentQuizzes extends Component
 {
     public CourseModuleContent $moduleContent;
 
+    protected $listeners = [
+        'refresh'
+    ];
+
+    public function refresh() {
+        $this->moduleContent->refresh();
+        $this->moduleContent->load('contentQuizzes');
+    }
+
     public function mount(CourseModuleContent $moduleContent) {
         $this->moduleContent = $moduleContent->load('contentQuizzes');
     }
