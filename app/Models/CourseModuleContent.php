@@ -28,4 +28,8 @@ class CourseModuleContent extends Model
     public function module() {
         return $this->belongsTo(CourseModule::class, 'course_module_id');
     }
+
+    public function resources() {
+        return $this->hasMany(Resource::class, 'course_module_content_id');
+    }
 }

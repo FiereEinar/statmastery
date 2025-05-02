@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\CourseModule;
 use App\Models\CourseModuleContent;
 use App\Models\Quiz;
+use App\Models\Resource;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use WireUi\Traits\WireUiActions;
@@ -14,10 +15,13 @@ class UpdateCourse extends Component
 {
     use WithFileUploads;
     use WireUiActions;
+    
     public Course $course;
     public CourseModuleContent $activeContent;
     public $editorContent;
     public $questionsCsv;
+    public $activeSidebarTab = 1;
+    public $resourceFile;
 
     protected $listeners = [
         'addCourseModule' => 'addCourseModule', 
@@ -34,6 +38,10 @@ class UpdateCourse extends Component
 
     public function refreshCourse() {
         $this->course->refresh();
+    }
+
+    public function setActiveSidebarTab($tab) {
+        $this->activeSidebarTab = $tab;
     }
 
     public function showAddModuleContentDialog($moduleID) {
@@ -110,6 +118,39 @@ class UpdateCourse extends Component
             'title' => 'File imported',
             'description' => 'File has been imported successfully.',
         ]);
+    }
+
+    public function updatedResourceFile() {
+        $this->uploadResource();
+    }
+
+    public function uploadResource()
+    {
+        $this->validate([
+            'resourceFile' => 'required|file|max:20480', // max 20MB
+        ]);
+
+        $originalName = $this->resourceFile->getClientOriginalName();
+
+        $path = $this->resourceFile->store('resources', 'public');
+
+        Resource::create([
+            'course_module_content_id' => $this->activeContent->id,
+            'filename' => $originalName,
+            'file_path' => $path,
+            'file_type' => $this->resourceFile->getClientOriginalExtension(),
+        ]);
+
+        $this->reset('resourceFile');
+
+        $this->notification()->send([
+            'icon' => 'success',
+            'title' => 'File uploaded',
+            'description' => 'Resource uploaded successfully.',
+        ]);
+
+        $this->course->refresh();
+        $this->activeContent->refresh();
     }
     
     public function render()

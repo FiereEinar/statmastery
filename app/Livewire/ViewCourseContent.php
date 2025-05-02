@@ -11,6 +11,7 @@ class ViewCourseContent extends Component
     public CourseModuleContent $activeContent;
     public Course $course;
     public $userProgress;
+    public $activeSidebarTab = 1;
 
     public function mount(Course $course, $userProgress) {
         $this->course = $course;
@@ -21,6 +22,11 @@ class ViewCourseContent extends Component
         if ($firstModule) {
             $this->activeContent = $firstModule->contents->first();
         }
+    }
+
+    public function setActiveSidebarTab($tab) {
+        $this->activeSidebarTab = $tab;
+        $this->dispatch('content-updated', $this->activeContent);
     }
 
     public function setActiveContent(CourseModuleContent $content) {

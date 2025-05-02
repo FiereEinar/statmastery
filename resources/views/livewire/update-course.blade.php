@@ -1,10 +1,20 @@
 <section class="flex grow min-h-full" x-data="{ saving: false }">
     {{-- Course Outline sidebar --}}
     <aside class="relative min-h-full border-r-2 border-neutral-content w-fit max-w-[400px] shrink-0">
-        <div class="flex items-center gap-2 px-5 py-3 border-b-2 border-primary">
-            <x-icon name="clipboard-document-list" />
-            <h1 class="text-2xl">Course Outline</h1>
+        {{-- Sidebar Tabs --}}
+        <div class="flex">
+            <button wire:click="setActiveSidebarTab(1)" class="cursor-pointer flex items-center gap-2 px-5 py-3 border-primary {{ $activeSidebarTab === 1 ? 'border-b-2' : '' }}">
+                <x-icon name="clipboard-document-list" />
+                <h1 class="text-xl">Course Outline</h1>
+            </button>
+            <button wire:click="setActiveSidebarTab(2)" class="cursor-pointer flex items-center gap-2 px-5 py-3 border-primary {{ $activeSidebarTab === 2 ? 'border-b-2' : '' }}">
+                <x-icon name="folder" />
+                <h1 class="text-xl">Resources</h1>
+            </button>
         </div>
+
+        {{-- Course Outline Tab --}}
+        @if ($activeSidebarTab === 1)
         <div id="modules-container" class="overflow-y-auto h-full max-h-[500px] max-w-[400px]">
             @if ($course->modules->isEmpty())
             <div class="flex items-center gap-2 px-5 py-3">
@@ -46,9 +56,54 @@
             </div>
             @endforeach
         </div>
+
+        {{-- Resources Tab --}}
+        @elseif ($activeSidebarTab === 2)
+            @if ($activeContent)
+            <div class="overflow-y-auto h-full max-h-[500px] max-w-[400px]">
+                {{-- Add Resource --}}
+                <div x-data="{ openResourceFile() { $refs.resourceFileInput.click() } }">
+                    <x-button @click="openResourceFile" class="w-full rounded-none py-4" icon="arrow-up-tray" flat primary label="Add Resource" />
+                    <input type="file" x-ref="resourceFileInput" hidden wire:model="resourceFile" id="resourceFile" class="file-input file-input-bordered w-full" />
+                </div>
+
+                @error('resourceFile')
+                    <x-error-message class="text-xs text-error">{{ $message }}</x-error-message>
+                @enderror
+
+                {{-- Resources List --}}
+                <div class="border-t border-base-content/50">
+                    @if ($activeContent->resources->isEmpty())
+                    <div class="flex items-center gap-2 p-4">
+                        <h1 class="italic text-base-content/50">No resources found</h1>
+                    </div>
+                    @endif
+                    <ul>
+                        @foreach ($activeContent->resources as $resource)
+                            <li>
+                                <a class="transition-all flex items-center justify-between border-b border-base-content/50 p-2 hover:bg-neutral-content" href="{{ asset('storage/' . $resource->file_path) }}" target="_blank">
+                                    <div class="flex items-center gap-2">
+                                        <x-file-icon className="size-8" fileExt="{{ $resource->file_type }}" />
+                                        <p class="truncate">{{ basename($resource->filename) }}</p>
+                                    </div>
+                                    <x-icon name="arrow-down-tray" />
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+            @else
+            <div class="p-4">
+                <h1 class="italic text-base-content/50">Select a content</h1>
+            </div>
+            @endif
+        @endif
+
         <livewire:add-course-module-dialog :course="$course" />
     </aside>
     
+    {{-- Dialogs --}}
     <livewire:add-module-content-dialog />
     <livewire:update-course-module-dialog />
     <livewire:update-module-content-dialog />
@@ -63,7 +118,10 @@
             <h1 class="ml-2">{{ $activeContent->title }}</h1>
             @endif
             <div class="flex gap-2 items-center">
+                {{-- Save status --}}
                 <p class="text-sm pr-2 text-base-content/50" @saving.window="saving = true" @saved.window="saving = false" x-text="saving ? 'Saving...' : 'Saved'"></p>
+                
+                {{-- Inport Question --}}
                 @if ($activeContent && $activeContent->content_type->name === 'quiz')
                 <div x-data="{ openFile() { $refs.csvInput.click() } }">
                     <x-button @click="openFile" flat xs icon="document-arrow-up" label="Import Questions" />
@@ -77,6 +135,8 @@
                         x-ref="csvInput"
                     />
                 </div>
+
+                {{-- Add Question --}}
                 <x-button wire:click="showAddQuestionDialog({{ $activeContent->id }})" flat xs icon="plus" label="Add Question" />
                 @endif
             </div>

@@ -1,9 +1,15 @@
 <section class="flex grow min-h-full">
     {{-- Course Outline sidebar --}}
     <aside class="relative pb-[8rem] min-h-full border-r-2 border-neutral-content w-fit max-w-[400px] shrink-0">
-        <div class="flex items-center gap-2 px-5 py-3 border-b-2 border-primary">
-            <x-icon name="clipboard-document-list" />
-            <h1 class="text-2xl">Course Outline</h1>
+        <div class="flex">
+            <button wire:click="setActiveSidebarTab(1)" class="cursor-pointer flex items-center gap-2 px-5 py-3 border-primary {{ $activeSidebarTab === 1 ? 'border-b-2' : '' }}">
+                <x-icon name="clipboard-document-list" />
+                <h1 class="text-xl">Course Outline</h1>
+            </button>
+            <button wire:click="setActiveSidebarTab(2)" class="cursor-pointer flex items-center gap-2 px-5 py-3 border-primary {{ $activeSidebarTab === 2 ? 'border-b-2' : '' }}">
+                <x-icon name="folder" />
+                <h1 class="text-xl">Resources</h1>
+            </button>
         </div>
         <div class="overflow-y-auto h-full max-h-[500px] max-w-[400px]">
             @if ($course->modules->isEmpty())
@@ -77,7 +83,7 @@
         </div>
                 
         <div class="relative h-[600px] bg-white shadow text-wrap space-y-3 overflow-y-auto">
-            <div id="loading-spinner" class="w-full h-full absolute top-0 left-0 flex items-center justify-center bg-white bg-opacity-70 z-10">
+            <div id="loading-spinner" class="{{ $activeSidebarTab === 1 ? '' : 'hidden' }} w-full h-full absolute top-0 left-0 flex items-center justify-center bg-white bg-opacity-70 z-10">
                 <div class="loader"></div> 
             </div>
             
@@ -152,7 +158,7 @@
                 setTimeout(() => {
                     // Hide spinner
                     document.getElementById('loading-spinner').classList.add('hidden');
-                }, 400);
+                }, 300);
             }
             </script>
     </main>

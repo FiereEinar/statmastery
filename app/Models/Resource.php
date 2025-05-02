@@ -11,6 +11,7 @@ class Resource extends Model
 
     protected $fillable = [
         'course_module_content_id',
+        'filename',
         'file_path',
         'file_type',
     ];

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('resources', function (Blueprint $table) {
             $table->id();
             $table->foreignId('course_module_content_id')->constrained()->cascadeOnDelete();
+            $table->string('filename');
             $table->string('file_path');
             $table->string('file_type');
             $table->timestamps();
