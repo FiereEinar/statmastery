@@ -63,10 +63,22 @@
             <h1 class="ml-2">{{ $activeContent->title }}</h1>
             @endif
             <div class="flex gap-2 items-center">
-                @if ($activeContent && $activeContent->content_type->name === 'quiz')
-                <x-button wire:click="showAddQuestionDialog({{ $activeContent->id }})" outline xs icon="question-mark-circle" label="Add Question" />
-                @endif
                 <p class="text-sm pr-2 text-base-content/50" @saving.window="saving = true" @saved.window="saving = false" x-text="saving ? 'Saving...' : 'Saved'"></p>
+                @if ($activeContent && $activeContent->content_type->name === 'quiz')
+                <div x-data="{ openFile() { $refs.csvInput.click() } }">
+                    <x-button @click="openFile" flat xs icon="document-arrow-up" label="Import Questions" />
+                    
+                    <input 
+                        type="file" 
+                        id="questions-csv" 
+                        wire:model="questionsCsv" 
+                        accept=".csv"
+                        hidden
+                        x-ref="csvInput"
+                    />
+                </div>
+                <x-button wire:click="showAddQuestionDialog({{ $activeContent->id }})" flat xs icon="plus" label="Add Question" />
+                @endif
             </div>
 
             {{-- Hidden input bound to Livewire --}}

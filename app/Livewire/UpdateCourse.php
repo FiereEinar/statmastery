@@ -5,13 +5,19 @@ namespace App\Livewire;
 use App\Models\Course;
 use App\Models\CourseModule;
 use App\Models\CourseModuleContent;
+use App\Models\Quiz;
 use Livewire\Component;
+use Livewire\WithFileUploads;
+use WireUi\Traits\WireUiActions;
 
 class UpdateCourse extends Component
 {
+    use WithFileUploads;
+    use WireUiActions;
     public Course $course;
     public CourseModuleContent $activeContent;
     public $editorContent;
+    public $questionsCsv;
 
     protected $listeners = [
         'addCourseModule' => 'addCourseModule', 
@@ -69,12 +75,41 @@ class UpdateCourse extends Component
         $this->course->refresh();
     }
 
-    public function saving() {
-        
+    public function updatedQuestionsCsv()
+    {
+        $this->importQuestions();
     }
 
-    public function saved() {
-        
+    public function importQuestions()
+    {
+        $this->validate([
+            'questionsCsv' => 'required|file|mimes:csv,txt|max:2048',
+        ]);
+
+        $path = $this->questionsCsv->getRealPath();
+        $file = fopen($path, 'r');
+
+        $header = fgetcsv($file); // Read header
+
+        while (($row = fgetcsv($file)) !== false) {
+            $data = array_combine($header, $row);
+
+            // Assumes columns: question, type, options (semicolon-separated), correct_answers (semicolon-separated)
+            Quiz::create([
+                'course_module_content_id' => $this->activeContent->id,
+                'question' => $data['question'],
+                'quiz_type' => $data['type'],
+                'options' => json_encode(explode(';', $data['options'])),
+                'correct_answer' => json_encode(explode(';', $data['correct_answers'])),
+            ]);
+        }
+
+        fclose($file);
+        $this->notification()->send([
+            'icon' => 'success',
+            'title' => 'File imported',
+            'description' => 'File has been imported successfully.',
+        ]);
     }
     
     public function render()

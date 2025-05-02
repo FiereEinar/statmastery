@@ -23,7 +23,7 @@
     <livewire:scripts />
 	</head>
 	<body class=" min-h-screen flex flex-col">
-		<x-notifications position="bottom-end" />
+		<x-notifications />
     <x-course-header :course="$course" type="update" />
     <livewire:update-course :course="$course" />
 	</body>

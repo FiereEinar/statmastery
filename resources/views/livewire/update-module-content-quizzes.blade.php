@@ -34,14 +34,14 @@
     
                 @elseif ($quiz->quiz_type === 'enumeration')
                     <div class="space-y-2">
-                        @for ($i = 0; $i < count($quiz->correct_answers ?? []); $i++)
+                        @foreach (json_decode($quiz->correct_answer ?? '[]', true) as $i => $answer)
                             <input
                                 type="text"
                                 name="quiz_{{ $quiz->id }}_enum_{{ $i }}"
                                 class="input input-bordered w-full"
                                 placeholder="Answer {{ $i + 1 }}"
                             />
-                        @endfor
+                        @endforeach
                     </div>
                 @endif
             </article>
