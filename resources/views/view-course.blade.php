@@ -25,7 +25,7 @@
     <x-topbar />
 		<section>
       <div class="flex w-full">
-        <div class="space-y-5 border-r border-neutral-content">
+        <div class="space-y-5 border-r border-neutral-content grow">
           {{-- Course Hero Section --}}
           <div class="relative py-8 pr-5 pl-32 bg-neutral-content/50 border-b-2 border-neutral-content space-y-5">
             <div class="breadcrumbs text-sm">
@@ -123,8 +123,8 @@
           {{-- Course Image --}}
           <div class="w-[500px]">
             <x-custom-image 
-            source="{{ $course->thumbnail }}" 
-            defaultImg="images/courses/placeholder.png"
+            source="storage/{{ $course->thumbnail }}" 
+            defaultImg="storage/thumbnails/placeholder.png"
             alt="Course image"
             className="w-full object-cover object-center"
             />

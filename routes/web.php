@@ -19,6 +19,7 @@ Route::middleware(['auth.check'])->group(function () {
     Route::get('/dashboard', [CourseController::class, 'dashboard']);
 
     // Course routes
+    Route::get('/course/create', [CourseController::class, 'createCourseView']);
     Route::get('/course/{course}/edit', [CourseController::class, 'courseEditView']);
     Route::get('/course/{course}/content', [CourseController::class, 'viewCourseContent']);
     Route::get('/profile/update', [UserController::class, 'updateProfileView']);

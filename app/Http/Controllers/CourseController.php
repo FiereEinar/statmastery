@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\CourseBadge;
 use App\Models\CourseCategory;
 use App\Models\CourseModule;
 use App\Models\Enrollment;
@@ -14,6 +15,7 @@ use GuzzleHttp\Client;
 
 class CourseController extends Controller
 {
+
     public function dashboard() {
         $user = auth()->guard("web")->user();
         $courseIds = ProgressTracking::where("user_id", $user->id)
@@ -34,6 +36,12 @@ class CourseController extends Controller
         $courses = Course::all();
         $categories = CourseCategory::all();
         return view('courses', ['courses'=> $courses, 'categories' => $categories]);
+    }
+
+    public function createCourseView() {
+        $categories = CourseCategory::all();
+        $courseBadges = CourseBadge::all();
+        return view('create-course', ['categories' => $categories, 'courseBadges' => $courseBadges]);
     }
 
     public function courseEditView(Course $course) {
@@ -80,18 +88,25 @@ class CourseController extends Controller
     }
 
     public function createCourse(Request $request) {
-        $body = $request->validate([
+        $validated = $request->validate([
             "title" => ["required", "min:3", "max:255"],
             "description" => ["required", "min:3", "max:255"],
-            "thumbnail"=> ["required"],
-            "badge"=> ["required", "in:Beginner,Intermediate,Advanced"],
+            "thumbnail"=> 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            "badge_id"=> ["required"],
+            "category_id"=> ["required"],
             "overview"=> ["required"],
             "time_to_complete"=> ["required"],
             "price"=> ["required"],
         ]);
 
-        $body['owner_id'] = auth()->guard('web')->user()->id;
-        $course = Course::create($body);
+        if ($request->file('thumbnail') != null) {
+            $validated['thumbnail'] = $request->file('thumbnail')->store('thumbnails', 'public');
+        } else {
+            $validated['thumbnail'] = 'nothing.jpg';
+        }
+    
+        $validated['owner_id'] = auth()->guard('web')->user()->id;
+        $course = Course::create($validated);
         return redirect("/course/{$course->id}/edit");
     }
     
