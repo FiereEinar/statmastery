@@ -45,4 +45,11 @@ class BookingController extends Controller
             'success' => true,
         ]);
     }
+
+    public function deleteBooking(Event $event) {
+        $event->delete();
+        return response()->json([
+            'success' => true,
+        ]);
+    }
 }

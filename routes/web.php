@@ -38,6 +38,7 @@ Route::middleware(['auth.check'])->group(function () {
     })->name('booking.array');
     Route::post('/v1/api/booking', [BookingController::class, 'createBooking']);
     Route::put('/v1/api/booking/{event}', [BookingController::class, 'updateBooking']);
+    Route::delete('/v1/api/booking/{event}', [BookingController::class, 'deleteBooking']);
 });
 
 // Public course route

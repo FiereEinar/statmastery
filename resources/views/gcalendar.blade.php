@@ -31,9 +31,12 @@
 
       document.addEventListener('DOMContentLoaded', function() {
         const calendarEl = document.getElementById('calendar')
+
+        // Initialize the calendar
         calendar = new FullCalendar.Calendar(calendarEl, {
           events: '{{ route('booking.array') }}',
           initialView: 'dayGridMonth',
+          editable: true,
           headerToolbar: {
             left: 'prev,next today',
             center: 'title',
@@ -44,7 +47,6 @@
             $('#event-modal').removeClass('hidden');
           },
           eventClick: function(info) {
-            console.log(info.event)
             const event = info.event;
 
             $('#title').val(event.title);
@@ -60,11 +62,21 @@
               initializeStartDateEndDateFormat('Y-m-d H:i', false);
             }
 
+            $('#deleteButtonContainer').removeClass('hidden');
             $('#event-modal').removeClass('hidden');
+          },
+          eventDrop: function(info) {
+            updateEventOnDrop(info.event);
+          },
+          eventResize: function(info) {
+            updateEventOnDrop(info.event);
           }
-        })
+        });
+
+        // Render the calendar
         calendar.render();
 
+        // Initialize allDay checkbox
         $('#isAllDay').change(function() {
           let isAllDay = $(this).prop('checked');
           if (isAllDay) {
@@ -83,6 +95,7 @@
         });
       })
 
+      // Initialize date picker
       function initializeStartDateEndDateFormat(format, allDay) {
         let timePicker = !allDay;
         $('#startDateTime').datetimepicker({
@@ -95,6 +108,7 @@
         });
       }
 
+      // Set default date
       function setDefaultDate(startingDate, endingDate, allDay) {
         let startDate, endDate;
         let isAllDay = allDay ?? $('#isAllDay').prop('checked');
@@ -109,6 +123,44 @@
         }
         $('#startDateTime').val(startDate);
         $('#endDateTime').val(endDate);
+      }
+
+      // Update event on drop when dragged and resized
+      function updateEventOnDrop(updatedEvent) {
+        let eventID = updatedEvent.id;
+        let url = '/v1/api/booking/' + eventID;
+
+        let data = {
+          is_all_day: updatedEvent.extendedProps.is_all_day,
+          title: updatedEvent.title,
+          description: updatedEvent.extendedProps.description,
+          _method: "PUT",
+        }
+
+        if (updatedEvent.extendedProps.is_all_day) {
+          data.start = datefns.format(updatedEvent.start, 'yyyy-MM-dd');
+          data.end = datefns.format(updatedEvent.end, 'yyyy-MM-dd');
+        } else {
+          data.start = datefns.format(updatedEvent.start, 'yyyy-MM-dd HH:mm:ss');
+          data.end = datefns.format(updatedEvent.end, 'yyyy-MM-dd HH:mm:ss');
+        }
+
+        $.ajax({
+          type: 'POST',
+          url: url,
+          dataType: 'json',
+          data: data,
+          success: function(res) {
+            console.log(res)
+            if (res.success) {
+              calendar.refetchEvents();
+              closeModal();
+              resetModal();
+            } else {
+              alert('Something went wrong', res.message); 
+            }
+          }
+        })
       }
 
     </script>
@@ -187,7 +239,10 @@
 
             <input id="eventID" name="eventID" class="input w-full" type="text" hidden >
             
-            <div class="flex justify-end">
+            <div class="flex justify-end gap-3">
+              <div id="deleteButtonContainer" class="hidden">
+                <x-button id="deleteButton" type="button" negative label="Delete" right-icon="trash" interaction="negative" />
+              </div>
               <x-button id="submitButton" type="button" primary label="Submit" />
             </div>
           </form>
@@ -201,17 +256,21 @@
       const modal = document.getElementById('event-modal');
       const modalContent = document.getElementById('event-modal-content');
 
+      // Close modal when user clicks on backdrop
       modal.addEventListener('click', function (event) {
         // If the user clicked directly on the backdrop (not on modal content)
         if (!modalContent.contains(event.target)) {
-          modal.classList.add('hidden');
+          closeModal();
         }
       });
 
+      // Close modal when user clicks on close button
       function closeModal() {
+        document.getElementById('deleteButtonContainer').classList.add('hidden');
         document.getElementById('event-modal').classList.add('hidden');
-      }
+      } 
 
+      // Reset modal
       function resetModal() {
         document.getElementById('event-modal').classList.add('hidden');
         document.getElementById('title').value = '';
@@ -222,12 +281,14 @@
     </script>
 
     <script type="module">
+      // csrf token setup
       $.ajaxSetup({
         headers: {
           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
       });
-      
+
+      // Add event
       $('#submitButton').click(function() {
         let url = '/v1/api/booking';
         let eventID = $('#eventID').val();
@@ -262,6 +323,26 @@
           }
         })
       });
+
+      // Delete event
+      $('#deleteButton').click(function() {
+        const eventID = $('#eventID').val();
+        $.ajax({
+          type: 'DELETE',
+          url: '/v1/api/booking/' + eventID,
+          dataType: 'json',
+          success: function(res) {
+            console.log(res)
+            if (res.success) {
+              calendar.refetchEvents();
+              closeModal();
+              resetModal();
+            } else {
+              alert('Something went wrong', res.message); 
+            }
+          }
+        })
+      })
     </script>
 	</body>
 </html>
