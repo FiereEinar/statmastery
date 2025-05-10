@@ -65,6 +65,7 @@
             </div>
             <div class="w-full flex flex-col justify-center items-center gap-3">
               <x-button class="w-full" type="submit" primary label="Login" rounded="2xl" />
+              <x-button href="/google/redirect" class="w-full" type="button" primary label="Login With Google" rounded="2xl" />
               <p class="text-xs text-neutral-content">Don&apos;t have an account? <a class="underline" href="/signup">Signup</a></p>
             </div>
           </div>

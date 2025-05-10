@@ -23,7 +23,7 @@ class AuthController extends Controller
             'password' => ['required'],
         ]);
 
-        if (auth()->guard('web')->attempt(['email' => $body['email'],'password'=> $body['password']])) {
+        if (auth()->guard('web')->attempt(['email' => $body['email'], 'password'=> $body['password']])) {
             $request->session()->regenerate();
             return redirect('/dashboard');
         } else {
