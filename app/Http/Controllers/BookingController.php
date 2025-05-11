@@ -192,7 +192,6 @@ class BookingController extends Controller
             'start' => ['required'],
             'end' => ['required'],
             'description' => ['required'],
-            'google_event_id' => ['nullable'], // optional
         ]);
 
         $currentUser = auth()->guard('web')->user();
@@ -229,14 +228,23 @@ class BookingController extends Controller
     
             $service = new GoogleCalendar($client);
     
+            $start = Carbon::parse($event->start, 'Asia/Manila')->setTimezone('Asia/Manila')->toRfc3339String();
+            $end = Carbon::parse($event->end, 'Asia/Manila')->setTimezone('Asia/Manila')->toRfc3339String();
+
             $gEvent = $service->events->get('primary', $event->google_event_id);
             $gEvent->setSummary($event->title);
             $gEvent->setDescription($event->description);
-            $gEvent->setStart(new EventDateTime(['dateTime' => $event->start, 'timeZone' => 'Asia/Manila']));
-            $gEvent->setEnd(new EventDateTime(['dateTime' => $event->end, 'timeZone' => 'Asia/Manila']));
-            // $gEvent->setStart(['dateTime' => $event->start, 'timeZone' => 'Asia/Manila']);
-            // $gEvent->setEnd(['dateTime' => $event->end, 'timeZone' => 'Asia/Manila']);
-    
+
+            $gEvent->setStart(new EventDateTime([
+                'dateTime' => $start,
+                'timeZone' => 'Asia/Manila',
+            ]));
+
+            $gEvent->setEnd(new EventDateTime([
+                'dateTime' => $end,
+                'timeZone' => 'Asia/Manila',
+            ]));
+            
             $service->events->update('primary', $event->google_event_id, $gEvent);
         } catch (Exception $e) {
             throw $e;
