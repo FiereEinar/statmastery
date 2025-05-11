@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('event_id')->nullable();
             $table->text('description');
-            $table->integer('status')->default(0)->nullable();
+            $table->integer('status')->default(0)->nullable(); // 0 = pending, 1 = approved
             $table->integer('is_all_day')->default(0)->nullable();
             $table->softDeletes();
             $table->timestamps();

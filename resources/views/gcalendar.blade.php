@@ -47,10 +47,12 @@
             $('#event-modal').removeClass('hidden');
           },
           eventClick: function(info) {
+            console.log(info)
             const event = info.event;
 
             $('#title').val(event.title);
             $('#eventID').val(event.id);
+            $('#googleEventID').val(event.extendedProps.gogle_event_id);
             $('#description').val(event.extendedProps.description);
             $('#isAllDay').prop('checked', event.allDay); 
             
@@ -128,12 +130,14 @@
       // Update event on drop when dragged and resized
       function updateEventOnDrop(updatedEvent) {
         let eventID = updatedEvent.id;
+        let googleEventID = updatedEvent.extendedProps.google_event_id;
         let url = '/v1/api/booking/' + eventID;
-
+        console.log(googleEventID);
         let data = {
           is_all_day: updatedEvent.extendedProps.is_all_day,
           title: updatedEvent.title,
           description: updatedEvent.extendedProps.description,
+          google_event_id: googleEventID,
           _method: "PUT",
         }
 
@@ -169,6 +173,18 @@
 		<x-topbar />
 		
     <div class="py-8 px-32">
+      <div class="flex gap-4 pl-6">
+        <p>Legend: </p>
+        <div class="flex items-center gap-1">
+          <div class="size-4 rounded-full bg-[#3788D8]"></div>
+          <p>Approved</p>
+        </div>
+        <div class="flex items-center gap-1">
+          <div class="size-4 rounded-full bg-[#fcba03]"></div>
+          <p>Pending</p>
+        </div>
+      </div>
+
       <div class="card">
         <div class="card-body">
           <div id="calendar"></div>
@@ -238,6 +254,7 @@
             </fieldset>
 
             <input id="eventID" name="eventID" class="input w-full" type="text" hidden >
+            <input id="googleEventID" name="googleEventID" class="input w-full" type="text" hidden >
             
             <div class="flex justify-end gap-3">
               <div id="deleteButtonContainer" class="hidden">

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\EventResource;
 use App\Models\Event;
 use Carbon\Carbon;
+use Exception;
+use Google_Service_Exception;
 use Illuminate\Http\Request;
 use Google\Client;
 use Google\Service\Calendar as GoogleCalendar;
@@ -65,6 +67,15 @@ class BookingController extends Controller
                     continue; // Skip if already saved locally
                 }
 
+                // date format = "2023-01-01 00:00:00"
+                // $startDateArr[0] = "2023-01-01"
+                // $startDateArr[1] = "00:00:00"
+                // $startDateArr = explode(' ', $gEvent->start);
+
+                // dd([
+                //     $gEvent->start,
+                //     Carbon::parse($gEvent->start->dateTime)->format('Y-m-d H:i'),
+                // ]);
                 $events[] = [
                     'title' => $gEvent->summary,
                     'start' => Carbon::parse($gEvent->start->dateTime)->format('Y-m-d H:i'),
@@ -72,11 +83,19 @@ class BookingController extends Controller
                     'description' => $gEvent->description,
                     // 'event_id' => $gEvent->id,
                     'googe_event_id' => $gEvent->id,
-                    'source' => 'google'
+                    'source' => 'google',
+                    'status' => 1
                 ];
             }
 
-            dd($googleEvents);
+            for ($i = 0; $i < count($events); $i++) {
+                // if pending status, color yellow
+                if ($events[$i]['status'] === 0) {
+                    $events[$i]['backgroundColor'] = '#fcba03';
+                }
+            }
+
+            // dd([$events, $googleEvents]);
         }
 
         return $events;
@@ -147,11 +166,15 @@ class BookingController extends Controller
         if ($client->isAccessTokenExpired()) return;
 
         $service = new GoogleCalendar($client);
+
+        $startDate = Carbon::parse($event->start, 'Asia/Manila')->setTimezone('Asia/Manila')->toRfc3339String();
+        $endDate = Carbon::parse($event->end, 'Asia/Manila')->setTimezone('Asia/Manila')->toRfc3339String();
+
         $gEvent = new GoogleEvent([
             'summary' => $event->title,
             'description' => $event->description,
-            'start' => ['dateTime' => Carbon::parse($event->start)->toRfc3339String(), 'timeZone' => 'Asia/Manila'],
-            'end' => ['dateTime' => Carbon::parse($event->end)->toRfc3339String(), 'timeZone' => 'Asia/Manila'],
+            'start' => ['dateTime' => $startDate, 'timeZone' => 'Asia/Manila'],
+            'end' => ['dateTime' => $endDate, 'timeZone' => 'Asia/Manila'],
             'creator' => ['id' => auth()->guard('web')->user()->id],
         ]);
 
@@ -169,6 +192,7 @@ class BookingController extends Controller
             'start' => ['required'],
             'end' => ['required'],
             'description' => ['required'],
+            'google_event_id' => ['nullable'], // optional
         ]);
 
         $currentUser = auth()->guard('web')->user();
@@ -179,34 +203,44 @@ class BookingController extends Controller
         }
 
         $event->update($validated);
+        $error = null;
         
         if ($event->google_event_id && Session::has('google_token')) {
-            $this->updateGoogleCalendarEvent($event);
+            try {
+                $this->updateGoogleCalendarEvent($event);
+            } catch (Google_Service_Exception $e) {
+                $error = $e->getMessage();
+            }
         }
 
         return response()->json([
             'success' => true,
+            'error' => $error
         ]);
     }
 
     protected function updateGoogleCalendarEvent(Event $event)
     {
-        $client = new Client();
-        $guzzleClient = new \GuzzleHttp\Client(array( 'curl' => array( CURLOPT_SSL_VERIFYPEER => false, ), ));
-        $client->setHttpClient($guzzleClient);
-        $client->setAccessToken(Session::get('google_token'));
-
-        $service = new GoogleCalendar($client);
-
-        $gEvent = $service->events->get('primary', $event->google_event_id);
-        $gEvent->setSummary($event->title);
-        $gEvent->setDescription($event->description);
-        $gEvent->setStart(new EventDateTime(['dateTime' => $event->start, 'timeZone' => 'Asia/Manila']));
-        $gEvent->setEnd(new EventDateTime(['dateTime' => $event->end, 'timeZone' => 'Asia/Manila']));
-        // $gEvent->setStart(['dateTime' => $event->start, 'timeZone' => 'Asia/Manila']);
-        // $gEvent->setEnd(['dateTime' => $event->end, 'timeZone' => 'Asia/Manila']);
-
-        $service->events->update('primary', $event->google_event_id, $gEvent);
+        try {
+            $client = new Client();
+            $guzzleClient = new \GuzzleHttp\Client(array( 'curl' => array( CURLOPT_SSL_VERIFYPEER => false, ), ));
+            $client->setHttpClient($guzzleClient);
+            $client->setAccessToken(Session::get('google_token'));
+    
+            $service = new GoogleCalendar($client);
+    
+            $gEvent = $service->events->get('primary', $event->google_event_id);
+            $gEvent->setSummary($event->title);
+            $gEvent->setDescription($event->description);
+            $gEvent->setStart(new EventDateTime(['dateTime' => $event->start, 'timeZone' => 'Asia/Manila']));
+            $gEvent->setEnd(new EventDateTime(['dateTime' => $event->end, 'timeZone' => 'Asia/Manila']));
+            // $gEvent->setStart(['dateTime' => $event->start, 'timeZone' => 'Asia/Manila']);
+            // $gEvent->setEnd(['dateTime' => $event->end, 'timeZone' => 'Asia/Manila']);
+    
+            $service->events->update('primary', $event->google_event_id, $gEvent);
+        } catch (Exception $e) {
+            throw $e;
+        }
     }
 
     public function deleteBooking(Event $event) {
