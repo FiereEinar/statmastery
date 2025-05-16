@@ -18,9 +18,9 @@ class CourseFactory extends Factory
     {
         return [
             'owner_id' => 1,
-            'title' => $this->faker->sentence,
+            'title' => $this->faker->title,
             'description' => $this->faker->paragraph,
-            'overview' => $this->faker->paragraph(6)."\n\n".$this->faker->paragraph(6)."\n\n".$this->faker->paragraph(6),
+            'overview' => $this->faker->paragraph(nbSentences: 6)."\n\n".$this->faker->paragraph(6)."\n\n".$this->faker->paragraph(6),
             'thumbnail' => 'images/courses/placeholder.png',
             'badge_id' => $this->faker->numberBetween(1, 3),
             'time_to_complete' => '1 Month',

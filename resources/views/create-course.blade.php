@@ -65,7 +65,7 @@
           <div class="w-[500px]">
             <x-custom-image 
             source="/storage/nothing.png" 
-            defaultImg="images/courses/placeholder.png"
+            defaultImg="storage/thumbnails/placeholder.png"
             alt="Course image"
             className="w-full object-cover object-center"
             />

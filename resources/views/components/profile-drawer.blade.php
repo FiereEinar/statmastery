@@ -57,7 +57,18 @@
                     </a>
 
                     <div class="w-full border-b-2 border-neutral-content h-1 my-6"></div>
+
+                    <div class="flex gap-1 items-center">
+                        <x-icon name="calendar" />
+                        <h4 class="font-semibold">Booking</h4>
+                    </div>
+                    <a href="/gcalendar" class="flex gap-1 items-center justify-between hover:text-primary">
+                        <h4>Book Event</h4>
+                        <x-icon class="text-primary" name="chevron-right" />
+                    </a>
                     
+                    <div class="w-full border-b-2 border-neutral-content h-1 my-6"></div>
+
                     <div class="flex gap-1 items-center">
                         <x-icon name="user-circle" />
                         <h4 class="font-semibold">Profile</h4>

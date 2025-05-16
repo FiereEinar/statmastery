@@ -5,9 +5,14 @@ namespace Database\Seeders;
 use App\Models\Course;
 use App\Models\CourseBadge;
 use App\Models\CourseCategory;
+use App\Models\CourseComment;
 use App\Models\CourseModule;
 use App\Models\CourseModuleContent;
 use App\Models\CourseModuleContentType;
+use App\Models\CourseReview;
+use App\Models\Enrollment;
+use App\Models\ProgressTracking;
+use App\Models\Quiz;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -26,6 +31,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'nick@gmail.com',
             'password' => '123123',
         ]);
+        User::factory()->count(5)->create();
 
         CourseBadge::factory()->create([
             'name'=> 'Beginner',
@@ -37,7 +43,21 @@ class DatabaseSeeder extends Seeder
             'name'=> 'Advanced',
         ]);
 
-        CourseCategory::factory()->count(5)->create();
+        CourseCategory::factory()->create([
+            "name" => "Advanced",
+        ]);
+        CourseCategory::factory()->create([
+            "name" => "Fundamentals",
+        ]);
+        CourseCategory::factory()->create([
+            "name" => "Analysis",
+        ]);
+        CourseCategory::factory()->create([
+            "name" => "Geometry",
+        ]);
+        CourseCategory::factory()->create([
+            "name" => "Probability",
+        ]);
 
         Course::factory()->create([
             "title" => "Statistics & Probability",
@@ -87,6 +107,31 @@ class DatabaseSeeder extends Seeder
             "price" => 1400,
         ]);
 
+        Course::factory()->create([
+            "title" => "Linear Algebra",
+            "description" => "Master the art of matrix operations, vector spaces, and linear equations. Perfect for math enthusiasts and computer science beginners.",
+            "thumbnail" => "nothing.jpg",
+            "time_to_complete" => "4 Months",
+            "price" => 600,
+        ]);
+
+        Course::factory()->create([
+            "title" => "Geometry Essentials",
+            "description" => "Learn the basics of geometry, including points, lines, planes, and angles. Perfect for students in math, physics, and engineering.",
+            "thumbnail" => "nothing.jpg",
+            "time_to_complete" => "2 Months",
+            "price" => 500,
+        ]);
+
+
+        Course::factory()->create([
+            "title" => "Calculus Essentials",
+            "description" => "Understand the core concepts of limits, derivatives, and integrals. A must-have course for STEM students aiming to master continuous change.",
+            "thumbnail" => "nothing.jpg",
+            "time_to_complete" => "8 Months",
+            "price" => 1400,
+        ]);
+
         CourseModuleContentType::factory()->create([
             "name" => "content",
         ]);
@@ -100,6 +145,47 @@ class DatabaseSeeder extends Seeder
         $this->createCourseModules(4, 6,);
         $this->createCourseModules(5, 10);
         $this->createCourseModules(6, 5);
+
+        CourseComment::factory(20)->create();
+        CourseReview::factory(20)->create();
+
+        Enrollment::create(["user_id" => 1, "course_id" => 1]);
+        Enrollment::create(["user_id" => 1, "course_id" => 4]);
+        Enrollment::create(["user_id" => 1, "course_id" => 3]);
+
+        Enrollment::create(["user_id" => 2, "course_id" => 4]);
+        Enrollment::create(["user_id" => 2, "course_id" => 1]);
+
+        Enrollment::create(["user_id" => 3, "course_id" => 1]);
+
+        for ($i = 1; $i <= 3; $i++) {
+            ProgressTracking::create([
+                'user_id' => 1,
+                'course_id' => 1,
+                'module_id' => 1,
+                'content_id' => $i,
+            ]);
+        }
+
+        for ($i = 1; $i <= 3; $i++) {
+            ProgressTracking::create([
+                'user_id' => 1,
+                'course_id' => 3,
+                'module_id' => 1,
+                'content_id' => $i,
+            ]);
+        }
+
+        for ($i = 1; $i <= 3; $i++) {
+            ProgressTracking::create([
+                'user_id' => 2,
+                'course_id' => 1,
+                'module_id' => 1,
+                'content_id' => $i,
+            ]);
+        }
+
+        
     }
 
     private function createCourseModules($courseID, $moduleCount = 5) {
@@ -115,6 +201,21 @@ class DatabaseSeeder extends Seeder
                 CourseModuleContent::factory()->create([
                     "course_module_id" => $this->module_count,
                     "content_number"=> $j,
+                ]);
+            }
+
+            // quiz content at the end of the module
+            $quizContent = CourseModuleContent::factory()->create([
+                "course_module_id" => $this->module_count,
+                "content_number"=> $j + 1,
+                "content_type_id" => 2,
+            ]);
+
+            $quizAmount = 10;
+
+            for ($k = 1; $k <= $quizAmount; $k++) {
+                Quiz::factory()->create([
+                    "course_module_content_id" => $quizContent->id,
                 ]);
             }
             
