@@ -16,9 +16,11 @@ class GoogleCalendarController extends Controller
         $client = new Client();
         $guzzleClient = new \GuzzleHttp\Client(array( 'curl' => array( CURLOPT_SSL_VERIFYPEER => false, ), ));
         $client->setHttpClient($guzzleClient);
+        
         $client->setClientId(config('google.client_id'));
         $client->setClientSecret(config('google.client_secret'));
         $client->setRedirectUri(config('google.redirect_uri'));
+        
         $client->setScopes(config('google.scopes'));
         $client->setAccessType('offline');
         $client->setPrompt('consent');

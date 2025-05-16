@@ -285,6 +285,7 @@
       function closeModal() {
         document.getElementById('deleteButtonContainer').classList.add('hidden');
         document.getElementById('event-modal').classList.add('hidden');
+        resetModal();
       } 
 
       // Reset modal

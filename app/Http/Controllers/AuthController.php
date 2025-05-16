@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\GoogleToken;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Google\Client;
+use Illuminate\Support\Facades\DB;
 
 class AuthController extends Controller
 {
@@ -53,5 +56,51 @@ class AuthController extends Controller
     public function logout() {
         auth()->guard('web')->logout();
         return redirect('/login');
+    }
+
+    public function redirectToGoogleAdmin() {
+        $client = new Client();
+        $guzzleClient = new \GuzzleHttp\Client(array( 'curl' => array( CURLOPT_SSL_VERIFYPEER => false, ), ));
+        $client->setHttpClient($guzzleClient);
+
+        $client->setClientId(config('google.client_id'));
+        $client->setClientSecret(config('google.client_secret'));
+        $client->setRedirectUri(config('google.redirect_uri_admin'));
+
+        $client->setScopes(config('google.scopes'));
+        $client->setAccessType('offline'); // ensures refresh_token is returned
+        $client->setPrompt('consent');     // forces showing the consent screen
+        $client->setIncludeGrantedScopes(true);
+
+        $url = $client->createAuthUrl();
+        return redirect($url);
+    }
+
+    public function handleGoogleCallbackAdmin(Request $request) {
+        $client = new Client();
+        $guzzleClient = new \GuzzleHttp\Client(array( 'curl' => array( CURLOPT_SSL_VERIFYPEER => false, ), ));
+        $client->setHttpClient($guzzleClient);
+
+        $client->setClientId(config('google.client_id'));
+        $client->setClientSecret(config('google.client_secret'));
+        $client->setRedirectUri(config('google.redirect_uri_admin'));
+
+        $token = $client->fetchAccessTokenWithAuthCode(request('code'));
+
+        if (isset($token['error'])) {
+            return redirect()->route('error.page')->with('error', $token['error_description']);
+        }
+
+        // Save tokens (at least the refresh_token) for admin
+        GoogleToken::updateOrInsert(
+            ['user_identifier' => 'admin'],
+            [
+                'access_token' => $token['access_token'],
+                'refresh_token' => $token['refresh_token'] ?? null,
+                'expires_in' => $token['expires_in'],
+            ]
+        );
+
+        return redirect()->route('dashboard')->with('success', 'Google Calendar connected!');
     }
 }

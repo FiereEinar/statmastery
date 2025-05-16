@@ -18,6 +18,10 @@ use Google\Service\Calendar\EventDateTime;
 class BookingController extends Controller
 {
     public function bookAppointmentView(){
+        if (Session::get('google_token') === null) {
+            return redirect('/google/redirect');
+        }
+        
         $events = $this->fetchGoogleAndLocalEvents();
         
         // dd($events);
@@ -146,10 +150,11 @@ class BookingController extends Controller
 
         $event = Event::create($validated);
 
+        // disabled now, it will still be pending, once approved, then it will be created in admin google calendar
         // Also create in Google Calendar
-        if (Session::has('google_token')) {
-            $this->createGoogleCalendarEvent($event);
-        }
+        // if (Session::has('google_token')) {
+        //     $this->createGoogleCalendarEvent($event);
+        // }
 
         return response()->json([
             'success' => true

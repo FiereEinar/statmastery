@@ -18,11 +18,20 @@ class CourseController extends Controller
 
     public function dashboard() {
         $user = auth()->guard("web")->user();
-        $courseIds = ProgressTracking::where("user_id", $user->id)
+
+        // This retreives all the courses that the user has progress on
+        // $courseIds = ProgressTracking::where("user_id", $user->id)
+        //     ->select("course_id")
+        //     ->distinct()
+        //     ->pluck("course_id");
+        // $takenCourses = Course::whereIn('id', $courseIds)->get();
+
+        // This retrieves courses that the user enrolled in, with progress or not
+        $enrollments = Enrollment::where("user_id", $user->id)
             ->select("course_id")
-            ->distinct()
             ->pluck("course_id");
-        $takenCourses = Course::whereIn('id', $courseIds)->get();
+            
+        $takenCourses = Course::whereIn('id', $enrollments)->get();
 
         return view('dashboard', ['takenCourses'=> $takenCourses]);
     }

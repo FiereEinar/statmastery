@@ -17,6 +17,9 @@ Route::get('/v1/api/logout', [AuthController::class, 'logout']);
 Route::post('/v1/api/login', [AuthController::class, 'login']);
 Route::post('/v1/api/signup', [AuthController::class, 'signup']);
 
+Route::get('/google/redirect/admin', [AuthController::class, 'redirectToGoogleAdmin']);
+Route::get('/google/callback/admin', [AuthController::class, 'handleGoogleCallbackAdmin']);
+
 Route::get('/google/redirect', [GoogleCalendarController::class, 'redirectToGoogle']);
 Route::get('/google/callback', [GoogleCalendarController::class, 'handleGoogleCallback']);
 
