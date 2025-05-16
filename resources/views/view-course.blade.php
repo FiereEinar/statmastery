@@ -46,7 +46,7 @@
                   <x-button type="submit" primary label="Enroll Now" />
                 </form>
               @endif
-              @if (auth()->guard('web')->check() && auth()->guard('web')->user()->id === $course->owner_id)
+              @if (auth()->guard('web')->check() && auth()->guard('web')->user()->id === $course->owner_id || auth()->guard('web')->user()->role === 'admin')
                 <x-button href="/course/{{ $course->id }}/edit" primary outline label="Edit Course" />
               @endif
             </div>

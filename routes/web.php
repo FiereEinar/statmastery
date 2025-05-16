@@ -5,8 +5,6 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\GoogleCalendarController;
 use App\Http\Controllers\UserController;
-use App\Http\Resources\EventResource;
-use App\Models\Event;
 use Illuminate\Support\Facades\Route;
 
 // Auth routes
@@ -29,7 +27,7 @@ Route::middleware(['auth.check'])->group(function () {
     Route::get('/gcalendar', [BookingController::class, 'bookAppointmentView']);
     
     // Course routes
-    Route::get('/course/create', [CourseController::class, 'createCourseView']);
+    Route::get('/course/create', [CourseController::class, 'createCourseView'])->middleware('auth.admin');
     Route::get('/course/{course}/edit', [CourseController::class, 'courseEditView']);
     Route::get('/course/{course}/content', [CourseController::class, 'viewCourseContent']);
     Route::get('/profile/update', [UserController::class, 'updateProfileView']);

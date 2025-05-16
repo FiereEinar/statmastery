@@ -47,10 +47,13 @@
                         <x-icon name="book-open" />
                         <h4 class="font-semibold">Course</h4>
                     </div>
+
+                    @if (auth()->user()->role === 'admin')
                     <a href="/course/create" class="flex gap-1 items-center justify-between hover:text-primary">
                         <h4>Create Course</h4>
                         <x-icon class="text-primary" name="chevron-right" />
                     </a>
+                    @endif
                     <a href="/course" class="flex gap-1 items-center justify-between hover:text-primary">
                         <h4>Browse Courses</h4>
                         <x-icon class="text-primary" name="chevron-right" />

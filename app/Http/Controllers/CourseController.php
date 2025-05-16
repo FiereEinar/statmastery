@@ -54,6 +54,9 @@ class CourseController extends Controller
     }
 
     public function courseEditView(Course $course) {
+        if (auth()->guard('web')->user()->id !== $course->owner_id) return redirect("/course/{$course->id}");
+        if (auth()->guard('web')->user()->role !== 'admin') return redirect("/course/{$course->id}");
+
         return view('edit-course', ['course'=> $course]);
     }
 
@@ -162,7 +165,9 @@ class CourseController extends Controller
             pluck('content_id')->
             toArray();
 
-        // WTFWTFWTF
+        // i want to make sure that the user is enrolled in the course
+        // if the user has not payed and the course is not free, then redirect
+        // otherwise create an enrollment for them
         // if (sizeof($userEnrollments) === 0) {
         //     if (!$hasPayed && $course->price !== 0) return redirect("/course/$course->id");
 
