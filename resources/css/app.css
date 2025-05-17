@@ -19,6 +19,37 @@
     animation: spin 2s linear infinite;
 }
 
+.cross-bg {
+    background-color: #ffffff;
+    opacity: 0.8;
+    background: radial-gradient(
+            circle,
+            transparent 20%,
+            #ffffff 20%,
+            #ffffff 80%,
+            transparent 80%,
+            transparent
+        ),
+        radial-gradient(
+                circle,
+                transparent 20%,
+                #ffffff 20%,
+                #ffffff 80%,
+                transparent 80%,
+                transparent
+            )
+            25px 25px,
+        linear-gradient(#aeb7f9 2px, transparent 2px) 0 -1px,
+        linear-gradient(90deg, #aeb7f9 2px, #ffffff 2px) -1px 0;
+    background-size: 50px 50px, 50px 50px, 25px 25px, 25px 25px;
+}
+
+.boxed-bg {
+    background-color: #ffffff;
+    background-image: url("https://www.transparenttextures.com/patterns/axiom-pattern.png");
+    /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
+}
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);

@@ -25,6 +25,7 @@
 		<x-topbar />
     <x-herosection />
     <x-featuredcourses :courses="$courses" />
+		{{-- <x-testimonials-section /> --}}
     <x-footer />
 	</body>
 </html>

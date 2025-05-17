@@ -21,13 +21,13 @@
 		<wireui:scripts />
 		<livewire:scripts />
 	</head>
-	<body>
-		<main class="h-[100dvh] flex justify-center items-center gap-10 bg-[url('../../public/images/auth-bg.jpg')] bg-cover bg-center">
+	<body class="boxed-bg">
+		<main class="h-[100dvh] flex justify-center items-center gap-10 bg-[url('../../public/images/auth-bg-transparent.png')] bg-cover bg-center">
       <div>
-        <div class="flex gap-2 items-center justify-center">
+        <a hre="/" class="flex gap-2 items-center justify-center">
           <img src="{{ asset('images/app-logo.jpg') }}" class="size-20" alt="app logo">
           <h1 class="text-4xl"><span class="text-primary">Stat</span>Mastery</h1>
-        </div>
+        </a>
         <div class="flex flex-col items-center justify-center">
           <img class="size-96" src="{{ asset('images/auth-hero.png') }}" alt="app heru img">
           <p class="text-center w-full">"Learn endlessly, Study Purposefully."</p>
