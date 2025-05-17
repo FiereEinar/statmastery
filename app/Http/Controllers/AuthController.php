@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Google\Client;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
@@ -38,13 +39,26 @@ class AuthController extends Controller
         $body = $request->validate([
             'name' => ['required', 'min:3', 'max:255'],
             'email' => ['required', 'email', Rule::unique('users', 'email')],
-            'password' => ['required','min:3', 'max:255'],
-            'confirmPassword' => ['required', 'min:3', 'max:255'],
+            // 'password' => [
+            //     'required',
+            //     'min:8',
+            //     'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/'
+            // ],
+            'password' => [
+                'required',
+                'confirmed',
+                Password::min(8)
+                    ->mixedCase() // at least one uppercase and one lowercase
+                    ->letters()   // at least one letter
+                    ->numbers()   // at least one number
+                    ->symbols()   // at least one symbol
+            ],
+            // 'confirmPassword' => ['required', 'min:3', 'max:255'],
         ]);
 
-        if ($body['password'] !== $body['confirmPassword']) {
-            return back()->withErrors(['all' => 'Passwords do not match'])->withInput();
-        }
+        // if ($body['password'] !== $body['confirmPassword']) {
+        //     return back()->withErrors(['all' => 'Passwords do not match'])->withInput();
+        // }
 
         $body['password'] = bcrypt($body['password']);
         $user = User::create($body);
