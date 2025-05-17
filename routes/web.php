@@ -27,7 +27,6 @@ Route::middleware(['auth.check'])->group(function () {
     Route::get('/gcalendar', [BookingController::class, 'bookAppointmentView']);
     
     // Course routes
-    Route::get('/course/create', [CourseController::class, 'createCourseView'])->middleware('auth.admin');
     Route::get('/course/{course}/edit', [CourseController::class, 'courseEditView']);
     Route::get('/course/{course}/content', [CourseController::class, 'viewCourseContent']);
     Route::get('/profile/update', [UserController::class, 'updateProfileView']);
@@ -37,12 +36,22 @@ Route::middleware(['auth.check'])->group(function () {
     Route::post('/v1/api/course/{course}/module', [CourseController::class, 'createCourseModule']);
     Route::post('/v1/api/course', [CourseController::class, 'createCourse']);
     
+    Route::get('/v1/api/booking/google/events', [BookingController::class, 'fetchGoogleEvents']);
     Route::get('/v1/api/booking/array', [BookingController::class, 'refetchEvents'])->name('booking.array');
     Route::post('/v1/api/booking', [BookingController::class, 'createBooking']);
     Route::put('/v1/api/booking/{event}', [BookingController::class, 'updateBooking']);
     Route::delete('/v1/api/booking/{event}', [BookingController::class, 'deleteBooking']);
+
+    // Admin routes
+    Route::middleware('auth.admin')->group(function () {
+        Route::get('/course/create', [CourseController::class, 'createCourseView']);
+        Route::get('/booking', [BookingController::class, 'bookingsView']);
+        Route::get('/user/progress', [UserController::class, 'usersProgressView']);
+        Route::get('/user/submission', [UserController::class, 'usersSubmissionsView']);
+
+        Route::put('/v1/api/booking/{event}/approve', [BookingController::class, 'approveEventHandler']);
+    });
 });
-Route::get('/v1/api/booking/google/events', [BookingController::class, 'fetchGoogleEvents']);
 
 // Public course route
 Route::get('/', [CourseController::class, 'home']);

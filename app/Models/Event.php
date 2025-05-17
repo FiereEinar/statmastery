@@ -17,4 +17,8 @@ class Event extends Model
         'end',
         'is_all_day'
     ];
+
+    public function user() {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

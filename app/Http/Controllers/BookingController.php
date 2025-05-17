@@ -17,6 +17,16 @@ use Google\Service\Calendar\EventDateTime;
 
 class BookingController extends Controller
 {
+    public function bookingsView() {
+        if (Session::get('google_token') === null) {
+            return redirect('/google/redirect');
+        }
+        
+        $events = $this->fetchGoogleAndLocalEvents();
+        $pendingEvents = Event::where('status', 0)->get();
+        return view('bookings', ['events' => $events, 'pendingEvents' => $pendingEvents]);
+    }
+
     public function bookAppointmentView(){
         if (Session::get('google_token') === null) {
             return redirect('/google/redirect');
@@ -29,6 +39,24 @@ class BookingController extends Controller
         return view('gcalendar', ['events' => $events]);
     }
 
+    public function approveEventHandler(Event $event) {
+        $currentUser = auth()->guard('web')->user();
+        if ($currentUser->role !== 'admin' || Session::get('google_token') === null) {
+            return response()->json([
+                'success' => false
+            ]);
+        }
+
+        $event->status = 1;
+        $event->save();
+
+        $this->createGoogleCalendarEvent($event);
+
+        return response()->json([
+            'success' => true
+        ]);
+    }
+
     protected function fetchGoogleCalendarEvents()
     {
         $client = new Client();
@@ -38,7 +66,7 @@ class BookingController extends Controller
 
         if ($client->isAccessTokenExpired()) {
             // Refresh or redirect to re-authenticate
-            return ['token expired'];
+            return redirect('/google/redirect');
         }
 
         $service = new GoogleCalendar($client);
@@ -168,7 +196,9 @@ class BookingController extends Controller
         $client->setHttpClient($guzzleClient);
         $client->setAccessToken(Session::get('google_token'));
 
-        if ($client->isAccessTokenExpired()) return;
+        if ($client->isAccessTokenExpired()) {
+            return redirect('/google/redirect');
+        };
 
         $service = new GoogleCalendar($client);
 
