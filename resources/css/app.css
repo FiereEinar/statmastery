@@ -50,6 +50,12 @@
     /* This is mostly intended for prototyping; please download the pattern and re-host for production environments. Thank you! */
 }
 
+.auth-shadow {
+    box-shadow: -10px -10px 0px 0px rgba(18, 63, 116, 0.74);
+    -webkit-box-shadow: -10px -10px 0px 0px rgba(18, 63, 116, 0.74);
+    -moz-box-shadow: -10px -10px 0px 0px rgba(18, 63, 116, 0.74);
+}
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);

@@ -8,8 +8,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Google\Client;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Http;
 
 class AuthController extends Controller
 {
@@ -23,16 +23,44 @@ class AuthController extends Controller
 
     public function login(Request $request){
         $body = $request->validate([
-            'email' => ['required'],
+            'email' => ['required', 'email'],
             'password' => ['required'],
+            'g-recaptcha-response' => ['required'],
         ]);
+
+        // HTTP client
+        $guzzleClient = new \GuzzleHttp\Client(array( 'curl' => array( CURLOPT_SSL_VERIFYPEER => false, ), ));
+        $response = $guzzleClient->post('https://www.google.com/recaptcha/api/siteverify', [
+            'form_params' => [
+                'secret' => env('RECAPTCHA_SECRET_KEY'),
+                'response' => $request->input('g-recaptcha-response'),
+                'remoteip' => $request->ip(),
+            ],
+        ]);
+
+        $data = json_decode((string) $response->getBody(), true);
+
+        if (!($data['success'] ?? false)) {
+            return back()->withErrors(['captcha' => 'CAPTCHA verification failed.'])->withInput();
+        }
+
+        // HTTPS client
+        // $captchaResponse = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+        //     'secret' => env('RECAPTCHA_SECRET_KEY'),
+        //     'response' => $body['g-recaptcha-response'],
+        //     'remoteip' => $request->ip(),
+        // ]);
+
+        // if (!$captchaResponse->json('success')) {
+        //     return back()->withErrors(['captcha' => 'CAPTCHA verification failed.'])->withInput();
+        // }
 
         if (auth()->guard('web')->attempt(['email' => $body['email'], 'password'=> $body['password']])) {
             $request->session()->regenerate();
             return redirect('/dashboard');
-        } else {
-            return back()->withErrors(['all' => 'Incorrect credentials'])->withInput();
         }
+        
+        return back()->withErrors(['all' => 'Incorrect credentials'])->withInput();
     }
 
     public function signup(Request $request) {
@@ -53,11 +81,34 @@ class AuthController extends Controller
                     ->numbers()   // at least one number
                     ->symbols()   // at least one symbol
             ],
-            // 'confirmPassword' => ['required', 'min:3', 'max:255'],
+            'g-recaptcha-response' => ['required'],
         ]);
 
-        // if ($body['password'] !== $body['confirmPassword']) {
-        //     return back()->withErrors(['all' => 'Passwords do not match'])->withInput();
+        // HTTP client
+        $guzzleClient = new \GuzzleHttp\Client(array( 'curl' => array( CURLOPT_SSL_VERIFYPEER => false, ), ));
+        $response = $guzzleClient->post('https://www.google.com/recaptcha/api/siteverify', [
+            'form_params' => [
+                'secret' => env('RECAPTCHA_SECRET_KEY'),
+                'response' => $request->input('g-recaptcha-response'),
+                'remoteip' => $request->ip(),
+            ],
+        ]);
+
+        $data = json_decode((string) $response->getBody(), true);
+
+        if (!($data['success'] ?? false)) {
+            return back()->withErrors(['captcha' => 'CAPTCHA verification failed.'])->withInput();
+        }
+
+        // HTTPS
+        // $captchaResponse = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+        //     'secret' => env('RECAPTCHA_SECRET_KEY'),
+        //     'response' => $body['g-recaptcha-response'],
+        //     'remoteip' => $request->ip(),
+        // ]);
+
+        // if (!$captchaResponse->json('success')) {
+        //     return back()->withErrors(['captcha' => 'CAPTCHA verification failed. Please try again.'])->withInput();
         // }
 
         $body['password'] = bcrypt($body['password']);

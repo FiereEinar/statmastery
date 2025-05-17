@@ -17,7 +17,7 @@
             <div class="flex flex-col bg-base-200 text-base-content min-h-full pr-4">
                 <div class="bg-[url('../../public/images/profile-cover.png')] bg-cover bg-center text-white py-3 px-5 flex items-center gap-3">
                     <x-custom-image 
-                    :source="'storage/'.auth()->guard('web')->user()->profile_picture ?? 'nothing.png'" 
+                    :source="'storage/'.(auth()->guard('web')->user()->profile_picture ?? 'nothing.png')" 
                     defaultImg="images/user-placeholder.jpg"
                     className="rounded-full w-12 h-12"
                     :alt="auth()->user()->name . ' profile picture'" 

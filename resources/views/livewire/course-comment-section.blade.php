@@ -22,7 +22,7 @@
         <div>
             <div class="flex gap-3 items-center">
                 <x-custom-image 
-                :source="'storage/' . $comment->user->profile_picture ?? 'nothing.png'" 
+                :source="'storage/' . ($comment->user->profile_picture ?? 'nothing.png')" 
                 defaultImg="images/user-placeholder.jpg"
                 className="rounded-full size-8"
                 :alt="$comment->user->name . ' profile picture'" 
