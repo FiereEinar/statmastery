@@ -5,6 +5,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\GoogleCalendarController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PasswordResetController;
 use Illuminate\Support\Facades\Route;
 
 // Auth routes
@@ -20,6 +21,12 @@ Route::get('/google/callback/admin', [AuthController::class, 'handleGoogleCallba
 
 Route::get('/google/redirect', [GoogleCalendarController::class, 'redirectToGoogle']);
 Route::get('/google/callback', [GoogleCalendarController::class, 'handleGoogleCallback']);
+
+Route::get('/forgot-password', [PasswordResetController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('/forgot-password', [PasswordResetController::class, 'sendResetLinkEmail'])->name('password.email');
+
+Route::get('/reset-password/{token}', [PasswordResetController::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password', [PasswordResetController::class, 'reset'])->name('password.update');
 
 // Apply 'auth.check' middleware to all course-related routes
 Route::middleware(['auth.check'])->group(function () {
