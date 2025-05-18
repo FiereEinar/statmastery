@@ -52,7 +52,7 @@ Create a `.env` file from the example template:
 cp .env.example .env
 ```
 
-Open `.env` and fill in the required values, required values have "<REQUIRED>" value in `.env.example`.
+Open `.env` and fill in the required values, required values have "REQUIRED" value in `.env.example`.
 
 ---
 
@@ -80,7 +80,7 @@ php artisan key:generate
 
 ---
 
-### 🧪 6. Run Migrations & Seeders (Optional)
+### 🧪 6. Run Migrations & Seeders
 
 ```bash
 php artisan migrate --seed

@@ -30,7 +30,7 @@
 					<x-icon name="chevron-left" />
 				</x-button>
 				
-				<h1 class="text-2xl">Submissions</h1>
+				<h1 class="text-2xl">Quizzes</h1>
 				
 				<h2 class="text-2xl ml-6">
 						{{ $currentCourse->title }}
@@ -73,7 +73,7 @@
                 <td>
 									<p class="font-bold">{{ $quiz->title }}</p>
                 </td>
-                <td>{{ $quiz->created_at }}</td>
+                <td>{{ $quiz->created_at->format('F j, Y g:i A') }}</td>
                 <td>{{ $quiz->contentQuizzes->count() }}</td>
                 <td>{{ $quiz->submissions->count() }}</td>
                 <th>

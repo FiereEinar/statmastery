@@ -84,7 +84,7 @@
                 <td>
 									<p class="font-bold">{{ $submission->user->name }}</p>
                 </td>
-                <td>{{ $submission->created_at }}</td>
+                <td>{{ $submission->created_at->format('F j, Y g:i A') }}</td>
                 <td>{{ $submission->score }}/{{ $quiz->contentQuizzes->count() }}</td>
                 <td>%{{ number_format($percentage, 2) }}</td>
                 <th>
