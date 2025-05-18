@@ -43,9 +43,6 @@ Statmastery is a comprehensive web-based learning platform designed to enhance t
 -   **📚 Browse and Enroll in Courses**  
     Users can explore free and paid courses and enroll with a click.
 
--   **🔔 Email Notifications**  
-    Get instant updates for bookings, enrollments, and reminders.
-
 Statmastery bridges the gap between structured learning and personalized education, creating a more dynamic, accessible, and engaging way to master mathematical concepts.
 
 <br>
