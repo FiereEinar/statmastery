@@ -38,6 +38,8 @@
 				</h2>
       </div>
 
+      <div class="w-full h-1 border-b-2 border-neutral-content"></div>
+      
 			<div class="space-y-4">
         <div class="flex items-center gap-2">
 					<h2 class="text-xl">Course Quizzes</h2>

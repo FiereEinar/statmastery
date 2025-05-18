@@ -39,10 +39,14 @@
           </h2>
         </div>
 
-        <div>
-          <a href="/user/progress/course/1/quizzes" class="hover:underline cursor-pointer">View Quizzes</a>
+        <div class="space-x-4 flex items-center gap-2">
+          <a href="/course/{{ $currentCourse->id }}/achievements" class="hover:underline cursor-pointer text-primary">Achievements</a>
+          <div class="h-6 border-l border-neutral-content w-1"></div>
+          <a href="/user/progress/course/{{ $currentCourse->id }}/quizzes" class="hover:underline cursor-pointer text-primary">View Quizzes</a>
         </div>
       </div>
+      
+      <div class="w-full h-1 border-b-2 border-neutral-content"></div>
 
 			<div class="space-y-4">
         @if ($currentCourse->students->count() == 0)

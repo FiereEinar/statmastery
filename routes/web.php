@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AchievementController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CourseController;
@@ -38,6 +39,7 @@ Route::middleware(['auth.check'])->group(function () {
     Route::get('/course/{course}/edit', [CourseController::class, 'courseEditView']);
     Route::get('/course/{course}/content', [CourseController::class, 'viewCourseContent']);
     Route::get('/profile/update', [UserController::class, 'updateProfileView']);
+    Route::get('/profile/achievements', [UserController::class, 'userAchievementsView']);
     
     Route::post('/v1/api/course/{course}/checkout', [CourseController::class, 'createACheckout']);
     Route::put('/v1/api/course/{course}', [CourseController::class, 'updateCourse']);
@@ -53,9 +55,12 @@ Route::middleware(['auth.check'])->group(function () {
     // Admin routes
     Route::middleware('auth.admin')->group(function () {
         Route::get('/course/create', [CourseController::class, 'createCourseView']);
+        Route::get('/course/{course}/achievements/create', [AchievementController::class, 'createAchievementView']);
+        Route::post('/v1/api/course/{course}/achievements/create', [AchievementController::class, 'createAchievement']);
         Route::get('/booking', [BookingController::class, 'bookingsView']);
         Route::get('/user/progress', [UserController::class, 'usersProgressView']);
         Route::get('/user/progress/course/{course}', [UserController::class, 'usersProgressOnCourseView']);
+        Route::get('/course/{course}/achievements', [AchievementController::class, 'courseAchievementsView']);
         Route::get('/user/progress/course/{course}/quizzes', [UserController::class, 'courseQuizzesView']);
         Route::get('/user/progress/course/{course}/quizzes/{content}', [UserController::class, 'courseQuizzesSubmissionsView']);
         Route::get('/user/progress/course/{course}/quizzes/{content}/download', [UserController::class, 'downloadCourseQuizzesSubmissionsView']);

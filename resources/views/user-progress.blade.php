@@ -39,13 +39,15 @@
 				<h1 class="text-2xl">My Courses ({{ $courses->count() }})</h1>
 				<x-button href="/course/create" icon="plus" flat primary label="Create Course" />
 			</div>
+
+      <div class="w-full h-1 border-b-2 border-neutral-content"></div>
+
 			<div class="space-y-4">
 				@foreach ($courses as $course)
 					<x-course-article :course="$course" />
 				@endforeach
 			</div>
 		</section>
-
     <x-footer />
 	</body>
 </html>

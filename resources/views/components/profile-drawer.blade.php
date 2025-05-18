@@ -86,7 +86,7 @@
                         <x-icon class="text-primary" name="chevron-right" />
                     </a>
                     <a href="/user/progress" class="flex gap-1 items-center justify-between hover:text-primary">
-                        <h4>Manage Progress</h4>
+                        <h4>Manage Courses</h4>
                         <x-icon class="text-primary" name="chevron-right" />
                     </a>
                     <div class="w-full border-b-2 border-neutral-content h-1 my-6"></div>
@@ -100,7 +100,7 @@
                         <h4>Update Profile</h4>
                         <x-icon class="text-primary" name="chevron-right" />
                     </a>
-                    <a href="/dashboard" class="flex gap-1 items-center justify-between hover:text-primary">
+                    <a href="/profile/achievements" class="flex gap-1 items-center justify-between hover:text-primary">
                         <h4>Achievements</h4>
                         <x-icon class="text-primary" name="chevron-right" />
                     </a>

@@ -274,4 +274,21 @@ class CourseController extends Controller
 
         return redirect()->away($checkoutUrl);
     }
+
+    public function uploadAchievement(Request $request, Course $course) {
+        $request->validate([
+            'title' => 'required|string',
+            'file' => 'required|file|mimes:pdf,jpg,png',
+        ]);
+
+        $path = $request->file('file')->store('achievements', 'public');
+
+        $course->achievement()->create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'file_path' => $path,
+        ]);
+
+        return back()->with('success', 'Achievement uploaded!');
+    }
 }

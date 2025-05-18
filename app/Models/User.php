@@ -54,4 +54,8 @@ class User extends Authenticatable
     public function quizSubmissions() {
         return $this->hasMany(QuizSubmission::class);
     }
+
+    public function achievements() {
+        return $this->hasMany(Achievement::class);
+    }
 }

@@ -17,6 +17,12 @@ class UserController extends Controller
         ]);
     }
 
+    public function userAchievementsView() {
+        return view('user-achievements', [
+            'user' => auth()->guard('web')->user()
+        ]);
+    }
+
     public function usersProgressView() {
         $user = auth()->guard("web")->user();
         $courses = Course::where('owner_id', $user->id)->get();

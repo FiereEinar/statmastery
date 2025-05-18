@@ -53,12 +53,14 @@
 					<h4 class="font-semibold text-lg">Latest Acheivements</h4>
 					<a href="#" class="text-xs text-primary hover:underline">Show all</a>
 				</div>
-				<div class="w-full h-28 border-2 border-neutral-content"></div>
-				<div class="w-full h-1 border-b-2 border-neutral-content"></div>
+				<div class="w-full h-28 p-2 border-2 border-neutral-content">
+					<p class="text-base-content/50 italic">No achievements yet.</p>
+				</div>
+				{{-- <div class="w-full h-1 border-b-2 border-neutral-content"></div>
 				<h4 class="font-semibold text-lg">Continue Learning</h4>
 				<div>
 
-				</div>
+				</div> --}}
 			</aside>
 		</div>
 		@else
