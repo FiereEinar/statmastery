@@ -158,24 +158,28 @@ class CourseController extends Controller
         if (!$currentUser) return redirect("/course/$course->id");
 
         $hasPayed = $this->isUserPaidOnCourse($currentUser->id, $course->id);
-        $userEnrollments = Enrollment::where('user_id', $currentUser->id)->where('course_id', $course->id)->get();
-        $userProgress = ProgressTracking::
-            where('user_id', $currentUser->id ?? '')->
-            where('course_id', $course->id)->
-            pluck('content_id')->
-            toArray();
+        $isUserEnrolled = Enrollment::where('user_id', $currentUser->id)
+            ->where('course_id', $course->id)
+            ->exists();
 
-        // i want to make sure that the user is enrolled in the course
-        // if the user has not payed and the course is not free, then redirect
-        // otherwise create an enrollment for them
-        // if (sizeof($userEnrollments) === 0) {
-        //     if (!$hasPayed && $course->price !== 0) return redirect("/course/$course->id");
+        // if not enrolled
+        if (!$isUserEnrolled) {
+            // if not paid and course isn't free, redirect
+            if (!$hasPayed && $course->price > 0) {
+                return redirect("/course/{$course->id}");
+            }
 
-        //     Enrollment::create([
-        //         'user_id' => $currentUser->id,
-        //         'course_id' => $course->id,
-        //     ]);
-        // }
+            // otherwise, auto-enroll the user
+            Enrollment::create([
+                'user_id' => $currentUser->id,
+                'course_id' => $course->id,
+            ]);
+        }
+
+        $userProgress = ProgressTracking::where('user_id', $currentUser->id)
+            ->where('course_id', $course->id)
+            ->pluck('content_id')
+            ->toArray();
 
         return view('course-content', [
             'course' => $course, 
