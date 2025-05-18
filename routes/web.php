@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/login', [AuthController::class, 'loginView']);
 Route::get('/signup', [AuthController::class, 'signupView']);
 
-Route::get('/v1/api/logout', [AuthController::class, 'logout']);
-Route::post('/v1/api/login', [AuthController::class, 'login']);
+Route::get('/v1/api/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/v1/api/login', [AuthController::class, 'login'])->name('login');
 Route::post('/v1/api/signup', [AuthController::class, 'signup']);
 
 Route::get('/google/redirect/admin', [AuthController::class, 'redirectToGoogleAdmin']);
@@ -54,6 +54,7 @@ Route::middleware(['auth.check'])->group(function () {
         Route::get('/course/create', [CourseController::class, 'createCourseView']);
         Route::get('/booking', [BookingController::class, 'bookingsView']);
         Route::get('/user/progress', [UserController::class, 'usersProgressView']);
+        Route::get('/user/progress/course/{course}', [UserController::class, 'usersProgressOnCourseView']);
         Route::get('/user/submission', [UserController::class, 'usersSubmissionsView']);
 
         Route::put('/v1/api/booking/{event}/approve', [BookingController::class, 'approveEventHandler']);

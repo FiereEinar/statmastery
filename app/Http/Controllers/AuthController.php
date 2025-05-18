@@ -118,9 +118,18 @@ class AuthController extends Controller
         return redirect('/dashboard');
     }
 
-    public function logout() {
+    public function logout(Request $request) {
         auth()->guard('web')->logout();
         return redirect('/login');
+        
+        // // Invalidate the session
+        // $request->session()->invalidate();
+        // $request->session()->regenerateToken();
+
+        // // Redirect to Google's logout endpoint with a return URL
+        // $googleLogoutUrl = 'https://accounts.google.com/Logout?continue=https://appengine.google.com/_ah/logout?continue=' . urlencode(route('login'));
+
+        // return redirect($googleLogoutUrl);
     }
 
     public function redirectToGoogleAdmin() {

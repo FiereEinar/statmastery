@@ -40,4 +40,12 @@ class Course extends Model
     public function reviews() {
         return $this->hasMany(CourseReview::class, 'course_id')->orderBy('created_at', 'desc');
     }
+
+    public function students() {
+        return $this->belongsToMany(User::class, 'enrollments', 'course_id', 'user_id');
+    }
+
+    public function enrollments() {
+        return $this->hasMany(Enrollment::class, 'course_id');
+    }
 }

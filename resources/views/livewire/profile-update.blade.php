@@ -23,9 +23,9 @@
         </div>
         <div>
         </div>
-      </section>
+    </section>
   
-      <section class="px-28 py-10">
+    <section class="px-28 py-10">
         <div class="rounded-md border border-neutral-content p-8 space-y-5">
             <h1 class="text-2xl">Update Profile</h1>
             <div class="space-y-2">

@@ -2,21 +2,21 @@
 
 namespace App\View\Components;
 
+use App\Models\Course;
 use Closure;
 use Illuminate\View\Component;
 use Illuminate\Contracts\View\View;
 
-class CourseImage extends Component
+class CourseArticle extends Component
 {
-    public string $source;
-    public string $className = '';
+    public Course $course;
+    
     /**
      * Create a new component instance.
      */
-    public function __construct(string $source, string $className = '')
+    public function __construct(Course $course)
     {
-        $this->source = $source;
-        $this->className = $className;
+        $this->course = $course;
     }
 
     /**
@@ -24,6 +24,6 @@ class CourseImage extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.course-image');
+        return view('components.course-article');
     }
 }

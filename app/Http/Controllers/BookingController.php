@@ -47,9 +47,11 @@ class BookingController extends Controller
             ]);
         }
 
+        // change the status to 1 (approved)
         $event->status = 1;
         $event->save();
 
+        // sync with Google Calendar
         $this->createGoogleCalendarEvent($event);
 
         return response()->json([
@@ -86,17 +88,16 @@ class BookingController extends Controller
     protected function fetchGoogleAndLocalEvents() {
         $events = Event::all()->toArray();
 
-        // Check if token is available
         if (Session::has('google_token')) {
             $googleEvents = $this->fetchGoogleCalendarEvents();
 
-            // Get all stored google_event_id values
+            // get all stored google_event_id values
             $localGoogleIds = Event::whereNotNull('google_event_id')->pluck('google_event_id')->toArray();
 
-            // Optionally merge or deduplicate them with local $events
+            // optionally merge or deduplicate them with local $events
             foreach ($googleEvents as $gEvent) {
                 if (in_array($gEvent->id, $localGoogleIds)) {
-                    continue; // Skip if already saved locally
+                    continue; // skip if already saved locally
                 }
 
                 // date format = "2023-01-01 00:00:00"
@@ -128,6 +129,8 @@ class BookingController extends Controller
             }
 
             // dd([$events, $googleEvents]);
+        } else {
+            return redirect('/google/redirect');
         }
 
         return $events;
