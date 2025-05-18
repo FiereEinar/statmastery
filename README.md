@@ -37,7 +37,14 @@ Statmastery is a comprehensive web-based learning platform designed to enhance t
 -   **🗂️ Manage Course Categories**  
     Organize courses into categories for easy browsing and discovery.
 
--   **🗓️ Booking System with Google**
+-   **🗓️ Booking System with Google Calendar Integration**  
+    Instructors can list their availability, and learners can book sessions that sync directly with Google Calendar.
+
+-   **📚 Browse and Enroll in Courses**  
+    Users can explore free and paid courses and enroll with a click.
+
+-   **🔔 Email Notifications**  
+    Get instant updates for bookings, enrollments, and reminders.
 
 Statmastery bridges the gap between structured learning and personalized education, creating a more dynamic, accessible, and engaging way to master mathematical concepts.
 
