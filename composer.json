@@ -14,7 +14,7 @@
         "laravel/tinker": "^2.10.1",
         "livewire/livewire": "^3.6",
         "lodash-php/lodash-php": "^0.1.0",
-        "mpdf/mpdf": "*",
+        "mpdf/mpdf": "^8.2",
         "wireui/wireui": "^2.4"
     },
     "require-dev": {

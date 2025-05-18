@@ -1,77 +1,79 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Quiz Report</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 40px;
+    }
 
-		<title>Laravel</title>
+    h2 {
+      font-size: 24px;
+      margin-bottom: 5px;
+    }
 
-		<!-- Fonts -->
-		<link rel="preconnect" href="https://fonts.bunny.net">
-		<link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
+    p.meta {
+      font-size: 12px;
+      color: #555;
+      margin-bottom: 20px;
+    }
 
-		<!-- Styles / Scripts -->
-		@if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
-			@vite(['resources/css/app.css', 'resources/js/app.js'])
-		@else
-			<style>
-			</style>
-		@endif
-		<livewire:styles />
-		<wireui:scripts />
-		<livewire:scripts />
-	</head>
-	<body>
-		<section class="px-28 py-10 space-y-6">
-			<div class="flex justify-start items-center gap-4">
-				<h2 class="text-2xl ml-6">
-						{{ $currentCourse->title }}, {{ $quiz->title }}
-						<p class="text-base-content/70 text-xs">Created at: {{ $currentCourse->created_at->format('F j, Y g:i A') }}</p>
-				</h2>
-      </div>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 14px;
+    }
 
-			<div class="space-y-4">
-        <div class="overflow-x-auto">
-          <table class="table">
-            <!-- head -->
-            <thead>
-              <tr>
-                <th>Learner</th>
-                <th>Submitted At</th>
-                <th>Score</th>
-                <th>Percentage</th>
-              </tr>
-            </thead>
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
 
-            <tbody>
-              <!-- row 1 -->
-              @foreach ($quiz->submissions as $submission)
-              <tr>
-                @php
-                  $percentage = $submission->score / $quiz->contentQuizzes->count() * 100;
-                @endphp
-                <td>
-									<p class="font-bold">{{ $submission->user->name }}</p>
-                </td>
-                <td>{{ $submission->created_at }}</td>
-                <td>{{ $submission->score }}/{{ $quiz->contentQuizzes->count() }}</td>
-                <td>%{{ number_format($percentage, 2) }}</td>
-              </tr>
-              @endforeach
-            </tbody>
+    th {
+      background-color: #f0f0f0;
+    }
 
-            <!-- foot -->
-            <tfoot>
-              <tr>
-                <th>Learner</th>
-                <th>Submitted At</th>
-                <th>Score</th>
-                <th>Percentage</th>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-			</div>
-		</section>
-	</body>
+    tr:nth-child(even) {
+      background-color: #fafafa;
+    }
+
+    .font-bold {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h2>{{ $currentCourse->title }}, {{ $quiz->title }}</h2>
+  <p class="meta">Created at: {{ $currentCourse->created_at->format('F j, Y g:i A') }}</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Learner</th>
+        <th>Submitted At</th>
+        <th>Score</th>
+        <th>Percentage</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach ($quiz->submissions as $submission)
+        @php
+          $percentage = $quiz->contentQuizzes->count() > 0
+            ? $submission->score / $quiz->contentQuizzes->count() * 100
+            : 0;
+        @endphp
+        <tr>
+          <td class="font-bold">{{ $submission->user->name }}</td>
+          <td>{{ $submission->created_at->format('F j, Y g:i A') }}</td>
+          <td>{{ $submission->score }}/{{ $quiz->contentQuizzes->count() }}</td>
+          <td>%{{ number_format($percentage, 2) }}</td>
+        </tr>
+      @endforeach
+    </tbody>
+  </table>
+</body>
 </html>
