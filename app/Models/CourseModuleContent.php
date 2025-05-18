@@ -32,4 +32,8 @@ class CourseModuleContent extends Model
     public function resources() {
         return $this->hasMany(Resource::class, 'course_module_content_id');
     }
+
+    public function submissions() {
+        return $this->hasMany(QuizSubmission::class, 'quiz_id');
+    }
 }

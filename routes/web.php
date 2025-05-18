@@ -55,7 +55,9 @@ Route::middleware(['auth.check'])->group(function () {
         Route::get('/booking', [BookingController::class, 'bookingsView']);
         Route::get('/user/progress', [UserController::class, 'usersProgressView']);
         Route::get('/user/progress/course/{course}', [UserController::class, 'usersProgressOnCourseView']);
-        Route::get('/user/submission', [UserController::class, 'usersSubmissionsView']);
+        Route::get('/user/progress/course/{course}/quizzes', [UserController::class, 'courseQuizzesView']);
+        Route::get('/user/progress/course/{course}/quizzes/{content}', [UserController::class, 'courseQuizzesSubmissionsView']);
+        Route::get('/user/{user}/submission/course/{course}', [UserController::class, 'usersSubmissionsView']);
 
         Route::put('/v1/api/booking/{event}/approve', [BookingController::class, 'approveEventHandler']);
     });

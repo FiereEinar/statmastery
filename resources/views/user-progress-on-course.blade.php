@@ -60,18 +60,24 @@
     </section>
 
 		<section class="px-28 py-10 space-y-6">
-			<div class="flex justify-start items-center gap-4">
-        <x-button href="/user/progress" flat primary>
-          <x-icon name="chevron-left" />
-        </x-button>
-				
-        <h1 class="text-2xl">Learners</h1>
-        
-        <h2 class="text-2xl ml-6">
-            {{ $currentCourse->title }}
-            <p class="text-base-content/70 text-xs">Created at: {{ $currentCourse->created_at }}</p>
-        </h2>
-			</div>
+      <div class="flex items-center justify-between">
+        <div class="flex justify-start items-center gap-4">
+          <x-button href="/user/progress" flat primary>
+            <x-icon name="chevron-left" />
+          </x-button>
+          
+          <h1 class="text-2xl">Learners</h1>
+          
+          <h2 class="text-2xl ml-6">
+              {{ $currentCourse->title }}
+              <p class="text-base-content/70 text-xs">Created at: {{ $currentCourse->created_at->format('F j, Y g:i A') }}</p>
+          </h2>
+        </div>
+
+        <div>
+          <a href="/user/progress/course/1/quizzes" class="hover:underline cursor-pointer">View Quizzes</a>
+        </div>
+      </div>
 
 			<div class="space-y-4">
         @if ($currentCourse->students->count() == 0)
@@ -125,12 +131,12 @@
                     </div>
                   </div>
                 </td>
-                <td>{{ $enrollment->created_at }}</td>
+                <td>{{ $enrollment->created_at->format('F j, Y g:i A') }}</td>
                 <td>%{{ number_format($usersProgress[$enrollment->user->id]['percentage'], 2) }}</td>
                 <td>{{ $usersProgress[$enrollment->user->id]['completed'] }}/{{ $courseModuleContentCount }}</td>
                 <th>
-                  <a href="/user/{{ $enrollment->user->id }}">
-                    <button class="btn btn-ghost btn-xs">details</button>
+                  <a href="/user/{{ $enrollment->user->id }}/submission/course/{{ $currentCourse->id }}">
+                    <button class="btn btn-ghost btn-xs">submissions</button>
                   </a>
                 </th>
               </tr>

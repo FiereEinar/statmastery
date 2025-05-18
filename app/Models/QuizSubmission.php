@@ -20,7 +20,7 @@ class QuizSubmission extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function quiz() {
-        return $this->belongsTo(Quiz::class, 'quiz_id');
+    public function moduleContent() {
+        return $this->belongsTo(CourseModuleContent::class, 'quiz_id');
     }
 }

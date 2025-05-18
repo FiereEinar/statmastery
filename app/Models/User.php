@@ -50,4 +50,8 @@ class User extends Authenticatable
     public function completedModuleContents() {
         $this->belongsToMany(CourseModuleContent::class, 'progress_trackings');
     }
+
+    public function quizSubmissions() {
+        return $this->hasMany(QuizSubmission::class);
+    }
 }

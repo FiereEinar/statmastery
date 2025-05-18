@@ -24,13 +24,13 @@
 	<body>
 		<x-topbar />
 
-		@php
+		{{-- @php
 			$totalStudentCount = 0;
 
 			foreach ($courses as $course) {
 				$totalStudentCount += $course->students->count();
 			}
-		@endphp
+		@endphp --}}
 
 		<section class="flex justify-between px-28 py-10 bg-[url('../../public/images/profile-cover.png')] bg-cover bg-center">
         <div class="flex gap-4">
@@ -49,13 +49,13 @@
             </div>
         </div>
         <div>
-					<div class="flex flex-col gap-2 items-center justify-center text-white">
+					{{-- <div class="flex flex-col gap-2 items-center justify-center text-white">
             <h2 class="text-3xl flex items-center gap-2">
 							<x-icon name="users" />
 							{{ $totalStudentCount }}
 						</h2>
             <p>Total Students</p>
-        	</div>
+        	</div> --}}
         </div>
     </section>
 
@@ -75,18 +75,7 @@
 
 			<div class="space-y-4">
         <div class="flex items-center gap-2">
-					<div class="mask mask-squircle h-12 w-12">
-						<x-custom-image 
-						:source="'storage/' . ($student->profile_picture ?? 'nothing.png')" 
-						defaultImg="images/user-placeholder.jpg"
-						className="a"
-						:alt="$student->name . ' profile picture'" 
-						/>
-					</div>
-					<h2 class="text-xl">
-						{{ $student->name }}
-						<p class="text-base-content/70 text-xs">{{ $student->email }}</p>
-					</h2>
+					<h2 class="text-xl">Course Quizzes</h2>
 				</div>
 
         <div class="overflow-x-auto">
@@ -99,10 +88,10 @@
                     <input type="checkbox" class="checkbox" />
                   </label>
                 </th>
-                <th>Module Quiz</th>
-                <th>Submission Date</th>
-                <th>Score</th>
-                <th>Percentage</th>
+                <th>Quiz Title</th>
+                <th>Created At</th>
+                <th>Items</th>
+                <th>Submissions</th>
                 <th></th>
               </tr>
             </thead>
@@ -119,20 +108,13 @@
                 <td>
 									<p class="font-bold">{{ $quiz->title }}</p>
                 </td>
-								@php
-									$submission = $userQuizSubmissionsOnCourse->where('quiz_id', $quiz->id)->first();
-									$created_at = $submission ? $submission->created_at->format('F j, Y g:i A') : '--';
-									$score = $submission ? $submission->score : '--';
-									$total = $quiz->contentQuizzes->count();
-									$percentage = $submission ? $score / $total * 100 : '--';
-								@endphp
-                <td>{{ $created_at }}</td>
-                <td>{{ $score }}/{{ $total }}</td>
-                <td>{{ $submission ? '%' . number_format($percentage, 2) : '--' }}</td>
+                <td>{{ $quiz->created_at }}</td>
+                <td>{{ $quiz->contentQuizzes->count() }}</td>
+                <td>{{ $quiz->submissions->count() }}</td>
                 <th>
-                  {{-- <a>
+                  <a href="/user/progress/course/1/quizzes/{{ $quiz->id }}">
                     <button class="btn btn-ghost btn-xs">details</button>
-                  </a> --}}
+                  </a>
                 </th>
               </tr>
               @endforeach
@@ -142,10 +124,10 @@
             <tfoot>
               <tr>
                 <th></th>
-                <th>Module Quiz</th>
-                <th>Submission Date</th>
-                <th>Score</th>
-                <th>Percentage</th>
+                <th>Quiz Title</th>
+                <th>Created At</th>
+                <th>Items</th>
+                <th>Submissions</th>
                 <th></th>
               </tr>
             </tfoot>

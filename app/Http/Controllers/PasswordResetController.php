@@ -12,7 +12,7 @@ class PasswordResetController extends Controller
 {
     public function showLinkRequestForm()
     {
-        return view('auth.forgot-password'); // Create this view
+        return view('auth.forgot-password'); 
     }
 
     public function sendResetLinkEmail(Request $request)

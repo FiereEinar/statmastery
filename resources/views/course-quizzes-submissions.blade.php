@@ -24,13 +24,13 @@
 	<body>
 		<x-topbar />
 
-		@php
+		{{-- @php
 			$totalStudentCount = 0;
 
 			foreach ($courses as $course) {
 				$totalStudentCount += $course->students->count();
 			}
-		@endphp
+		@endphp --}}
 
 		<section class="flex justify-between px-28 py-10 bg-[url('../../public/images/profile-cover.png')] bg-cover bg-center">
         <div class="flex gap-4">
@@ -49,19 +49,19 @@
             </div>
         </div>
         <div>
-					<div class="flex flex-col gap-2 items-center justify-center text-white">
+					{{-- <div class="flex flex-col gap-2 items-center justify-center text-white">
             <h2 class="text-3xl flex items-center gap-2">
 							<x-icon name="users" />
 							{{ $totalStudentCount }}
 						</h2>
             <p>Total Students</p>
-        	</div>
+        	</div> --}}
         </div>
     </section>
 
 		<section class="px-28 py-10 space-y-6">
 			<div class="flex justify-start items-center gap-4">
-				<x-button href="/user/progress/course/{{ $currentCourse->id }}" flat primary>
+				<x-button href="/user/progress/course/{{ $currentCourse->id }}/quizzes" flat primary>
 					<x-icon name="chevron-left" />
 				</x-button>
 				
@@ -74,19 +74,16 @@
       </div>
 
 			<div class="space-y-4">
-        <div class="flex items-center gap-2">
-					<div class="mask mask-squircle h-12 w-12">
-						<x-custom-image 
-						:source="'storage/' . ($student->profile_picture ?? 'nothing.png')" 
-						defaultImg="images/user-placeholder.jpg"
-						className="a"
-						:alt="$student->name . ' profile picture'" 
-						/>
-					</div>
-					<h2 class="text-xl">
-						{{ $student->name }}
-						<p class="text-base-content/70 text-xs">{{ $student->email }}</p>
-					</h2>
+        <div class="flex justify-between items-center gap-2">
+          <div class="breadcrumbs text-sm">
+            <ul>
+              <li><a href="/user/progress/course/{{ $currentCourse->id }}/quizzes"><h2 class="text-xl">Course Quizzes</h2></a></li>
+              <li><a><h2 class="text-xl">{{ $quiz->title }}</h2></a></li>
+            </ul>
+          </div>
+					<div>
+            <x-button primary flat icon="arrow-down-tray" label="Download" />
+          </div>
 				</div>
 
         <div class="overflow-x-auto">
@@ -99,8 +96,8 @@
                     <input type="checkbox" class="checkbox" />
                   </label>
                 </th>
-                <th>Module Quiz</th>
-                <th>Submission Date</th>
+                <th>Learner</th>
+                <th>Submitted At</th>
                 <th>Score</th>
                 <th>Percentage</th>
                 <th></th>
@@ -109,26 +106,22 @@
 
             <tbody>
               <!-- row 1 -->
-              @foreach ($courseQuizzes as $quiz)
+              @foreach ($quiz->submissions as $submission)
               <tr>
                 <th>
                   <label>
                     <input type="checkbox" class="checkbox" />
                   </label>
                 </th>
+                @php
+                  $percentage = $submission->score / $quiz->contentQuizzes->count() * 100;
+                @endphp
                 <td>
-									<p class="font-bold">{{ $quiz->title }}</p>
+									<p class="font-bold">{{ $submission->user->name }}</p>
                 </td>
-								@php
-									$submission = $userQuizSubmissionsOnCourse->where('quiz_id', $quiz->id)->first();
-									$created_at = $submission ? $submission->created_at->format('F j, Y g:i A') : '--';
-									$score = $submission ? $submission->score : '--';
-									$total = $quiz->contentQuizzes->count();
-									$percentage = $submission ? $score / $total * 100 : '--';
-								@endphp
-                <td>{{ $created_at }}</td>
-                <td>{{ $score }}/{{ $total }}</td>
-                <td>{{ $submission ? '%' . number_format($percentage, 2) : '--' }}</td>
+                <td>{{ $submission->created_at }}</td>
+                <td>{{ $submission->score }}/{{ $quiz->contentQuizzes->count() }}</td>
+                <td>%{{ number_format($percentage, 2) }}</td>
                 <th>
                   {{-- <a>
                     <button class="btn btn-ghost btn-xs">details</button>
@@ -142,8 +135,8 @@
             <tfoot>
               <tr>
                 <th></th>
-                <th>Module Quiz</th>
-                <th>Submission Date</th>
+                <th>Learner</th>
+                <th>Submitted At</th>
                 <th>Score</th>
                 <th>Percentage</th>
                 <th></th>

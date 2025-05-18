@@ -75,18 +75,14 @@
                     @if (auth()->user()->role === 'admin')
                     <div class="flex gap-1 items-center">
                         <x-icon name="clipboard" />
-                        <h4 class="font-semibold">Manage</h4>
+                        <h4 class="font-semibold">Admin</h4>
                     </div>
                     <a href="/booking" class="flex gap-1 items-center justify-between hover:text-primary">
-                        <h4>Bookings</h4>
+                        <h4>Manage Bookings</h4>
                         <x-icon class="text-primary" name="chevron-right" />
                     </a>
                     <a href="/user/progress" class="flex gap-1 items-center justify-between hover:text-primary">
-                        <h4>User Progress</h4>
-                        <x-icon class="text-primary" name="chevron-right" />
-                    </a>
-                    <a href="/user/submission" class="flex gap-1 items-center justify-between hover:text-primary">
-                        <h4>User Submissions</h4>
+                        <h4>Manage Progress</h4>
                         <x-icon class="text-primary" name="chevron-right" />
                     </a>
                     <div class="w-full border-b-2 border-neutral-content h-1 my-6"></div>

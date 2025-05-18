@@ -6,7 +6,7 @@
             <span class="badge badge-{{ $course->badge->name === 'Beginner' ? 'success' : ($course->badge->name === 'Intermediate' ? 'warning' : 'error') }} z-60">{{ $course->badge->name }}</span>
             <h2 class="text-xl">
                 {{ $course->title }}
-                <p class="text-base-content/70 text-xs">Created at: {{ $course->created_at }}</p>
+                <p class="text-base-content/70 text-xs">Created at: {{ $course->created_at->format('F j, Y g:i A') }}</p>
             </h2>
             <p class="text-base-content/70 line-clamp-2">{{ $course->description }}</p>
             <p class="text-base-content/70">{{ $course->price <= 0 ? 'Free' : 'Paid' }}</p>
