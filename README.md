@@ -179,4 +179,10 @@ A visual tour of the platform's features and user interface:
 
 ![Manage Bookings](public/screenshots/manage-bookings.png)
 
-### 👤
+### 👤 Learner Dashboard
+
+![Learner Dashboard](public/screenshots/learner-dashboard.png)
+
+### ⚙️ Update Profile
+
+![Update Profile](public/screenshots/update-profile.png)
