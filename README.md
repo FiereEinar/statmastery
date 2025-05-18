@@ -2,19 +2,42 @@
 
 Statmastery is a comprehensive web-based learning platform designed to enhance the way students and educators connect in the field of mathematics and statistics. It offers an intuitive and flexible system for both self-paced learning and personalized instruction.
 
-## 🔑 Key Features:
+## 🚀 Key Features
 
--   **Course Management Module**: Students can browse, enroll in, and access a variety of online math-related courses.
+-   **👨‍🏫 Course Management (CRUD)**  
+    Instructors can create, update, and delete detailed course content, including descriptions, media, and resources.
 
--   **Instructor Booking System**: Users can view instructor profiles, check available time slots, and schedule one-on-one learning sessions.
+-   **🔐 Authentication & Authorization**  
+    Role-based access system to separate admins, instructors, and learners with secure login.
 
--   **Google Calendar Integration**: Automatically sync booked sessions with learners' and instructors' Google Calendars for seamless scheduling and reminders.
+-   **💳 Payment Integration (PayMongo)**  
+    Accept payments for premium courses with seamless PayMongo integration.
 
--   **Rich Text Editor (TinyMCE)**: Instructors can easily create and format engaging course content using a powerful and user-friendly editor.
+-   **🧑‍🎓 User Profile Management**  
+    Learners and instructors can manage their personal and professional information.
 
--   **Admin Dashboard**: Robust tools for managing users, courses, instructors, and bookings, giving full control to system administrators.
+-   **📝 Rich Text Editor (TinyMCE)**  
+    Compose engaging and well-formatted lessons and instructions using a rich text editor.
 
--   **User-Centric Design**: Includes secure login, automated email notifications, and a built-in feedback system to enhance the user experience.
+-   **📁 Upload & Download Course Resources**  
+    Instructors can upload PDFs, images, and files; learners can download them anytime.
+
+-   **📊 Quizzes for Courses**  
+    Add assessments to any module to track student learning and understanding.
+
+-   **📥 Import Quizzes via CSV**  
+    Bulk import quizzes through CSV files for faster content creation.
+
+-   **📈 Quiz Submission Reports**  
+    Track learner progress and quiz performance via detailed reports.
+
+-   **💬 Course Comments & Reviews**  
+    Learners can provide feedback and rate courses to help others choose wisely.
+
+-   **🗂️ Manage Course Categories**  
+    Organize courses into categories for easy browsing and discovery.
+
+-   **🗓️ Booking System with Google**
 
 Statmastery bridges the gap between structured learning and personalized education, creating a more dynamic, accessible, and engaging way to master mathematical concepts.
 
