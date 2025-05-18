@@ -11,6 +11,12 @@ use Illuminate\Http\Request;
 use Mpdf\Mpdf;
 class UserController extends Controller
 {
+    public function submissionsView() {
+        return view('submissions', [
+            
+        ]);
+    }
+
     public function usersProgressView() {
         $user = auth()->guard("web")->user();
         $courses = Course::where('owner_id', $user->id)->get();

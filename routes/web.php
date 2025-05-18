@@ -31,6 +31,7 @@ Route::post('/reset-password', [PasswordResetController::class, 'reset'])->name(
 // Apply 'auth.check' middleware to all course-related routes
 Route::middleware(['auth.check'])->group(function () {
     Route::get('/dashboard', [CourseController::class, 'dashboard']);
+    Route::get('/submissions', [UserController::class, 'submissionsView']);
     Route::get('/gcalendar', [BookingController::class, 'bookAppointmentView']);
     
     // Course routes

@@ -40,6 +40,10 @@
                         <h4>My Learning</h4>
                         <x-icon class="text-primary" name="chevron-right" />
                     </a>
+                    {{-- <a href="/submissions" class="flex gap-1 items-center justify-between hover:text-primary">
+                        <h4>My Submissions</h4>
+                        <x-icon class="text-primary" name="chevron-right" />
+                    </a> --}}
 
                     <div class="w-full border-b-2 border-neutral-content h-1 my-6"></div>
 

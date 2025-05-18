@@ -141,6 +141,101 @@ Or, if you're using a virtual host via XAMPP, use the custom URL you configured.
 
 ---
 
+# 📡 API Routes
+
+Below are the available API routes grouped by functionality. Routes follow RESTful conventions and are prefixed appropriately (e.g., `/v1/api/...`). Authentication is required for most routes, and some are admin-only.
+
+---
+
+### 🧑‍💻 **Authentication Routes**
+
+| Method | Endpoint                 | Description                          |
+| ------ | ------------------------ | ------------------------------------ |
+| `GET`  | `/login`                 | Login page view                      |
+| `GET`  | `/signup`                | Signup page view                     |
+| `POST` | `/v1/api/login`          | Authenticate user and issue session  |
+| `POST` | `/v1/api/signup`         | Register a new user                  |
+| `GET`  | `/v1/api/logout`         | Logout the authenticated user        |
+| `GET`  | `/google/redirect/admin` | Initiate Google OAuth for admin      |
+| `GET`  | `/google/callback/admin` | Handle Google callback for admin     |
+| `GET`  | `/google/redirect`       | Google OAuth redirect for calendar   |
+| `GET`  | `/google/callback`       | Google calendar integration callback |
+
+---
+
+### 🔐 **Password Reset Routes**
+
+| Method | Endpoint                  | Description              |
+| ------ | ------------------------- | ------------------------ |
+| `GET`  | `/forgot-password`        | Show reset password form |
+| `POST` | `/forgot-password`        | Send reset link email    |
+| `GET`  | `/reset-password/{token}` | Show password reset page |
+| `POST` | `/reset-password`         | Submit new password      |
+
+---
+
+### 📚 **Course Management (Auth Required)**
+
+| Method | Endpoint                           | Description                 |
+| ------ | ---------------------------------- | --------------------------- |
+| `GET`  | `/dashboard`                       | View dashboard with stats   |
+| `GET`  | `/course/{course}/edit`            | Edit course form            |
+| `GET`  | `/course/{course}/content`         | View course content         |
+| `PUT`  | `/v1/api/course/{course}`          | Update a course             |
+| `POST` | `/v1/api/course`                   | Create a new course         |
+| `POST` | `/v1/api/course/{course}/module`   | Add a module to a course    |
+| `POST` | `/v1/api/course/{course}/checkout` | Enroll or checkout a course |
+
+---
+
+### 📅 **Booking Routes (Auth Required)**
+
+| Method   | Endpoint                        | Description                  |
+| -------- | ------------------------------- | ---------------------------- |
+| `GET`    | `/gcalendar`                    | Book appointment view        |
+| `POST`   | `/v1/api/booking`               | Create a booking event       |
+| `GET`    | `/v1/api/booking/google/events` | Fetch Google Calendar events |
+| `GET`    | `/v1/api/booking/array`         | Fetch booking data as array  |
+| `PUT`    | `/v1/api/booking/{event}`       | Update a booking event       |
+| `DELETE` | `/v1/api/booking/{event}`       | Delete a booking event       |
+
+---
+
+### 🛠️ **Admin Routes (Auth + Admin Middleware)**
+
+| Method | Endpoint                                                    | Description                             |
+| ------ | ----------------------------------------------------------- | --------------------------------------- |
+| `GET`  | `/course/create`                                            | Admin course creation view              |
+| `GET`  | `/booking`                                                  | View and manage bookings                |
+| `PUT`  | `/v1/api/booking/{event}/approve`                           | Approve a booking                       |
+| `GET`  | `/user/progress`                                            | View all user progress                  |
+| `GET`  | `/user/progress/course/{course}`                            | User progress in a course               |
+| `GET`  | `/user/progress/course/{course}/quizzes`                    | Quiz overview per course                |
+| `GET`  | `/user/progress/course/{course}/quizzes/{content}`          | View quiz submissions                   |
+| `GET`  | `/user/progress/course/{course}/quizzes/{content}/download` | Download quiz submissions               |
+| `GET`  | `/user/{user}/submission/course/{course}`                   | View specific user’s course submissions |
+
+---
+
+### 👤 **User Profile**
+
+| Method | Endpoint          | Description                     |
+| ------ | ----------------- | ------------------------------- |
+| `GET`  | `/profile/update` | View update profile form        |
+| `GET`  | `/submissions`    | View learner's quiz submissions |
+
+---
+
+### 🌐 **Public Routes**
+
+| Method | Endpoint           | Description        |
+| ------ | ------------------ | ------------------ |
+| `GET`  | `/`                | Home landing page  |
+| `GET`  | `/course`          | View all courses   |
+| `GET`  | `/course/{course}` | View single course |
+
+---
+
 # 📸 Screenshots
 
 A visual tour of the platform's features and user interface:
