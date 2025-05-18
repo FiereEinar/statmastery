@@ -7,60 +7,118 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+# 📚 Statmastery
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Statmastery is a comprehensive web-based learning platform designed to enhance the way students and educators connect in the field of mathematics and statistics. It offers an intuitive and flexible system for both self-paced learning and personalized instruction.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 🔑 Key Features:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-   **Course Management Module**: Students can browse, enroll in, and access a variety of online math-related courses.
 
-## Learning Laravel
+-   **Instructor Booking System**: Users can view instructor profiles, check available time slots, and schedule one-on-one learning sessions.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+-   **Google Calendar Integration**: Automatically sync booked sessions with learners' and instructors' Google Calendars for seamless scheduling and reminders.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+-   **Rich Text Editor (TinyMCE)**: Instructors can easily create and format engaging course content using a powerful and user-friendly editor.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+-   **Admin Dashboard**: Robust tools for managing users, courses, instructors, and bookings, giving full control to system administrators.
 
-## Laravel Sponsors
+-   **User-Centric Design**: Includes secure login, automated email notifications, and a built-in feedback system to enhance the user experience.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Statmastery bridges the gap between structured learning and personalized education, creating a more dynamic, accessible, and engaging way to master mathematical concepts.
 
-### Premium Partners
+<br>
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+---
 
-## Contributing
+# ⚙️ Installation & Setup Guide (Laravel + XAMPP)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Follow these steps to install and set up **Statmastery** locally using Laravel and XAMPP:
 
-## Code of Conduct
+### 🧰 Requirements
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+-   PHP >= 8.1
+-   Composer
+-   XAMPP (MySQL & Apache)
+-   Node.js and NPM (for frontend assets, if applicable)
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 📦 1. Clone the Repository
 
-## License
+```bash
+git clone https://github.com/FiereEinar/statmastery.git
+cd statmastery
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+### ⚙️ 2. Set Up `.env` File
+
+Create a `.env` file from the example template:
+
+```bash
+cp .env.example .env
+```
+
+Open `.env` and fill in the required values, required values have "<REQUIRED>" value in `.env.example`.
+
+---
+
+### 🗃️ 3. Create the Database
+
+-   Open **phpMyAdmin** via XAMPP.
+-   Create a new MySQL database with the name you specified in `DB_DATABASE`.
+
+---
+
+### 📥 4. Install Dependencies
+
+```bash
+composer install
+npm install && npm run dev
+```
+
+---
+
+### 🔑 5. Generate Application Key
+
+```bash
+php artisan key:generate
+```
+
+---
+
+### 🧪 6. Run Migrations & Seeders (Optional)
+
+```bash
+php artisan migrate --seed
+```
+
+---
+
+### 🚀 7. Serve the Application
+
+Start your Laravel development server:
+
+```bash
+php artisan serve
+```
+
+Open your browser and navigate to:
+[http://localhost:8000](http://localhost:8000)
+
+Or, if you're using a virtual host via XAMPP, use the custom URL you configured.
+
+---
+
+### 🛠️ 8. XAMPP Notes
+
+-   Ensure **Apache** and **MySQL** are running via the XAMPP Control Panel.
+-   If port `8000` is already in use, specify a different port:
+
+    ```bash
+    php artisan serve --port=8080
+    ```
+
+---

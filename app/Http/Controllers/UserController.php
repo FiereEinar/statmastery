@@ -8,7 +8,7 @@ use App\Models\CourseModuleContent;
 use App\Models\ProgressTracking;
 use App\Models\User;
 use Illuminate\Http\Request;
-
+use Mpdf\Mpdf;
 class UserController extends Controller
 {
     public function usersProgressView() {
@@ -129,6 +129,24 @@ class UserController extends Controller
             'user' => $currentUser, 
             'currentCourse' => $course,
             'quiz' => $content
+        ]);
+    }
+
+    public function downloadCourseQuizzesSubmissionsView(Course $course, CourseModuleContent $content) {
+        $currentUser = auth()->guard("web")->user();
+
+        $html = view('reports.course-quizzes-submissions', [
+            'user' => $currentUser,
+            'currentCourse' => $course,
+            'quiz' => $content
+        ])->render();
+
+        $mpdf = new Mpdf();
+        $mpdf->WriteHTML($html);
+
+        return response($mpdf->Output('quiz-report.pdf', 'S'), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="quiz-report.pdf"',
         ]);
     }
 
