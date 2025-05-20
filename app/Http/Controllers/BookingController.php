@@ -290,6 +290,13 @@ class BookingController extends Controller
     }
 
     public function deleteBooking(Event $event) {
+        $currentUser = auth()->guard('web')->user();
+        if ($event->user_id !== $currentUser->id) {
+            return response()->json([
+                'success' => false,
+            ]);
+        }
+
         $event->delete();
 
         if ($event->google_event_id && Session::has('google_token')) {

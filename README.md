@@ -87,6 +87,7 @@ Open `.env` and fill in the required values, required values have "REQUIRED" val
 
 -   Open **phpMyAdmin** via XAMPP.
 -   Create a new MySQL database with the name you specified in `DB_DATABASE`.
+-   Import the sql file name `realapps_db.sql` into the database that you created
 
 ---
 

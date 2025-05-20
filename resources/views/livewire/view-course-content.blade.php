@@ -1,6 +1,7 @@
 <section class="flex grow min-h-full">
     {{-- Course Outline sidebar --}}
     <aside class="relative pb-[8rem] min-h-full border-r-2 border-neutral-content w-fit max-w-[400px] shrink-0">
+        {{-- Sidebar Tabs --}}
         <div class="flex">
             <button wire:click="setActiveSidebarTab(1)" class="cursor-pointer flex items-center gap-2 px-5 py-3 border-primary {{ $activeSidebarTab === 1 ? 'border-b-2' : '' }}">
                 <x-icon name="clipboard-document-list" />
@@ -11,6 +12,9 @@
                 <h1 class="text-xl">Resources</h1>
             </button>
         </div>
+
+        {{-- Course Outline Tab --}}
+        @if ($activeSidebarTab === 1)
         <div class="overflow-y-auto h-full max-h-[500px] max-w-[400px]">
             @if ($course->modules->isEmpty())
             <div class="flex items-center gap-2 px-5 py-3">
@@ -60,6 +64,39 @@
             </div>
             @endforeach
         </div>
+
+        {{-- Resources Tab --}}
+        @elseif ($activeSidebarTab === 2)
+            @if ($activeContent)
+            <div class="overflow-y-auto h-full max-h-[500px] max-w-[400px]">
+                {{-- Resources List --}}
+                <div class="border-t border-base-content/50">
+                    @if ($activeContent->resources->isEmpty())
+                    <div class="flex items-center gap-2 p-4">
+                        <h1 class="italic text-base-content/50">No resources found</h1>
+                    </div>
+                    @endif
+                    <ul>
+                        @foreach ($activeContent->resources as $resource)
+                            <li>
+                                <a class="transition-all flex items-center justify-between border-b border-base-content/50 p-2 hover:bg-neutral-content" href="{{ asset('storage/' . $resource->file_path) }}" target="_blank">
+                                    <div class="flex items-center gap-2">
+                                        <x-file-icon className="size-8" fileExt="{{ $resource->file_type }}" />
+                                        <p class="truncate">{{ basename($resource->filename) }}</p>
+                                    </div>
+                                    <x-icon name="arrow-down-tray" />
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+            @else
+            <div class="p-4">
+                <h1 class="italic text-base-content/50">Select a content</h1>
+            </div>
+            @endif
+        @endif
     </aside>
 
     {{-- Main content --}}
